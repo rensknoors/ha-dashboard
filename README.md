@@ -1,27 +1,38 @@
-# React + TypeScript + Vite
+# Home Assistant dashboard (React + TypeScript + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a personalized dashboard tailored towards my own Home Assistant configuration. This which won't work for other Home Assistant configurations but feel free to use this as inspirations.
 
-Currently, two official plugins are available:
+## Usage
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Add a `.env.local` and/or `.env.production.local` file with `VITE_HASS_URL`. This should contain the url to your Home Assistant environment and is needed for authentication.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+Example:
+```
+# .env.local
+VITE_HASS_URL="https://homeassistant.local:8123"
+```
+```
+# .env.production.local
+VITE_HASS_URL="https://url-to-your-home-assistant-instance.com"
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Deploy
+
+1. In Homeassistant: Install and setup the Terminal & SSH addon, this is very easy!
+    - Click on your "Profile name" in your HA dashboard
+    - Scroll down and enabled "Advanced mode"
+    - Go to Settings -> Addons -> search for "Terminal & SSH" -> Install
+    - Go to the configuration tab, enter a password into the field and save
+    - Ensure the PORT is 22, save, the default username is `root`
+
+2. Add an `.env` file with the following environment variables:
+```
+SSH_USERNAME="root"
+SSH_PASSWORD="password"
+SSH_HOSTNAME="ip or hostname"
+```
+
+3. Run the deploy command:
+```zsh
+pnpm run deploy
+```
