@@ -1,13 +1,13 @@
 import { HassConnect } from '@hakit/core';
 
-function App() {
-  const HASS_URL = 'https://192.168.86.61:8123';
+const App = () => {
+  const HASS_URL = import.meta.env.VITE_HASS_URL;
 
   return (
     <HassConnect hassUrl={HASS_URL}>
       <div></div>
     </HassConnect>
   );
-}
+};
 
 export default App;
