@@ -20,10 +20,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@root": ["./src"],
-      "@components": ["./src/components/"],
-      "@areas": ["./src/areas/"],
-      "@hooks": ["./src/hooks/"]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/hooks/*": ["./src/hooks*/"]
     }
   },
   "include": ["src"],
