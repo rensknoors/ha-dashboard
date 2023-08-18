@@ -6,7 +6,7 @@ import {
 
 const buttons: Array<TileButtonProps> = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     icon: 'mdi:tablet-dashboard',
     color: 'bg-blue-300',
@@ -34,8 +34,8 @@ const buttons: Array<TileButtonProps> = [
 const SideBar = () => {
   return (
     <Column className="flex">
-      {buttons.map((route) => (
-        <TileButton {...route} />
+      {buttons.map((route, index) => (
+        <TileButton key={index} {...route} />
       ))}
     </Column>
   );

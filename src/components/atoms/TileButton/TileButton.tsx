@@ -1,4 +1,5 @@
 import { useIcon } from '@hakit/core';
+import { Link } from 'react-router-dom';
 
 export type TileButtonProps = {
   path: string;
@@ -7,14 +8,15 @@ export type TileButtonProps = {
   color: string;
 };
 
-const TileButton = ({ icon, name, path, color }: TileButtonProps) => {
+const TileButton = ({ icon, color, path }: TileButtonProps) => {
   const svg = useIcon(icon);
   return (
-    <div
+    <Link
+      to={path}
       className={`${color} m-2 flex aspect-square w-16 place-content-center place-items-center rounded-3xl text-black`}
     >
       {svg}
-    </div>
+    </Link>
   );
 };
 
