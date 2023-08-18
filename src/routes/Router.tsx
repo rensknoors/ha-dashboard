@@ -35,10 +35,10 @@ const router = createHashRouter(
         },
       ],
     },
-  ],
-  {
-    basename: import.meta.env.DEV ? '/' : '/local/react-dashboard/index.html',
-  }
+  ]
+  // {
+  //   basename: import.meta.env.DEV ? '/' : '/local/react-dashboard/index.html',
+  // }
 );
 
 const Router = () => {
