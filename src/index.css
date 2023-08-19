@@ -30,3 +30,9 @@ body {
     background-color: #ffffff;
   }
 }
+
+@layer components {
+  .centered-row {
+    @apply my-4 flex w-full justify-center first:mt-0 last:mb-0;
+  }
+}

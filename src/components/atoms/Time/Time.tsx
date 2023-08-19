@@ -18,11 +18,7 @@ const Time = () => {
 
   const formattedTime = `${hours}:${minutes}`;
 
-  return (
-    <div className="flex w-full justify-center">
-      <span className="text-8xl font-bold">{formattedTime}</span>
-    </div>
-  );
+  return <span className="text-8xl font-bold">{formattedTime}</span>;
 };
 
 export { Time };
