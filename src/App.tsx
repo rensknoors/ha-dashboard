@@ -6,7 +6,6 @@ const App = () => {
 
   return (
     <HassConnect hassUrl={HASS_URL}>
-      <h1 className="text-center text-4xl">React Dashboard</h1>
       <Router />
     </HassConnect>
   );
