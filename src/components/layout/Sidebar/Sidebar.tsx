@@ -6,7 +6,7 @@ import {
 
 const buttons: Array<TileButtonProps> = [
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     icon: 'mdi:tablet-dashboard',
     color: 'bg-blue-300',
