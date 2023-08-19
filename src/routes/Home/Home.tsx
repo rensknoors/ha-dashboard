@@ -1,8 +1,12 @@
+import { Time } from '@/components/atoms/Time/Time';
+
 const Home = () => {
   return (
-    <div>
-      <h1 className="text-3xl font-bold">Home</h1>
-      <p className="text-xl">Welcome to your new Hakit project!</p>
+    <div className="flex h-full w-full gap-6">
+      <div className="flex-grow">
+        <Time />
+      </div>
+      <div className="flex-grow">World</div>
     </div>
   );
 };
