@@ -13,11 +13,14 @@ const Time = () => {
     };
   }, []);
 
-  const formattedTime = currentTime.toLocaleTimeString();
+  const hours = currentTime.getHours().toString().padStart(2, '0');
+  const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+
+  const formattedTime = `${hours}:${minutes}`;
 
   return (
-    <div>
-      <span>{formattedTime}</span>
+    <div className="flex w-full justify-center">
+      <span className="text-8xl font-bold">{formattedTime}</span>
     </div>
   );
 };
