@@ -1,4 +1,5 @@
 import { HassConnect } from '@hakit/core';
+
 import { Router } from './routes/Router';
 
 const App = () => {

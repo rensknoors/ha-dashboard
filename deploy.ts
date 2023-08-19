@@ -1,5 +1,6 @@
-import { Client } from 'node-scp';
 import * as dotenv from 'dotenv';
+import { Client } from 'node-scp';
+
 dotenv.config();
 
 const USERNAME = process.env.SSH_USERNAME;
@@ -11,7 +12,6 @@ const LOCAL_DIRECTORY = './dist'; // the pathname to your output files from your
 
 const REMOTE_PATH = `/config/www/${REMOTE_FOLDER_NAME}`;
 
-
 async function deploy() {
   try {
     const client = await Client({
@@ -22,7 +22,7 @@ async function deploy() {
       // if you have extra security, here's how you can use the privateKey / passphrase
       // privateKey: fs.readFileSync('./key.pem'),
       // passphrase: 'your key passphrase',
-    })
+    });
     // empty the directory initially so we remove anything that doesn't need to be there
     try {
       await client.rmdir(REMOTE_PATH);
@@ -31,11 +31,11 @@ async function deploy() {
     }
     // upload the folder to your home assistant server
     await client.uploadDir(LOCAL_DIRECTORY, REMOTE_PATH);
-    client.close() // remember to close connection after you finish
-    console.log('Successfully deployed!')
+    client.close(); // remember to close connection after you finish
+    console.log('Successfully deployed!');
   } catch (e) {
-    console.log('Error:', e.message)
+    console.log('Error:', e.message);
   }
 }
 
-deploy()
+deploy();

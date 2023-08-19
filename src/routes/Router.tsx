@@ -1,10 +1,12 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
 import { ErrorPage } from '@/routes/ErrorPage/ErrorPage';
+
 import { Home } from './Home/Home';
+import { Media } from './Media/Media';
 import { Root } from './Root';
 import { Vacuum } from './Vacuum/Vacuum';
 import { Weather } from './Weather/Weather';
-import { Media } from './Media/Media';
 
 const router = createBrowserRouter([
   {

@@ -1,10 +1,11 @@
 import { Column } from '@hakit/components';
+
 import {
   TileButton,
   TileButtonProps,
 } from '@/components/atoms/TileButton/TileButton';
 
-const buttons: Array<TileButtonProps> = [
+const buttons: TileButtonProps[] = [
   {
     path: '/',
     name: 'Home',
