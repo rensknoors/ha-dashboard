@@ -18,7 +18,7 @@ module.exports = {
     project: ['./tsconfig.json', './tsconfig.node.json'],
     tsconfigRootDir: __dirname,
   },
-  plugins: ['react-refresh', 'unused-imports'],
+  plugins: ['react-refresh', 'unused-imports', '@tanstack/query'],
   rules: {
     'react-refresh/only-export-components': [
       'warn',
