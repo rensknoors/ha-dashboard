@@ -1,6 +1,7 @@
 import { CurrentDate } from '@/components/atoms/CurrentDate/CurrentDate';
 import { Time } from '@/components/atoms/Time/Time';
-import { Weather } from '@/components/atoms/Weather/Weather';
+import { WeatherCard } from '@/components/atoms/WeatherCard/WeatherCard';
+import { MediaCard } from '@/components/molecules/MediaCard/MediaCard';
 
 const Home = () => {
   return (
@@ -13,10 +14,12 @@ const Home = () => {
           <CurrentDate />
         </div>
         <div className="centered-row py-8">
-          <Weather />
+          <WeatherCard />
         </div>
       </div>
-      <div className="basis-1/2">World</div>
+      <div className="basis-1/2">
+        <MediaCard entity="media_player.nest_wifi_kantoor" />
+      </div>
     </div>
   );
 };
