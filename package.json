@@ -16,6 +16,7 @@
     "@types/node": "^20.5.0",
     "basic-ftp": "^5.0.3",
     "dotenv": "^16.3.1",
+    "lottie-react": "^2.4.0",
     "node-scp": "^0.0.23",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
