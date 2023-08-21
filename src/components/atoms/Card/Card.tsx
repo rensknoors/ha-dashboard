@@ -1,14 +1,15 @@
 import { ReactNode } from 'react';
 
-const Card = ({
-  children,
-  className,
-}: {
+export type CardProps = {
   children: ReactNode;
   className?: string;
-}) => {
+};
+
+const Card = ({ children, className }: CardProps) => {
   return (
-    <div className={`bg-slate-800 py-4 px-6 rounded-3xl ${className}`}>
+    <div
+      className={`bg-slate-800 py-4 px-6 rounded-3xl overflow-hidden ${className}`}
+    >
       {children}
     </div>
   );
