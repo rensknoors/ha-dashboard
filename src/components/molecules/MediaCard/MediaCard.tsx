@@ -1,17 +1,43 @@
-import { useEntity } from '@hakit/core';
+import { useEntity, useHass } from '@hakit/core';
 
 import { Card } from '@/components/atoms/Card/Card';
 
 const MediaCard = ({ entity }: { entity: `media_player.${string}` }) => {
   const media = useEntity(entity);
+  const { callService } = useHass();
   console.log(media);
 
   return (
-    <Card>
-      <p className="text-xl">{media.attributes.media_artist}</p>
-      <p className="text-ellipsis line-clamp-1">
-        {media.attributes.media_title}
-      </p>
+    <Card className="min-h-[180px] flex place-items-center gap-6">
+      <div className="flex-grow flex-shrink-0">
+        <img
+          src={media.attributes.entity_picture}
+          className="w-20 h-w-20 rounded-2xl"
+          alt="media preview"
+        />
+      </div>
+
+      <div className="flex flex-col">
+        <span className="text-xl">{media.attributes.media_artist}</span>
+        <span className="text-ellipsis line-clamp-1">
+          {media.attributes.media_title}
+        </span>
+      </div>
+
+      <div
+        className="flex flex-col w-8 h-8 flex-shrink-0 bg-red-500 rounded-full"
+        onClick={() => {
+          callService({
+            domain: 'media_player',
+            service: 'media_play_pause',
+            target: {
+              entity_id: entity,
+            },
+          });
+        }}
+      >
+        {'>'}
+      </div>
     </Card>
   );
 };
