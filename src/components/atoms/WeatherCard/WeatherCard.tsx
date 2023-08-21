@@ -42,7 +42,7 @@ const fetchWeatherData = async () => {
   const response = await fetch(
     `https://weerlive.nl/api/json-data-10min.php?key=${
       import.meta.env.VITE_WEATHER_API_KEY
-    }&locatie=${import.meta.env.VITE_LATLONG}`
+    }&locatie=${import.meta.env.VITE_LOCATION}`
   );
   const data = await response.json();
   return data;
