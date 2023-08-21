@@ -17,8 +17,6 @@ import rain from '@/assets/weather-lottie-animations/rain.json';
 import snow from '@/assets/weather-lottie-animations/snow.json';
 import thunderStormsRain from '@/assets/weather-lottie-animations/thunderstorms-rain.json';
 
-const LATLONG = '50.9953,5.9016';
-
 export const weatherStatesMap = {
   zonnig: clearDay,
   bliksem: thunderStormsRain,
@@ -44,7 +42,7 @@ const fetchWeatherData = async () => {
   const response = await fetch(
     `https://weerlive.nl/api/json-data-10min.php?key=${
       import.meta.env.VITE_WEATHER_API_KEY
-    }&locatie=${LATLONG}`
+    }&locatie=${import.meta.env.VITE_LATLONG}`
   );
   const data = await response.json();
   return data;
