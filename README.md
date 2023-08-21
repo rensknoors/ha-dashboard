@@ -11,11 +11,15 @@ Example:
 ```
 # .env.local
 VITE_HASS_URL="https://homeassistant.local:8123"
+VITE_WEATHER_API_KEY="demo"
+VITE_LOCATION="Amsterdam" # Can be latlong or a location name
 ```
 
 ```
 # .env.production.local
 VITE_HASS_URL="https://url-to-your-home-assistant-instance.com"
+VITE_WEATHER_API_KEY="demo"
+VITE_LOCATION="Amsterdam" # Can be latlong or a location name
 ```
 
 ## Deploy
