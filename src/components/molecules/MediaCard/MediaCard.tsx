@@ -27,7 +27,7 @@ const MediaCard = ({ entity }: { entity: `media_player.${string}` }) => {
       </div>
 
       {/* Media info */}
-      <div className="z-10 flex flex-grow flex-col">
+      <div className="z-10 flex flex-grow flex-col gap-2">
         <span className="text-xl">
           {media.attributes.media_artist ?? media.attributes.app_name}
         </span>
