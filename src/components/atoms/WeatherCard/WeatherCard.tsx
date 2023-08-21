@@ -50,7 +50,7 @@ const fetchWeatherData = async () => {
   return data;
 };
 
-const Weather = () => {
+const WeatherCard = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['weather'],
     queryFn: fetchWeatherData,
@@ -84,4 +84,4 @@ const Weather = () => {
   );
 };
 
-export { Weather };
+export { WeatherCard };
