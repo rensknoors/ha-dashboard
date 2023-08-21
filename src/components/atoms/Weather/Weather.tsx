@@ -54,7 +54,6 @@ const Weather = () => {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ['weather'],
     queryFn: fetchWeatherData,
-    cacheTime: 1000 * 60 * 5, // 5 minutes
     refetchInterval: 1000 * 60 * 10, // 10 minutes
   });
   const image: WeatherImage = data?.liveweer[0]?.image;
