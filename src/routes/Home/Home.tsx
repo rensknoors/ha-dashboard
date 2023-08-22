@@ -19,7 +19,8 @@ const Home = () => {
     for (const key in mediaPlayers) {
       if (
         mediaPlayers[key].state === 'playing' ||
-        mediaPlayers[key].state === 'paused'
+        mediaPlayers[key].state === 'paused' ||
+        mediaPlayers[key].state === 'on'
       ) {
         return key;
       }
