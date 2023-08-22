@@ -3,6 +3,7 @@ import { HassEntityWithApi, useEntity } from '@hakit/core';
 import { CurrentDate } from '@/components/atoms/CurrentDate/CurrentDate';
 import { Time } from '@/components/atoms/Time/Time';
 import { WeatherCard } from '@/components/atoms/WeatherCard/WeatherCard';
+import { LightCard } from '@/components/molecules/LightCard/LightCard';
 import { MediaCard } from '@/components/molecules/MediaCard/MediaCard';
 
 const Home = () => {
@@ -43,10 +44,15 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="basis-1/2">
+      <div className="basis-1/2 flex flex-col gap-6">
         {activeMediaPlayerKey && (
           <MediaCard entity={`media_player.${activeMediaPlayerKey}`} />
         )}
+
+        <div className="flex gap-6">
+          <LightCard entity="light.living_room_group" />
+          <LightCard entity="light.garden_group" />
+        </div>
       </div>
     </div>
   );

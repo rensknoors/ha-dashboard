@@ -1,7 +1,11 @@
 import { useEntity, useHass } from '@hakit/core';
 import { BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
 
-import { Card } from '@/components/atoms/Card/Card';
+import { Card, CardProps } from '@/components/atoms/Card/Card';
+
+export type MediaCardProps = {
+  entity: `media_player.${string}`;
+} & CardProps;
 
 const getSourceThumbnail = (source: string) => {
   switch (source) {
@@ -14,7 +18,7 @@ const getSourceThumbnail = (source: string) => {
   }
 };
 
-const MediaCard = ({ entity }: { entity: `media_player.${string}` }) => {
+const MediaCard = ({ entity }: MediaCardProps) => {
   const media = useEntity(entity);
   const { callService } = useHass();
   const PlayPauseIcon = media.state === 'playing' ? BiPause : BiPlay;
@@ -30,7 +34,7 @@ const MediaCard = ({ entity }: { entity: `media_player.${string}` }) => {
       : media.attributes.entity_picture;
 
   return (
-    <Card className="min-h-[180px] flex place-items-center gap-6 relative">
+    <Card className="flex place-items-center gap-6 relative">
       {/* Background image */}
       <div
         className="z-0 absolute inset-0 bg-cover bg-center bg-no-repeat filter blur-lg scale-125"
