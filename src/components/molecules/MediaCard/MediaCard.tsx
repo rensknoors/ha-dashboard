@@ -8,7 +8,7 @@ const getSourceThumbnail = (source: string) => {
     case 'Netflix':
       return '/src/assets/logos/netflix.jpg';
     case 'Ziggo':
-      return '/src/assets/logos/ziggo2.png';
+      return '/src/assets/logos/ziggo.png';
     case 'Plex':
       return '/src/assets/logos/plex.jpg';
   }
