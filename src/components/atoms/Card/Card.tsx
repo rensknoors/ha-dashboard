@@ -7,7 +7,7 @@ export type CardProps = {
 const Card = ({ children, className }: CardProps) => {
   return (
     <div
-      className={`min-h-[180px] bg-slate-800 py-4 px-6 rounded-3xl overflow-hidden ${className}`}
+      className={`bg-slate-800 py-4 px-6 rounded-3xl overflow-hidden ${className}`}
     >
       {children}
     </div>

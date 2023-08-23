@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <div className="flex h-full w-full gap-6">
-      <div className="basis-1/2">
+      <div className="flex-1">
         <div className="centered-row py-8">
           <Time />
         </div>
@@ -44,14 +44,16 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="basis-1/2 flex flex-col gap-6">
+      <div className="flex-1 flex flex-col gap-6">
         {activeMediaPlayerKey && (
           <MediaCard entity={`media_player.${activeMediaPlayerKey}`} />
         )}
 
-        <div className="flex gap-6">
-          <LightCard entity="light.living_room_group" />
-          <LightCard entity="light.garden_group" />
+        <div className="grid grid-cols-2 wrap gap-6">
+          <LightCard className="" entity="light.living_room_group" />
+          <LightCard className="" entity="light.garden_group" />
+          <LightCard className="" entity="light.living_room_group" />
+          <LightCard className="" entity="light.garden_group" />
         </div>
       </div>
     </div>

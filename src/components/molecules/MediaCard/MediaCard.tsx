@@ -1,5 +1,6 @@
 import { useEntity, useHass } from '@hakit/core';
-import { BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
+import { AiOutlinePoweroff } from 'react-icons/ai';
+import { BiPause, BiPlay } from 'react-icons/bi';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
 
@@ -34,7 +35,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
       : media.attributes.entity_picture;
 
   return (
-    <Card className="flex place-items-center gap-6 relative">
+    <Card className="min-h-[180px] flex place-items-center gap-6 relative">
       {/* Background image */}
       <div
         className="z-0 absolute inset-0 bg-cover bg-center bg-no-repeat filter blur-lg scale-125"
@@ -60,7 +61,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
 
       {/* Play button */}
       {media.state === 'on' ? (
-        <BiPowerOff
+        <AiOutlinePoweroff
           className="z-10 w-14 h-14 flex-shrink-0"
           onClick={() => {
             callService({
