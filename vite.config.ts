@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import react from '@vitejs/plugin-react-swc';
 import { URL, fileURLToPath } from 'url';
 import { defineConfig } from 'vite';
@@ -13,6 +14,10 @@ export default defineConfig({
       esbuildOptions: { loader: 'tsx' },
     }),
   ],
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+  },
   resolve: {
     alias: [
       {

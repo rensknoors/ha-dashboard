@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 
 export interface TileButtonProps {
   path: string;
-  name: string;
   icon: string;
   color: string;
 }
 
+/**
+ * @param color tailwindcss color classes
+ * @param icon mdi icon name
+ * @param path path to the route
+ */
 const TileButton = ({ icon, color, path }: TileButtonProps) => {
   const svg = useIcon(icon);
   return (
