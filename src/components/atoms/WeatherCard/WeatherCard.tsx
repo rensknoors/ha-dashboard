@@ -17,7 +17,7 @@ import rain from '@/assets/weather-lottie-animations/rain.json';
 import snow from '@/assets/weather-lottie-animations/snow.json';
 import thunderStormsRain from '@/assets/weather-lottie-animations/thunderstorms-rain.json';
 
-export const weatherStatesMap = {
+const weatherStatesMap = {
   zonnig: clearDay,
   bliksem: thunderStormsRain,
   regen: drizzle,

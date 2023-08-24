@@ -8,25 +8,21 @@ import {
 const buttons: TileButtonProps[] = [
   {
     path: '/',
-    name: 'Home',
     icon: 'mdi:tablet-dashboard',
     color: 'bg-blue-300',
   },
   {
     path: '/vacuum',
-    name: 'Vacuum',
     icon: 'mdi:vacuum',
     color: 'bg-green-300',
   },
   {
     path: '/weather',
-    name: 'Weather',
     icon: 'mdi:weather-partly-cloudy',
     color: 'bg-amber-200',
   },
   {
     path: '/media',
-    name: 'Media',
     icon: 'mdi:play-pause',
     color: 'bg-white',
   },

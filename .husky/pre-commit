@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+GREEN='\033[1;32m'
+RED='\033[1;31m'
+NC='\033[0m' # No Color
+
+if pnpm run lint && pnpm run type-check; then
+  printf "${GREEN}✅ Pre-commit checks passed: Linting and type-checking are on point! 🚀${NC}\n"
+else
+  printf "${RED}⛔️ Pre-commit checks failed: Uh-oh! Linting and/or type-checking need some love. 💔${NC}\n"
+  exit 1
+fi

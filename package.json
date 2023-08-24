@@ -10,8 +10,10 @@
     "coverage": "vitest run --coverage",
     "format": "prettier . --write",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "type-check": "tsc --noEmit",
     "preview": "vite preview",
-    "deploy": "npx tsx ./deploy-renshome.ts"
+    "deploy": "npx tsx ./deploy-renshome.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@tailwindcss/line-clamp": "^0.4.4",
@@ -47,6 +49,7 @@
     "eslint-plugin-unused-imports": "^3.0.0",
     "global-jsdom": "^9.1.0",
     "happy-dom": "^10.11.0",
+    "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "postcss": "^8.4.27",
     "prettier": "3.0.1",
