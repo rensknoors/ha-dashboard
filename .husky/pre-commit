@@ -2,12 +2,14 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 GREEN='\033[1;32m'
-RED='\033[1;31m'
+YELLOW='\033[1;33m'
+MAGENTA='\033[1;35m'
 NC='\033[0m' # No Color
 
 if pnpm run lint && pnpm run type-check; then
-  printf "${GREEN}✅ Pre-commit checks passed: Linting and type-checking are on point! 🚀${NC}\n"
+  printf "${GREEN}✅ Hooray! Code triumphs! Ready to take off! 🚀${NC}\n"
 else
-  printf "${RED}⛔️ Pre-commit checks failed: Uh-oh! Linting and/or type-checking need some love. 💔${NC}\n"
+  printf "${MAGENTA}⛔️ Pre-commit checks found some quirks. Time to sprinkle some coding magic! 🧙✨${NC}\n"
+  printf "${YELLOW}💡 Pro Tip: Grab a ☕, put on your coding cape, and let's turn these hiccups into triumphs! 🌟🦸‍♂️${NC}\n"
   exit 1
 fi
