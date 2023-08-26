@@ -69,7 +69,7 @@ const WeatherCard = () => {
       {data.liveweer[0]?.alarm === '1' && (
         <div className="bg-red-400 py-4 px-5 rounded-3xl text-black flex flex-col mb-4">
           <span className="font-bold">Waarschuwing:</span>
-          <div>{data.liveweer[0]?.alarmtekst}</div>
+          <div>{data.liveweer[0]?.alarmtxt}</div>
         </div>
       )}
       <div className="flex items-center text-3xl gap-4">
