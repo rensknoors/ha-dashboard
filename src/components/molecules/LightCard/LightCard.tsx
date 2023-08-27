@@ -16,7 +16,6 @@ const LightCard = ({ entity, className }: LightCardProps) => {
   const textColor = light.state === 'on' ? 'black' : 'white';
 
   console.log(light);
-  console.log(light.attributes.brightness, brightness);
 
   return (
     <Card
@@ -26,7 +25,9 @@ const LightCard = ({ entity, className }: LightCardProps) => {
         `text-${textColor}`
       )}
       style={{
-        backgroundColor: `rgb(${light.attributes.rgb_color?.join(',')})`,
+        backgroundColor: light.attributes.rgb_color
+          ? `rgb(${light.attributes.rgb_color?.join(',')})`
+          : undefined,
       }}
       onClick={() => light.api.toggle()}
     >
