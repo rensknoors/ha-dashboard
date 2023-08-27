@@ -61,7 +61,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
       {/* Controls */}
       {media.state === 'on' ? (
         <BiPowerOff
-          className="z-10 box-content h-8 w-8 flex-shrink-0 p-8"
+          className="z-10 box-content h-8 w-8 flex-shrink-0 cursor-pointer p-8"
           onClick={() => {
             callService({
               domain: 'media_player',
@@ -74,7 +74,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
         />
       ) : (
         <PlayPauseIcon
-          className="z-10 h-14 w-14 flex-shrink-0"
+          className="z-10 h-14 w-14 flex-shrink-0 cursor-pointer"
           onClick={() => {
             callService({
               domain: 'media_player',
