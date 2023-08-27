@@ -50,9 +50,9 @@ const Home = () => {
         )}
 
         <div className="grid grid-cols-2 wrap gap-6">
+          <LightCard className="" entity="light.kitchen_group" />
           <LightCard className="" entity="light.living_room_group" />
-          <LightCard className="" entity="light.garden_group" />
-          <LightCard className="" entity="light.living_room_group" />
+          <LightCard className="" entity="light.bedroom_group" />
           <LightCard className="" entity="light.garden_group" />
         </div>
       </div>

@@ -4,10 +4,11 @@ export type CardProps = {
   children?: ReactNode;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const Card = ({ children, className, onClick }: CardProps) => {
+const Card = ({ children, className, style, onClick }: CardProps) => {
   return (
     <div
-      className={`bg-slate-800 py-4 px-4 rounded-3xl overflow-hidden ${className}`}
+      className={`overflow-hidden rounded-3xl bg-slate-800 px-4 py-4 ${className}`}
+      style={style}
       onClick={onClick}
     >
       {children}

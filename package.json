@@ -19,6 +19,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tanstack/react-query": "^4.33.0",
     "basic-ftp": "^5.0.3",
+    "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
     "lottie-react": "^2.4.0",
     "node-scp": "^0.0.23",
