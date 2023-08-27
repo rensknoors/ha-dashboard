@@ -31,13 +31,13 @@ const MediaCard = ({ entity }: MediaCardProps) => {
   const thumbnail =
     media.attributes.device_class === 'tv'
       ? getSourceThumbnail(media.attributes.source)
-      : media.attributes.entity_picture;
+      : media.attributes.entity_picture ?? '/src/assets/cast.png';
 
   return (
-    <Card className="min-h-[180px] flex place-items-center gap-6 relative">
+    <Card className="relative flex min-h-[180px] place-items-center gap-6">
       {/* Background image */}
       <div
-        className="z-0 absolute inset-0 bg-cover bg-center bg-no-repeat filter blur-lg scale-125"
+        className="absolute inset-0 z-0 scale-125 bg-cover bg-center bg-no-repeat blur-lg filter"
         style={{
           backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,.8)), url(${thumbnail})`,
         }}
@@ -45,14 +45,14 @@ const MediaCard = ({ entity }: MediaCardProps) => {
 
       {/* Thumbnail */}
       <div className="z-10 flex-shrink-0">
-        <img src={thumbnail} className="w-20 h-w-20 rounded-2xl bg-black" />
+        <img src={thumbnail} className="h-w-20 w-20 rounded-2xl bg-black" />
       </div>
 
       {/* Media info */}
       <div className="z-10 flex flex-grow flex-col gap-2">
         <span className="text-lg font-bold">{title}</span>
         {media.attributes.media_title && (
-          <span className="text-base text-ellipsis line-clamp-1">
+          <span className="line-clamp-1 text-ellipsis text-base">
             {media.attributes.media_title}
           </span>
         )}
@@ -61,7 +61,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
       {/* Controls */}
       {media.state === 'on' ? (
         <BiPowerOff
-          className="z-10 w-8 h-8 p-8 box-content flex-shrink-0"
+          className="z-10 box-content h-8 w-8 flex-shrink-0 p-8"
           onClick={() => {
             callService({
               domain: 'media_player',
@@ -74,7 +74,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
         />
       ) : (
         <PlayPauseIcon
-          className="z-10 w-14 h-14 flex-shrink-0"
+          className="z-10 h-14 w-14 flex-shrink-0"
           onClick={() => {
             callService({
               domain: 'media_player',
