@@ -1,4 +1,4 @@
-import { HassEntityWithApi, useEntity } from '@hakit/core';
+import { EntityName, HassEntityWithApi, useEntity } from '@hakit/core';
 
 import { CurrentDate } from '@/components/atoms/CurrentDate/CurrentDate';
 import { Time } from '@/components/atoms/Time/Time';
@@ -8,26 +8,29 @@ import { MediaCard } from '@/components/molecules/MediaCard/MediaCard';
 
 const Home = () => {
   // Only the first active media player will be shown, in this order:
-  const mediaPlayers: Record<string, HassEntityWithApi<'media_player'>> = {
-    tv: useEntity('media_player.tv'),
-    nest_hub: useEntity('media_player.nest_hub'),
-    lg_c8: useEntity('media_player.lg_c8'),
-    google_home_mini: useEntity('media_player.google_home_mini'),
-    nest_wifi_kantoor: useEntity('media_player.nest_wifi_kantoor'),
+  const mediaPlayers: Partial<
+    Record<EntityName, HassEntityWithApi<'media_player'>>
+  > = {
+    'media_player.tv': useEntity('media_player.tv'),
+    'media_player.nest_hub': useEntity('media_player.nest_hub'),
+    'media_player.lg_c8': useEntity('media_player.lg_c8'),
+    'media_player.google_home_mini': useEntity('media_player.google_home_mini'),
+    'media_player.nest_wifi_kantoor': useEntity(
+      'media_player.nest_wifi_kantoor'
+    ),
+  } as const;
+
+  const findActiveMediaPlayerKey = (): EntityName | undefined => {
+    const activeMediaPlayerKey = (
+      Object.keys(mediaPlayers) as Array<EntityName>
+    ).find((key) => {
+      const state = mediaPlayers[key]?.state;
+      return state === 'playing' || state === 'paused' || state === 'on';
+    });
+
+    return activeMediaPlayerKey;
   };
 
-  const findActiveMediaPlayerKey = (): string | null => {
-    for (const key in mediaPlayers) {
-      if (
-        mediaPlayers[key].state === 'playing' ||
-        mediaPlayers[key].state === 'paused' ||
-        mediaPlayers[key].state === 'on'
-      ) {
-        return key;
-      }
-    }
-    return null;
-  };
   const activeMediaPlayerKey = findActiveMediaPlayerKey();
 
   return (
@@ -44,16 +47,14 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col gap-6">
-        {activeMediaPlayerKey && (
-          <MediaCard entity={`media_player.${activeMediaPlayerKey}`} />
-        )}
+      <div className="flex flex-1 flex-col gap-6">
+        {activeMediaPlayerKey && <MediaCard entity={activeMediaPlayerKey} />}
 
-        <div className="grid grid-cols-2 wrap gap-6">
-          <LightCard className="" entity="light.kitchen_group" />
-          <LightCard className="" entity="light.living_room_group" />
-          <LightCard className="" entity="light.bedroom_group" />
-          <LightCard className="" entity="light.garden_group" />
+        <div className="wrap grid grid-cols-2 gap-6">
+          <LightCard entity="light.kitchen_group" />
+          <LightCard entity="light.living_room_group" />
+          <LightCard entity="light.bedroom_group" />
+          <LightCard entity="light.garden_group" />
         </div>
       </div>
     </div>

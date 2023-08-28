@@ -28,6 +28,6 @@
       "@/assets/*": ["./src/assets/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "sync-types.ts", "supported-types.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

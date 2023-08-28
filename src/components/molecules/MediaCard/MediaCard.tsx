@@ -1,10 +1,10 @@
-import { useEntity, useHass } from '@hakit/core';
+import { EntityName, useEntity, useHass } from '@hakit/core';
 import { BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
 
 export type MediaCardProps = {
-  entity: `media_player.${string}`;
+  entity: EntityName;
 } & CardProps;
 
 const getSourceThumbnail = (source: string) => {
@@ -34,7 +34,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
       : media.attributes.entity_picture ?? '/src/assets/cast.png';
 
   return (
-    <Card className="relative flex min-h-[180px] place-items-center gap-6">
+    <Card className="relative z-0 flex min-h-[180px] place-items-center gap-6">
       {/* Background image */}
       <div
         className="absolute inset-0 z-0 scale-125 bg-cover bg-center bg-no-repeat blur-lg filter"

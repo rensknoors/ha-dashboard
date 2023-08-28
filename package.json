@@ -13,6 +13,8 @@
     "type-check": "tsc --noEmit",
     "preview": "vite preview",
     "deploy": "npx tsx ./deploy-renshome.ts",
+    "prebuild": "pnpm run sync-types",
+    "sync-types": "ts-node --esm sync-types.ts",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -29,8 +31,8 @@
     "react-router-dom": "^6.15.0"
   },
   "devDependencies": {
-    "@hakit/components": "^1.0.10",
-    "@hakit/core": "^1.0.7",
+    "@hakit/components": "^1.0.18",
+    "@hakit/core": "^1.0.15",
     "@tanstack/eslint-plugin-query": "^4.32.5",
     "@testing-library/react": "^14.0.0",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
@@ -56,6 +58,7 @@
     "prettier": "3.0.1",
     "prettier-plugin-tailwindcss": "^0.5.2",
     "tailwindcss": "^3.3.3",
+    "ts-node": "^10.9.1",
     "tsx": "^3.12.7",
     "typescript": "^5.0.2",
     "url": "^0.11.1",
