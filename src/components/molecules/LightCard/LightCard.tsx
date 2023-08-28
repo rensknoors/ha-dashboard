@@ -18,15 +18,15 @@ const LightCard = ({ entity, className }: LightCardProps) => {
   const brightness = light.attributes.brightness
     ? Math.round(light.attributes.brightness / 2.55) + '%'
     : '0%';
-  const textColor = light.state === 'on' ? 'black' : 'white';
 
   return (
     <>
       <Card
         className={clsx(
           className,
-          'flex min-h-[120px] cursor-pointer flex-col',
-          `text-${textColor}`
+          'transition-background flex min-h-[120px] cursor-pointer flex-col duration-1000',
+          light.state === 'on' && 'bg-orange-300 text-black',
+          light.state === 'off' && 'text-white'
         )}
         style={{
           backgroundColor: light.attributes.rgb_color
@@ -47,8 +47,9 @@ const LightCard = ({ entity, className }: LightCardProps) => {
           <div className="relative flex h-full w-full items-center">
             <div
               className={clsx(
-                'absolute h-3 w-3 -translate-x-1/2 rounded-md',
-                `bg-${textColor}`
+                'transition-position absolute h-3 w-3 -translate-x-1/2 rounded-md duration-1000',
+                light.state === 'on' && 'bg-black',
+                light.state === 'off' && 'bg-white'
               )}
               style={{ left: brightness }}
             ></div>

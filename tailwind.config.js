@@ -11,7 +11,12 @@ export default {
         'BlinkMacSystemFont',
       ],
     },
-    extend: {},
+    extend: {
+      transitionProperty: {
+        background: 'background-color',
+        position: 'left, right, top, bottom',
+      },
+    },
   },
   plugins: [require('@tailwindcss/line-clamp')],
 };
