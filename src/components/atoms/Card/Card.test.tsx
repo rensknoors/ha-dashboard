@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import { Card } from './Card';
 
@@ -31,10 +31,11 @@ describe('Card', () => {
     render(<Card {...defaultProps}>Hello world</Card>);
 
     const card = screen.getByText('Hello world');
-
     fireEvent.mouseDown(card);
 
-    vi.advanceTimersByTime(1000);
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
 
     fireEvent.mouseUp(card);
 
