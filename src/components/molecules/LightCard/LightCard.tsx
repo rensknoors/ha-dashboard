@@ -1,3 +1,4 @@
+import { ModalByEntityDomain } from '@hakit/components';
 import {
   EntityName,
   HassEntityWithApi,
@@ -5,6 +6,7 @@ import {
   useIconByEntity,
 } from '@hakit/core';
 import { clsx } from 'clsx';
+import { useState } from 'react';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
 
@@ -15,6 +17,7 @@ export type LightCardProps = {
 const LightCard = ({ entity, className }: LightCardProps) => {
   const light = useEntity(entity) as HassEntityWithApi<'light'>;
   const icon = useIconByEntity(entity);
+  const [open, setOpen] = useState(false);
   const brightness = light.attributes.brightness
     ? Math.round(light.attributes.brightness / 2.55) + '%'
     : '0%';
@@ -34,6 +37,7 @@ const LightCard = ({ entity, className }: LightCardProps) => {
             : undefined,
         }}
         onClick={() => light.api.toggle()}
+        onLongPress={() => setOpen(true)}
       >
         <div>{icon}</div>
         <div className="flex-1">{light.attributes.friendly_name}</div>
@@ -56,6 +60,13 @@ const LightCard = ({ entity, className }: LightCardProps) => {
           </div>
         </div>
       </Card>
+      <ModalByEntityDomain
+        title={light.attributes.friendly_name ?? 'Light'}
+        entity={entity}
+        id="light-card-modal"
+        onClose={() => setOpen(false)}
+        open={open}
+      />
     </>
   );
 };
