@@ -18,7 +18,7 @@ const Time = () => {
 
   const formattedTime = `${hours}:${minutes}`;
 
-  return <span className="text-8xl font-bold">{formattedTime}</span>;
+  return <span className="text-8xl font-semibold">{formattedTime}</span>;
 };
 
 export { Time };

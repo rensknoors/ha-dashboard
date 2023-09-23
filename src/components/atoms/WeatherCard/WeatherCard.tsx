@@ -67,14 +67,14 @@ const WeatherCard = () => {
   return (
     <div className="flex flex-col items-center">
       {data.liveweer[0]?.alarm === '1' && (
-        <div className="bg-red-400 py-4 px-5 rounded-3xl text-black flex flex-col mb-4">
-          <span className="font-bold">Waarschuwing:</span>
+        <div className="mb-4 flex flex-col rounded-3xl bg-red-400 px-5 py-4 text-black">
+          <span className="font-semibold">Waarschuwing:</span>
           <div>{data.liveweer[0]?.alarmtxt}</div>
         </div>
       )}
-      <div className="flex items-center text-3xl gap-4">
+      <div className="flex items-center gap-4 text-3xl">
         {icon && (
-          <Lottie className="w-24 h-w-24" animationData={icon} loop={true} />
+          <Lottie className="h-24 w-24" animationData={icon} loop={true} />
         )}
         <div>{`${data.liveweer[0]?.temp} °C`}</div>
       </div>

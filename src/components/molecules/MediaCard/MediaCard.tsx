@@ -50,7 +50,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
 
       {/* Media info */}
       <div className="z-10 flex flex-grow flex-col gap-2">
-        <span className="text-lg font-bold">{title}</span>
+        <span className="text-lg font-semibold">{title}</span>
         {media.attributes.media_title && (
           <span className="line-clamp-1 text-ellipsis text-base">
             {media.attributes.media_title}
