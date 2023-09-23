@@ -27,7 +27,7 @@ const LightCard = ({ entity, className }: LightCardProps) => {
       <Card
         className={clsx(
           className,
-          'transition-background flex min-h-[120px] cursor-pointer flex-col duration-1000',
+          'flex min-h-[120px] cursor-pointer flex-col transition-background duration-1000',
           light.state === 'on' && 'bg-orange-300 text-black',
           light.state === 'off' && 'text-white'
         )}
@@ -51,7 +51,7 @@ const LightCard = ({ entity, className }: LightCardProps) => {
           <div className="relative flex h-full w-full items-center">
             <div
               className={clsx(
-                'transition-position absolute h-3 w-3 -translate-x-1/2 rounded-md duration-1000',
+                'absolute h-3 w-3 -translate-x-1/2 rounded-md transition-position duration-1000',
                 light.state === 'on' && 'bg-black',
                 light.state === 'off' && 'bg-white'
               )}
