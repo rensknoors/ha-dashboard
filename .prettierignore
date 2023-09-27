@@ -3,3 +3,4 @@ build
 coverage
 assets
 pnpm-lock.yaml
+supported-types.d.ts
