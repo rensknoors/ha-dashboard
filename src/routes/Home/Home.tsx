@@ -50,8 +50,11 @@ const Home = () => {
 
       <div className="flex flex-1 flex-col gap-6">
         <div className="grid grid-cols-2 gap-6">
-          <GraphCard entity="sensor.living_room_temperature" />
-          <GraphCard entity="sensor.bedroom_temperature" />
+          <GraphCard
+            entity="sensor.living_room_temperature"
+            label="Woonkamer"
+          />
+          <GraphCard entity="sensor.bedroom_temperature" label="Slaapkamer" />
         </div>
 
         {activeMediaPlayerKey && <MediaCard entity={activeMediaPlayerKey} />}
