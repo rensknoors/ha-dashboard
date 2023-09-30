@@ -22,7 +22,7 @@ const GraphCard = ({ entity, label, unit }: GraphCardProps) => {
         {`${state} ${unit ?? attributes.unit_of_measurement}`}
       </span>
       <span className="text-sm">{custom.relativeTime}</span>
-      <div className="absolute bottom-0 left-0">
+      <div className="absolute bottom-0 left-0 w-full">
         {history.loading ? (
           <span>Loading...</span>
         ) : (
