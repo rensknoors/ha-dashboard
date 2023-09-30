@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
 export type CardProps = {
@@ -45,7 +46,10 @@ const Card = ({
 
   return (
     <div
-      className={`overflow-hidden rounded-3xl bg-slate-800 px-4 py-4 ${className}`}
+      className={clsx(
+        className,
+        'overflow-hidden rounded-3xl bg-slate-800 px-4 py-4'
+      )}
       style={style}
       onClick={handleClick}
       onMouseDown={startPressTimer}
