@@ -1,5 +1,5 @@
-import clsx from 'clsx';
 import { ReactNode, useEffect, useRef, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export type CardProps = {
   children?: ReactNode;
@@ -46,9 +46,9 @@ const Card = ({
 
   return (
     <div
-      className={clsx(
-        className,
-        'overflow-hidden rounded-3xl bg-slate-800 px-4 py-4'
+      className={twMerge(
+        'overflow-hidden rounded-3xl bg-slate-800 px-4 py-4',
+        className
       )}
       style={style}
       onClick={handleClick}
