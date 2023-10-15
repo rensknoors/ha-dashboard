@@ -3,6 +3,7 @@ import { EntityName, HassEntityWithApi, useEntity } from '@hakit/core';
 import { CurrentDate } from '@/components/atoms/CurrentDate/CurrentDate';
 import { Time } from '@/components/atoms/Time/Time';
 import { WeatherCard } from '@/components/atoms/WeatherCard/WeatherCard';
+import { CalendarCard } from '@/components/molecules/CalendarCard/CalendarCard';
 import { GraphCard } from '@/components/molecules/GraphCard/GraphCard';
 import { LightCard } from '@/components/molecules/LightCard/LightCard';
 import { MediaCard } from '@/components/molecules/MediaCard/MediaCard';
@@ -45,6 +46,9 @@ const Home = () => {
         </div>
         <div className="centered-row py-8">
           <WeatherCard />
+        </div>
+        <div className="centered-row py-8">
+          <CalendarCard />
         </div>
       </div>
 

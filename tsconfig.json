@@ -27,6 +27,11 @@
       "@/assets/*": ["./src/assets/*"]
     }
   },
-  "include": ["src", "sync-types.ts", "supported-types.d.ts"],
+  "include": [
+    "src",
+    "sync-types.ts",
+    "supported-types.d.ts",
+    "src/components/molecules/CalendarCard/global.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
