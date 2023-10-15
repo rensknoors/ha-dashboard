@@ -1,18 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-interface ConfigApiCalendar {
-  apiKey: string;
-  clientId: string;
-  discoveryDocs: string[];
-  scope: string;
-  hosted_domain?: string;
-}
-
-type TokenClient = {
-  callback: (resp) => void;
-  error_callback: (resp) => void;
-  requestAccessToken: (options: { prompt: string }) => void;
-};
+import { ConfigApiCalendar, TokenClient } from './types';
 
 const SCRIPT_GAPI_SRC = 'https://apis.google.com/js/api.js';
 const SCRIPT_GOOGLE_SRC = 'https://accounts.google.com/gsi/client';
@@ -89,7 +77,7 @@ export const useApiCalendar = (config: ConfigApiCalendar) => {
   }, [config, initGapi, initGoogleAuth]);
 
   // Public methods
-  const signIn = async () => {
+  const authenticate = async () => {
     if (initialized && tokenClient) {
       return new Promise<void>((resolve, reject) => {
         tokenClient!.callback = (resp) => {
@@ -130,9 +118,26 @@ export const useApiCalendar = (config: ConfigApiCalendar) => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const listCalendars = async (): Promise<any | null> => {
+    if (window.gapi && window.gapi.client && window.gapi.client.calendar) {
+      try {
+        const response = await window.gapi.client.calendar.calendarList.list();
+        return response.result;
+      } catch (error) {
+        console.error('Error fetching calendar list:', error);
+        return null;
+      }
+    } else {
+      console.error('Error: gapi not loaded');
+      return null;
+    }
+  };
+
   return {
     initialized,
-    signIn,
+    authenticate,
     signOut,
+    listCalendars,
   };
 };
