@@ -1,43 +1,62 @@
+import { useEffect, useState } from 'react';
+
 import { useApiCalendar } from './apiCalendar';
 
 const config = {
-  clientId: import.meta.env.VITE_GCAL_CLIENT_ID,
-  apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
+  clientId:
+    '18277115676-hc6vkd5j02ivjucv4qp17kj6cih5ev8b.apps.googleusercontent.com',
+  apiKey: 'AIzaSyCUrP2UV4O3pAz3h0HUp1seBevMl9P7Vck',
   scope: 'https://www.googleapis.com/auth/calendar',
   discoveryDocs: [
     'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
   ],
 };
+// const config = {
+//   clientId: import.meta.env.VITE_GCAL_CLIENT_ID,
+//   apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
+//   scope: 'https://www.googleapis.com/auth/calendar',
+//   discoveryDocs: [
+//     'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+//   ],
+// };
 
 const CalendarCard = () => {
-  // const [isGapiLoaded, setGapiLoaded] = useState(false);
-  // const calendar = useMemo(() => new ApiCalendar(config), []);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [calendars, setCalendars] = useState<any[]>([]);
+  const { initialized, authenticate, signOut, listCalendars } =
+    useApiCalendar(config);
 
-  // useEffect(() => {
-  //   // TODO: Find a better way to check if gapi is loaded. Make a PR to react-google-calendar-api or fork it.
-  //   setTimeout(() => {
-  //     calendar.onLoad(() => {
-  //       setGapiLoaded(true);
-  //     });
-  //   }, 1000);
-  // }, [calendar]);
+  useEffect(() => {
+    if (!initialized) {
+      const fetchCalendars = async () => {
+        const result = await listCalendars();
+        if (result && result.items) {
+          setCalendars(result.items);
+        }
+      };
 
-  // console.log(calendar);
+      fetchCalendars();
+    }
+  }, [initialized, listCalendars]);
 
-  const apiCalendar = useApiCalendar(config);
-
-  if (!apiCalendar.initialized) {
+  if (!initialized) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
       <h1>CalendarCard</h1>
+      {calendars.map((calendar, index) => (
+        <div key={index}>
+          <h2>{calendar.summary}</h2>
+          <p>ID: {calendar.id}</p>
+        </div>
+      ))}
 
-      <button className="bg-green-800" onClick={apiCalendar.signIn}>
+      <button className="bg-green-800" onClick={authenticate}>
         Sign in
       </button>
-      <button className="bg-red-800" onClick={apiCalendar.signOut}>
+      <button className="bg-red-800" onClick={signOut}>
         Sign out
       </button>
     </div>
