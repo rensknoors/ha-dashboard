@@ -10,11 +10,11 @@ export type MediaCardProps = {
 const getSourceThumbnail = (source: string) => {
   switch (source) {
     case 'Netflix':
-      return '/src/assets/logos/netflix.jpg';
+      return '/logos/netflix.jpg';
     case 'Ziggo':
-      return '/src/assets/logos/ziggo.png';
+      return '/logos/ziggo.png';
     case 'Plex':
-      return '/src/assets/logos/plex.jpg';
+      return '/logos/plex.jpg';
   }
 };
 
@@ -31,7 +31,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
   const thumbnail =
     media.attributes.device_class === 'tv'
       ? getSourceThumbnail(media.attributes.source)
-      : media.attributes.entity_picture ?? '/src/assets/cast.png';
+      : media.attributes.entity_picture ?? '/cast.png';
 
   return (
     <Card className="relative z-0 flex min-h-[180px] place-items-center gap-6">
