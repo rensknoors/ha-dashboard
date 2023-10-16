@@ -6,12 +6,6 @@ export type ConfigApiCalendar = {
   hosted_domain?: string;
 };
 
-export type TokenClient = {
-  callback: (resp) => void;
-  error_callback: (resp) => void;
-  requestAccessToken: (options: { prompt: string }) => void;
-};
-
 export type EventsList = {
   kind: 'calendar#events';
   etag: string;
