@@ -1,5 +1,5 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { CalendarEvent } from './types';
 
@@ -32,13 +32,11 @@ const CalendarCard = () => {
     onSuccess: async (tokenResponse) => {
       setAccessToken(tokenResponse.access_token);
       setIsAuthenticated(true);
-
-      getEvents();
     },
     onError: (errorResponse) => console.log(errorResponse),
   });
 
-  const getEvents = async () => {
+  const getEvents = useCallback(async () => {
     console.log({ isAuthenticated });
     const calendarId = calendars.find((calendar) => calendar.name === 'Gezin')
       ?.id;
@@ -57,7 +55,13 @@ const CalendarCard = () => {
     console.log('setting events:', eventsList.items);
 
     setEvents(eventsList.items);
-  };
+  }, [accessToken, isAuthenticated]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getEvents();
+    }
+  }, [getEvents, isAuthenticated]);
 
   return (
     <>
@@ -69,7 +73,6 @@ const CalendarCard = () => {
               {event.summary}
             </div>
           ))}
-          <button onClick={getEvents}>get events</button>
         </div>
       ) : (
         <button onClick={() => googleLogin()}>Login</button>
