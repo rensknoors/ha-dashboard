@@ -1,17 +1,16 @@
-import { GoogleLogin } from '@react-oauth/google';
-import { gapi } from 'gapi-script';
-import { useEffect, useState } from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
+import { useState } from 'react';
 
-import { EventsList } from './types';
+import { CalendarEvent } from './types';
 
-const config = {
-  clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-  apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
-  scope: 'https://www.googleapis.com/auth/calendar',
-  discoveryDocs: [
-    'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
-  ],
-};
+// const config = {
+//   clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+//   apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
+//   scope: 'https://www.googleapis.com/auth/calendar',
+//   discoveryDocs: [
+//     'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
+//   ],
+// };
 
 const calendars = [
   {
@@ -25,54 +24,57 @@ const calendars = [
 ];
 
 const CalendarCard = () => {
-  const [events, setEvents] = useState<EventsList>();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [accessToken, setAccessToken] = useState('');
+  const [events, setEvents] = useState<CalendarEvent[]>();
 
-  const getEvents = () => {
-    function initClient() {
-      gapi.client
-        .init(config)
-        .then(function () {
-          return gapi.client.calendar.events.list({
-            calendarId: calendars.find((calendar) => calendar.name === 'Gezin')
-              ?.id,
-            timeMin: new Date().toISOString(),
-            timeMax: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-            maxResults: 10,
-          });
-        })
-        .then(
-          (response) => {
-            setEvents(response.result);
-          },
-          (reason) => {
-            console.log('Error: ' + reason.result.error.message);
-          }
-        );
-    }
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      setAccessToken(tokenResponse.access_token);
+      setIsAuthenticated(true);
 
-    gapi.load('client', initClient);
+      getEvents();
+    },
+    onError: (errorResponse) => console.log(errorResponse),
+  });
+
+  const getEvents = async () => {
+    console.log({ isAuthenticated });
+    const calendarId = calendars.find((calendar) => calendar.name === 'Gezin')
+      ?.id;
+
+    const params = new URLSearchParams({
+      maxResults: '10',
+      timeMin: new Date().toISOString(),
+      timeMax: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+    });
+
+    const eventsList = await fetch(
+      `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?${params}`,
+      { headers: { Authorization: `Bearer ${accessToken}` } }
+    ).then((response) => response.json());
+
+    console.log('setting events:', eventsList.items);
+
+    setEvents(eventsList.items);
   };
 
-  useEffect(() => {
-    getEvents();
-  }, []);
-
   return (
-    <div>
-      {!!events &&
-        events?.items?.map((event) => (
-          <div className="text" key={event.id}>
-            {event.summary}
-          </div>
-        ))}
-      <GoogleLogin
-        onSuccess={(credentialResponse) => console.log(credentialResponse)}
-        onError={() => {
-          console.log('Login Failed');
-        }}
-        auto_select
-      />
-    </div>
+    <>
+      {isAuthenticated ? (
+        <div className="w-full">
+          {events?.map((event) => (
+            <div className="flex items-center gap-4" key={event.id}>
+              <div className="h-4 w-4 rounded-full bg-gray-500"></div>
+              {event.summary}
+            </div>
+          ))}
+          <button onClick={getEvents}>get events</button>
+        </div>
+      ) : (
+        <button onClick={() => googleLogin()}>Login</button>
+      )}
+    </>
   );
 };
 
