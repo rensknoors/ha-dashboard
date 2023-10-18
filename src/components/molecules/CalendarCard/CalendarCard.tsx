@@ -89,7 +89,7 @@ const CalendarCard = () => {
           )}
           {events?.length > 0 && (
             <div className="flex w-full flex-col gap-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 <BiCalendar style={{ height: 20, width: 20 }} />
                 <span className="text-xl text-white">Kalender</span>
               </div>
