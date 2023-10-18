@@ -2,7 +2,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useState } from 'react';
-import { BiSun } from 'react-icons/bi';
+import { BiCalendar, BiSun } from 'react-icons/bi';
 import { FcGoogle } from 'react-icons/fc';
 
 import { CalendarEvent } from './types';
@@ -70,7 +70,7 @@ const CalendarCard = () => {
     queryKey: ['events'],
     queryFn: fetchEvents,
     refetchInterval: 1000 * 60 * 10, // 10 minutes
-    enabled: isAuthenticated,
+    enabled: isAuthenticated && !!accessToken,
   });
 
   if (isAuthenticated && isPending) return <div>Loading...</div>;
@@ -80,34 +80,43 @@ const CalendarCard = () => {
   return (
     <>
       {isAuthenticated ? (
-        <div className="flex w-full flex-col gap-2">
+        <>
           {events?.length === 0 && (
             <div className="flex items-center justify-center gap-4 text-slate-400">
               <BiSun style={{ height: 20, width: 20 }} color="#FFC107" />
               Geen events vandaag
             </div>
           )}
-          {events?.length > 0 &&
-            events?.map((event) => (
-              <div className="flex items-center gap-4" key={event.id}>
-                <div
-                  className={clsx(
-                    'h-2 w-2 rounded-full',
-                    event.start.date && 'bg-blue-300',
-                    event.start.dateTime && 'bg-green-300'
-                  )}
-                ></div>
-                <span className="text-slate-400">
-                  {event.start.date && 'Hele dag'}
-                  {event.start.dateTime &&
-                    `${formatToTimeString(event.start.dateTime)} -
-                      ${formatToTimeString(event.end.dateTime)}
-                    `}
-                </span>
-                <span className="font-semibold">{event.summary}</span>
+          {events?.length > 0 && (
+            <div className="flex w-full flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <BiCalendar style={{ height: 20, width: 20 }} />
+                <span className="text-xl text-white">Kalender</span>
               </div>
-            ))}
-        </div>
+              <div>
+                {events?.map((event) => (
+                  <div className="flex items-center gap-4" key={event.id}>
+                    <div
+                      className={clsx(
+                        'h-2 w-2 rounded-full',
+                        event.start.date && 'bg-blue-300',
+                        event.start.dateTime && 'bg-green-300'
+                      )}
+                    ></div>
+                    <span className="text-slate-400">
+                      {event.start.date && 'Hele dag'}
+                      {event.start.dateTime &&
+                        `${formatToTimeString(event.start.dateTime)} -
+                        ${formatToTimeString(event.end.dateTime)}
+                      `}
+                    </span>
+                    <span className="font-semibold">{event.summary}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <button
           className="rounded-lg border border-blue-600 px-3 py-2 text-white shadow-md hover:bg-blue-700 focus:border-blue-800 focus:outline-none focus:ring focus:ring-blue-200"
