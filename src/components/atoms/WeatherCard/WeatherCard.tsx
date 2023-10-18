@@ -49,7 +49,7 @@ const fetchWeatherData = async () => {
 };
 
 const WeatherCard = () => {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ['weather'],
     queryFn: fetchWeatherData,
     refetchInterval: 1000 * 60 * 10, // 10 minutes
@@ -58,12 +58,15 @@ const WeatherCard = () => {
 
   const icon = weatherStatesMap[image] ?? null;
 
-  if (isLoading) {
+  if (isPending) {
     return <div>Loading...</div>;
-  } else if (isError) {
+  }
+
+  if (isError) {
     console.error(error);
     return <div>Error: {error?.toString()}</div>;
   }
+
   return (
     <div className="flex flex-col items-center">
       {data.liveweer[0]?.alarm === '1' && (
