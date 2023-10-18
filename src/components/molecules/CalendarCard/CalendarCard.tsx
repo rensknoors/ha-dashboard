@@ -2,6 +2,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useState } from 'react';
+import { BiSun } from 'react-icons/bi';
 import { FcGoogle } from 'react-icons/fc';
 
 import { CalendarEvent } from './types';
@@ -80,25 +81,32 @@ const CalendarCard = () => {
     <>
       {isAuthenticated ? (
         <div className="flex w-full flex-col gap-2">
-          {events?.map((event) => (
-            <div className="flex items-center gap-4" key={event.id}>
-              <div
-                className={clsx(
-                  'h-2 w-2 rounded-full',
-                  event.start.date && 'bg-blue-300',
-                  event.start.dateTime && 'bg-green-300'
-                )}
-              ></div>
-              <span className="text-slate-400">
-                {event.start.date && 'Hele dag'}
-                {event.start.dateTime &&
-                  `${formatToTimeString(event.start.dateTime)} -
+          {events?.length === 0 && (
+            <div className="flex items-center justify-center gap-4 text-slate-400">
+              <BiSun style={{ height: 20, width: 20 }} color="#FFC107" />
+              Geen events vandaag
+            </div>
+          )}
+          {events?.length > 0 &&
+            events?.map((event) => (
+              <div className="flex items-center gap-4" key={event.id}>
+                <div
+                  className={clsx(
+                    'h-2 w-2 rounded-full',
+                    event.start.date && 'bg-blue-300',
+                    event.start.dateTime && 'bg-green-300'
+                  )}
+                ></div>
+                <span className="text-slate-400">
+                  {event.start.date && 'Hele dag'}
+                  {event.start.dateTime &&
+                    `${formatToTimeString(event.start.dateTime)} -
                       ${formatToTimeString(event.end.dateTime)}
                     `}
-              </span>
-              <span className="font-semibold">{event.summary}</span>
-            </div>
-          ))}
+                </span>
+                <span className="font-semibold">{event.summary}</span>
+              </div>
+            ))}
         </div>
       ) : (
         <button
