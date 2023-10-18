@@ -1,7 +1,10 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { useQuery } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+
+import { CalendarEvent } from './types';
 
 const calendars = [
   {
@@ -22,7 +25,7 @@ const CalendarCard = () => {
     localStorage.getItem('accessToken') || ''
   );
 
-  const fetchEvents = async () => {
+  const fetchEvents = async (): Promise<CalendarEvent[]> => {
     const calendarId = calendars.find((calendar) => calendar.name === 'Gezin')
       ?.id;
 
@@ -49,6 +52,14 @@ const CalendarCard = () => {
     onError: (errorResponse) => console.error(errorResponse),
   });
 
+  const formatToTimeString = (date: string | Date) => {
+    const newDate = new Date(date);
+    return newDate.toLocaleTimeString('nl-NL', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
+
   const {
     data: events,
     isPending,
@@ -68,11 +79,24 @@ const CalendarCard = () => {
   return (
     <>
       {isAuthenticated ? (
-        <div className="w-full">
+        <div className="flex w-full flex-col gap-2">
           {events?.map((event) => (
             <div className="flex items-center gap-4" key={event.id}>
-              <div className="h-4 w-4 rounded-full bg-gray-500"></div>
-              {event.summary}
+              <div
+                className={clsx(
+                  'h-2 w-2 rounded-full',
+                  event.start.date && 'bg-blue-300',
+                  event.start.dateTime && 'bg-green-300'
+                )}
+              ></div>
+              <span className="text-slate-400">
+                {event.start.date && 'Hele dag'}
+                {event.start.dateTime &&
+                  `${formatToTimeString(event.start.dateTime)} -
+                      ${formatToTimeString(event.end.dateTime)}
+                    `}
+              </span>
+              <span className="font-semibold">{event.summary}</span>
             </div>
           ))}
         </div>
