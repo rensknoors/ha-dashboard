@@ -1,16 +1,7 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import { useCallback, useEffect, useState } from 'react';
-
-import { CalendarEvent } from './types';
-
-// const config = {
-//   clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-//   apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
-//   scope: 'https://www.googleapis.com/auth/calendar',
-//   discoveryDocs: [
-//     'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
-//   ],
-// };
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { FcGoogle } from 'react-icons/fc';
 
 const calendars = [
   {
@@ -24,44 +15,55 @@ const calendars = [
 ];
 
 const CalendarCard = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [accessToken, setAccessToken] = useState('');
-  const [events, setEvents] = useState<CalendarEvent[]>();
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem('isAuthenticated') === 'true' || false
+  );
+  const [accessToken, setAccessToken] = useState(
+    localStorage.getItem('accessToken') || ''
+  );
 
-  const googleLogin = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      setAccessToken(tokenResponse.access_token);
-      setIsAuthenticated(true);
-    },
-    onError: (errorResponse) => console.log(errorResponse),
-  });
-
-  const getEvents = useCallback(async () => {
-    console.log({ isAuthenticated });
+  const fetchEvents = async () => {
     const calendarId = calendars.find((calendar) => calendar.name === 'Gezin')
       ?.id;
 
     const params = new URLSearchParams({
       maxResults: '10',
-      timeMin: new Date().toISOString(),
-      timeMax: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      timeMin: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
+      timeMax: new Date(new Date().setHours(23, 59, 59, 999)).toISOString(),
     });
 
     const eventsList = await fetch(
       `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?${params}`,
       { headers: { Authorization: `Bearer ${accessToken}` } }
     ).then((response) => response.json());
+    return eventsList.items;
+  };
 
-    console.log('setting events:', eventsList.items);
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      setAccessToken(tokenResponse.access_token);
+      localStorage.setItem('accessToken', tokenResponse.access_token);
+      setIsAuthenticated(true);
+      localStorage.setItem('isAuthenticated', 'true');
+    },
+    onError: (errorResponse) => console.error(errorResponse),
+  });
 
-    setEvents(eventsList.items);
-  }, [accessToken, isAuthenticated]);
+  const {
+    data: events,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['events'],
+    queryFn: fetchEvents,
+    refetchInterval: 1000 * 60 * 10, // 10 minutes
+    enabled: isAuthenticated,
+  });
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      getEvents();
-    }
-  }, [getEvents, isAuthenticated]);
+  if (isAuthenticated && isPending) return <div>Loading...</div>;
+
+  if (isError) return <div>Error: {error.message}</div>;
 
   return (
     <>
@@ -75,7 +77,15 @@ const CalendarCard = () => {
           ))}
         </div>
       ) : (
-        <button onClick={() => googleLogin()}>Login</button>
+        <button
+          className="rounded-lg border border-blue-600 px-3 py-2 text-white shadow-md hover:bg-blue-700 focus:border-blue-800 focus:outline-none focus:ring focus:ring-blue-200"
+          onClick={() => googleLogin()}
+        >
+          <div className="flex items-center gap-3">
+            <FcGoogle />
+            <span>Login with Google</span>
+          </div>
+        </button>
       )}
     </>
   );
