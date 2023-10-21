@@ -37,15 +37,15 @@ const MediaCard = ({ entity }: MediaCardProps) => {
     <Card className="relative z-0 flex min-h-[180px] place-items-center gap-6">
       {/* Background image */}
       <div
-        className="absolute inset-0 z-0 scale-125 bg-cover bg-center bg-no-repeat blur-lg filter"
+        className="absolute inset-0 z-0 scale-125 bg-cover bg-center bg-no-repeat blur-xl filter"
         style={{
-          backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,.8)), url(${thumbnail})`,
+          backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${thumbnail})`,
         }}
       ></div>
 
       {/* Thumbnail */}
       <div className="z-10 flex-shrink-0">
-        <img src={thumbnail} className="h-w-20 w-20 rounded-2xl bg-black" />
+        <img src={thumbnail} className="h-w-20 w-20 rounded-xl bg-black" />
       </div>
 
       {/* Media info */}
