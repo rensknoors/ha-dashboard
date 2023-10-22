@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { BiCalendar, BiSun } from 'react-icons/bi';
 import { FcGoogle } from 'react-icons/fc';
 
+import { TokenResponse } from '../../../../api/types';
 import { CalendarEvent } from './types';
 
 const calendars = [
@@ -44,13 +45,30 @@ const CalendarCard = () => {
   };
 
   const googleLogin = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      setAccessToken(tokenResponse.access_token);
-      localStorage.setItem('accessToken', tokenResponse.access_token);
-      setIsAuthenticated(true);
-      localStorage.setItem('isAuthenticated', 'true');
+    onSuccess: async ({ code }) => {
+      console.log('code', code);
+
+      await fetch('http://localhost:3001/auth/google', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      })
+        .then((response) => response.json())
+        .then((tokens: TokenResponse) => {
+          console.log(tokens);
+          setAccessToken(tokens.access_token);
+          localStorage.setItem('accessToken', tokens.access_token);
+
+          setIsAuthenticated(true);
+          localStorage.setItem('isAuthenticated', 'true');
+        });
     },
-    onError: (errorResponse) => console.error(errorResponse),
+    onError: (errorResponse) => {
+      console.error(errorResponse);
+    },
+    flow: 'auth-code',
   });
 
   const formatToTimeString = (date: string | Date) => {
