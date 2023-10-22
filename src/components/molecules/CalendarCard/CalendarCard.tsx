@@ -8,6 +8,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { TokenResponse } from '../../../../api/types';
 import { CalendarEvent } from './types';
 
+// TODO: fetch events from all calendars
 const calendars = [
   {
     name: 'Rens',
@@ -48,6 +49,7 @@ const CalendarCard = () => {
     onSuccess: async ({ code }) => {
       console.log('code', code);
 
+      // TODO: POST to correct endpoint, also in PROD
       await fetch('http://localhost:3001/auth/google', {
         method: 'POST',
         headers: {
@@ -57,6 +59,7 @@ const CalendarCard = () => {
       })
         .then((response) => response.json())
         .then((tokens: TokenResponse) => {
+          // TODO: save expiry date and refresh token when expired
           console.log(tokens);
           setAccessToken(tokens.access_token);
           localStorage.setItem('accessToken', tokens.access_token);
@@ -97,7 +100,7 @@ const CalendarCard = () => {
 
   return (
     <>
-      {isAuthenticated ? (
+      {isAuthenticated ? ( // TODO: add !isExpired check
         <>
           {events?.length === 0 && (
             <div className="flex items-center justify-center gap-4 text-slate-400">

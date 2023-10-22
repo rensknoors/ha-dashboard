@@ -4,6 +4,7 @@ import express from 'express';
 import { OAuth2Client, UserRefreshClient } from 'google-auth-library';
 import path from 'path';
 
+// TODO: use production ENV variables in PROD
 config({ path: path.resolve(process.cwd(), '.env.local') });
 
 const app = express();
