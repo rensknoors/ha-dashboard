@@ -7,5 +7,5 @@
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true
   },
-  "include": ["vite.config.ts", "tailwind.config.js", "deploy.ts"]
+  "include": ["vite.config.ts", "tailwind.config.js"]
 }
