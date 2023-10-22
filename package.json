@@ -4,16 +4,17 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
+    "start:api": "ts-node --esm ./api/refreshToken.ts",
     "build": "tsc && vite build",
     "test": "vitest run",
     "coverage": "vitest run --coverage",
     "format": "prettier . --write",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit",
+    "sync-types": "ts-node --esm sync-types.ts",
     "preview": "vite preview",
     "prebuild": "pnpm run sync-types",
-    "sync-types": "ts-node --esm sync-types.ts",
     "prepare": "husky install"
   },
   "dependencies": {
