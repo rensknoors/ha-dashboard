@@ -1,77 +1,47 @@
-import { useGoogleLogin } from '@react-oauth/google';
+import { useHass } from '@hakit/core';
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useCallback } from 'react';
 import { BiCalendar, BiSun } from 'react-icons/bi';
-import { FcGoogle } from 'react-icons/fc';
 
-import { TokenResponse } from '../../../../api/types';
 import { CalendarEvent } from './types';
 
 // TODO: fetch events from all calendars
-const calendars = [
-  {
-    name: 'Rens',
-    id: 'primary',
-  },
-  {
-    name: 'Gezin',
-    id: '09b81b7e3b43de21e3dd53e271d4c03ceea4f9240c9efcff399e34de7e4d13f1@group.calendar.google.com',
-  },
-];
+// const calendars = [
+//   {
+//     name: 'Rens',
+//     id: 'calendar.persoonlijk_rens',
+//   },
+//   {
+//     name: 'Gezin',
+//     id: 'calendar.gezin',
+//   },
+//   {
+//     name: 'Claire',
+//     id: 'calendar.clairebongers_gmail_com',
+//   },
+//   {
+//     name: 'Feestdagen',
+//     id: 'calendar.feestdagen_in_nederland',
+//   },
+// ];
 
 const CalendarCard = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem('isAuthenticated') === 'true' || false
-  );
-  const [accessToken, setAccessToken] = useState(
-    localStorage.getItem('accessToken') || ''
-  );
+  const { callApi } = useHass();
 
-  const fetchEvents = async (): Promise<CalendarEvent[]> => {
-    const calendarId = calendars.find((calendar) => calendar.name === 'Gezin')
-      ?.id;
+  const startOfDay = new Date(new Date().setHours(0, 0, 0, 0)).toISOString();
+  const endOfDay = new Date(new Date().setHours(23, 59, 59, 999)).toISOString();
 
-    const params = new URLSearchParams({
-      maxResults: '10',
-      timeMin: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
-      timeMax: new Date(new Date().setHours(23, 59, 59, 999)).toISOString(),
-    });
-
-    const eventsList = await fetch(
-      `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?${params}`,
-      { headers: { Authorization: `Bearer ${accessToken}` } }
-    ).then((response) => response.json());
-    return eventsList.items;
-  };
-
-  const googleLogin = useGoogleLogin({
-    onSuccess: async ({ code }) => {
-      console.log('code', code);
-
-      await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/google`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code }),
-      })
-        .then((response) => response.json())
-        .then((tokens: TokenResponse) => {
-          // TODO: save expiry date and refresh token when expired
-          console.log(tokens);
-          setAccessToken(tokens.access_token);
-          localStorage.setItem('accessToken', tokens.access_token);
-
-          setIsAuthenticated(true);
-          localStorage.setItem('isAuthenticated', 'true');
-        });
-    },
-    onError: (errorResponse) => {
-      console.error(errorResponse);
-    },
-    flow: 'auth-code',
-  });
+  const fetchEvents = useCallback(async () => {
+    const response = await callApi<CalendarEvent[]>(
+      `/calendars/calendar.gezin?start=${startOfDay}&end=${endOfDay}`,
+      { method: 'GET' }
+    );
+    if (response.status === 'error') {
+      throw new Error(response.data);
+    }
+    return response.data;
+  }, [callApi, endOfDay, startOfDay]);
 
   const formatToTimeString = (date: string | Date) => {
     const newDate = new Date(date);
@@ -90,63 +60,48 @@ const CalendarCard = () => {
     queryKey: ['events'],
     queryFn: fetchEvents,
     refetchInterval: 1000 * 60 * 10, // 10 minutes
-    enabled: isAuthenticated && !!accessToken,
   });
 
-  if (isAuthenticated && isPending) return <div>Loading...</div>;
+  if (isPending) return <div>Loading...</div>;
 
   if (isError) return <div>Error: {error.message}</div>;
 
   return (
     <>
-      {isAuthenticated ? ( // TODO: add !isExpired check
-        <>
-          {events?.length === 0 && (
-            <div className="flex items-center justify-center gap-4 text-slate-400">
-              <BiSun style={{ height: 20, width: 20 }} color="#FFC107" />
-              Geen events vandaag
-            </div>
-          )}
-          {events?.length > 0 && (
-            <div className="flex w-full flex-col gap-4">
-              <div className="flex items-center gap-4">
-                <BiCalendar style={{ height: 20, width: 20 }} />
-                <span className="text-xl text-white">Kalender</span>
-              </div>
-              <div>
-                {events?.map((event) => (
-                  <div className="flex items-center gap-4" key={event.id}>
-                    <div
-                      className={clsx(
-                        'h-2 w-2 rounded-full',
-                        event.start.date && 'bg-blue-300',
-                        event.start.dateTime && 'bg-green-300'
-                      )}
-                    ></div>
-                    <span className="text-slate-400">
-                      {event.start.date && 'Hele dag'}
-                      {event.start.dateTime &&
-                        `${formatToTimeString(event.start.dateTime)} -
+      {events?.length === 0 && (
+        <div className="flex items-center justify-center gap-4 text-slate-400">
+          <BiSun style={{ height: 20, width: 20 }} color="#FFC107" />
+          Geen events vandaag
+        </div>
+      )}
+      {events?.length > 0 && (
+        <div className="flex w-full flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <BiCalendar style={{ height: 20, width: 20 }} />
+            <span className="text-xl text-white">Kalender</span>
+          </div>
+          <div>
+            {events?.map((event) => (
+              <div className="flex items-center gap-4" key={event.uid}>
+                <div
+                  className={clsx(
+                    'h-2 w-2 rounded-full',
+                    event.start && 'bg-blue-300',
+                    event.start && 'bg-green-300'
+                  )}
+                ></div>
+                <span className="text-slate-400">
+                  {event.start.date && 'Hele dag'}
+                  {event.start.dateTime &&
+                    `${formatToTimeString(event.start.dateTime)} -
                         ${formatToTimeString(event.end.dateTime)}
                       `}
-                    </span>
-                    <span className="font-semibold">{event.summary}</span>
-                  </div>
-                ))}
+                </span>
+                <span className="font-semibold">{event.summary}</span>
               </div>
-            </div>
-          )}
-        </>
-      ) : (
-        <button
-          className="rounded-lg border border-blue-600 px-3 py-2 text-white shadow-md hover:bg-blue-700 focus:border-blue-800 focus:outline-none focus:ring focus:ring-blue-200"
-          onClick={() => googleLogin()}
-        >
-          <div className="flex items-center gap-3">
-            <FcGoogle />
-            <span>Login with Google</span>
+            ))}
           </div>
-        </button>
+        </div>
       )}
     </>
   );
