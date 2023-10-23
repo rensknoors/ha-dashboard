@@ -49,8 +49,7 @@ const CalendarCard = () => {
     onSuccess: async ({ code }) => {
       console.log('code', code);
 
-      // TODO: POST to correct endpoint, also in PROD
-      await fetch('http://localhost:3001/auth/google', {
+      await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/auth/google`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
