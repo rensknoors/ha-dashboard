@@ -6,26 +6,6 @@ import { BiCalendar, BiSun } from 'react-icons/bi';
 
 import { CalendarEvent } from './types';
 
-// TODO: fetch events from all calendars
-// const calendars = [
-//   {
-//     name: 'Rens',
-//     id: 'calendar.persoonlijk_rens',
-//   },
-//   {
-//     name: 'Gezin',
-//     id: 'calendar.gezin',
-//   },
-//   {
-//     name: 'Claire',
-//     id: 'calendar.clairebongers_gmail_com',
-//   },
-//   {
-//     name: 'Feestdagen',
-//     id: 'calendar.feestdagen_in_nederland',
-//   },
-// ];
-
 const CalendarCard = () => {
   const { callApi } = useHass();
 
