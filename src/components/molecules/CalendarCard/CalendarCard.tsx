@@ -63,7 +63,7 @@ const CalendarCard = () => {
     <>
       {events?.length === 0 && (
         <div className="flex items-center justify-center gap-3 text-slate-400">
-          <BiCalendarX className="h-5 w-5 text-white" />
+          <BiCalendarX className="h-6 w-6 text-white" />
           Geen events vandaag
         </div>
       )}
