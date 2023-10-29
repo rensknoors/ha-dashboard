@@ -2,7 +2,7 @@ import { useHass } from '@hakit/core';
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useCallback } from 'react';
-import { BiCalendar, BiSun } from 'react-icons/bi';
+import { BiCalendar, BiCalendarX } from 'react-icons/bi';
 
 import { CalendarEvent } from './types';
 
@@ -62,15 +62,15 @@ const CalendarCard = () => {
   return (
     <>
       {events?.length === 0 && (
-        <div className="flex items-center justify-center gap-4 text-slate-400">
-          <BiSun style={{ height: 20, width: 20 }} color="#FFC107" />
+        <div className="flex items-center justify-center gap-3 text-slate-400">
+          <BiCalendarX className="h-5 w-5 text-white" />
           Geen events vandaag
         </div>
       )}
       {events?.length > 0 && (
         <div className="flex w-full flex-col gap-4">
           <div className="flex items-center gap-4">
-            <BiCalendar style={{ height: 20, width: 20 }} />
+            <BiCalendar className="h-5 w-5" />
             <span className="text-xl text-white">Kalender</span>
           </div>
           <div>
