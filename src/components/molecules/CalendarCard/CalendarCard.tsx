@@ -44,7 +44,15 @@ const CalendarCard = () => {
 
   if (isPending) return <div>Loading...</div>;
 
-  if (isError) return <div>Error: {error.message}</div>;
+  // Only show error if there are no events to show
+  if (isError && !events.length) {
+    console.error(error);
+    return (
+      <div>
+        Error: {error.name} - {error.message}
+      </div>
+    );
+  }
 
   return (
     <>
