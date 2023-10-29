@@ -1,5 +1,7 @@
+import { FabCard, Modal } from '@hakit/components';
 import { useQuery } from '@tanstack/react-query';
 import Lottie from 'lottie-react';
+import { useState } from 'react';
 
 import clearDay from '@/assets/weather-lottie-animations/clear-day.json';
 import cloudy from '@/assets/weather-lottie-animations/cloudy.json';
@@ -49,6 +51,8 @@ const fetchWeatherData = async () => {
 };
 
 const WeatherCard = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   const { data, isPending, isError, error } = useQuery({
     queryKey: ['weather'],
     queryFn: fetchWeatherData,
@@ -65,25 +69,29 @@ const WeatherCard = () => {
   if (isError && error) {
     console.error(error);
     return (
-      <div>
-        Error: {error.name} - {error.message}
-      </div>
+      <span>
+        {error.name}: {error.message}
+      </span>
     );
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex items-center gap-4 text-3xl">
-        {icon && (
-          <Lottie className="h-24 w-24" animationData={icon} loop={true} />
-        )}
-        <div>{`${data?.liveweer[0]?.temp} °C`}</div>
-      </div>
+    <div className="flex items-center gap-4 text-3xl">
+      {icon && (
+        <Lottie className="h-24 w-24" animationData={icon} loop={true} />
+      )}
+      <div>{`${data?.liveweer[0]?.temp} °C`}</div>
       {data?.liveweer[0]?.alarm === '1' && (
-        <div className="mb-4 flex flex-col rounded-3xl bg-red-400 px-5 py-4 text-black">
-          <span className="font-semibold">Waarschuwing:</span>
-          <div>{data?.liveweer[0]?.alarmtxt}</div>
-        </div>
+        <>
+          <FabCard
+            icon="mdi:warning"
+            onClick={() => setModalOpen(true)}
+            className="bg-red-500 bg-opacity-20 text-red-500"
+          />
+          <Modal id="test" open={modalOpen} onClose={() => setModalOpen(false)}>
+            <div>{data?.liveweer[0]?.alarmtxt}</div>
+          </Modal>
+        </>
       )}
     </div>
   );
