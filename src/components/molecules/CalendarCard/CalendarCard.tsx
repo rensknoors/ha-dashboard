@@ -15,7 +15,12 @@ const CalendarCard = () => {
   const fetchEvents = useCallback(async () => {
     const response = await callApi<CalendarEvent[]>(
       `/calendars/calendar.gezin?start=${startOfDay}&end=${endOfDay}`,
-      { method: 'GET' }
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_HA_LONG_LIVED_TOKEN}`,
+        },
+      }
     );
     if (response.status === 'error') {
       throw new Error(response.data);
@@ -48,9 +53,9 @@ const CalendarCard = () => {
   if (isError && !events.length) {
     console.error(error);
     return (
-      <div>
-        Error: {error.name} - {error.message}
-      </div>
+      <span>
+        {error.name}: {error.message}
+      </span>
     );
   }
 
