@@ -62,9 +62,9 @@ const WeatherCard = () => {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
+  if (isError && error) {
     console.error(error);
-    return <div>Error: {error?.toString()}</div>;
+    return <div>Error: {error.message}</div>;
   }
 
   return (
