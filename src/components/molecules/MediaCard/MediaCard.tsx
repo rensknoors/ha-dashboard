@@ -1,10 +1,10 @@
 import { EntityName, useEntity, useHass } from '@hakit/core';
-import { BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
+import { BiMusic, BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
 
 export type MediaCardProps = {
-  entity: EntityName;
+  entity: EntityName | 'fallback';
 } & CardProps;
 
 const getSourceThumbnail = (source: string) => {
@@ -18,9 +18,34 @@ const getSourceThumbnail = (source: string) => {
   }
 };
 
+const Placeholder = () => {
+  const title = 'Het is stil...';
+  const description = 'Er wordt niets afgespeeld';
+
+  return (
+    <Card className=" flex min-h-[180px] place-items-center gap-6 border border-gray-700 border-opacity-40 bg-gray-700 bg-opacity-20">
+      <div className="flex-shrink-0">
+        <BiMusic className="h-14 w-14 rounded-xl text-gray-700" />
+      </div>
+
+      <div className="flex flex-grow flex-col">
+        <span className="text-lg font-semibold">{title}</span>
+        <span className="line-clamp-1 text-ellipsis text-base text-gray-500">
+          {description}
+        </span>
+      </div>
+    </Card>
+  );
+};
+
 const MediaCard = ({ entity }: MediaCardProps) => {
-  const media = useEntity(entity);
+  const media = useEntity(entity as EntityName, {
+    returnNullIfNotFound: true,
+  });
   const { callService } = useHass();
+
+  if (!media) return <Placeholder />;
+
   const PlayPauseIcon = media.state === 'playing' ? BiPause : BiPlay;
 
   const title =
@@ -49,7 +74,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
       </div>
 
       {/* Media info */}
-      <div className="z-10 flex flex-grow flex-col gap-2">
+      <div className="z-10 flex flex-grow flex-col">
         <span className="text-lg font-semibold">{title}</span>
         {media.attributes.media_title && (
           <span className="line-clamp-1 text-ellipsis text-base">
