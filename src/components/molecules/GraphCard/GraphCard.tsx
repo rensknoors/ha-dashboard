@@ -11,7 +11,12 @@ export type GraphCardProps = {
 } & CardProps;
 
 const GraphCard = ({ entity, label, unit }: GraphCardProps) => {
-  const { state, attributes, custom, history } = useEntity(entity);
+  const { state, attributes, custom, history } = useEntity(entity, {
+    historyOptions: {
+      disable: false,
+      hoursToShow: 12,
+    },
+  });
 
   return (
     <Card className="relative flex flex-col place-items-start bg-slate-400 text-black">
