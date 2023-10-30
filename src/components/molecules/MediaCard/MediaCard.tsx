@@ -15,6 +15,10 @@ const getSourceThumbnail = (source: string) => {
       return '/logos/ziggo.png';
     case 'Plex':
       return '/logos/plex.jpg';
+    case 'Sonos':
+      return '/logos/sonos.png';
+    case 'PS5/Switch':
+      return '/logos/playstation.jpg';
   }
 };
 
