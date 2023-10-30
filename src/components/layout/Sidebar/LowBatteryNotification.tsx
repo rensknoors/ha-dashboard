@@ -14,14 +14,19 @@ const LowBatteryNotification = () => {
     );
 
     if (lowBatteryDevices.length > 0) {
-      const message = lowBatteryDevices
-        .map(
-          (device) =>
-            `${device.attributes.friendly_name}: ${device.state}${device.attributes.unit_of_measurement}}`
-        )
-        .join(', ');
-
-      toast.warn(`Low battery on devices: ${message}`);
+      lowBatteryDevices.forEach((device) => {
+        toast(
+          `Low battery: ${device.attributes.friendly_name}: ${device.state}${device.attributes.unit_of_measurement}`,
+          {
+            position: 'bottom-right',
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            progress: undefined,
+            theme: 'dark',
+          }
+        );
+      });
     }
   }, [devices]);
 

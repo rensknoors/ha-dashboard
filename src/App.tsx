@@ -1,5 +1,6 @@
 import { HassConnect } from '@hakit/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ToastContainer } from 'react-toastify';
 
 import { Router } from './routes/Router';
 
@@ -12,6 +13,7 @@ const App = () => {
     <HassConnect hassUrl={HASS_URL}>
       <QueryClientProvider client={queryClient}>
         <Router />
+        <ToastContainer />
       </QueryClientProvider>
     </HassConnect>
   );

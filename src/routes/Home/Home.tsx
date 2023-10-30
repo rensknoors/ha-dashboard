@@ -3,6 +3,7 @@ import { EntityName, HassEntityWithApi, useEntity } from '@hakit/core';
 import { CurrentDate } from '@/components/atoms/CurrentDate/CurrentDate';
 import { Time } from '@/components/atoms/Time/Time';
 import { WeatherCard } from '@/components/atoms/WeatherCard/WeatherCard';
+import LowBatteryNotification from '@/components/layout/Sidebar/LowBatteryNotification';
 import { CalendarCard } from '@/components/molecules/CalendarCard/CalendarCard';
 import { GraphCard } from '@/components/molecules/GraphCard/GraphCard';
 import { LightCard } from '@/components/molecules/LightCard/LightCard';
@@ -38,6 +39,7 @@ const Home = () => {
   return (
     <div className="flex h-full w-full gap-6">
       <div className="flex-1">
+        <LowBatteryNotification />
         <div className="centered-row py-8">
           <Time />
         </div>
