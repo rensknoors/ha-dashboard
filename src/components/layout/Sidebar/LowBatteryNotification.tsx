@@ -18,7 +18,7 @@ const LowBatteryNotification = () => {
         toast(
           `Low battery: ${device.attributes.friendly_name}: ${device.state}${device.attributes.unit_of_measurement}`,
           {
-            position: 'bottom-right',
+            position: 'bottom-left',
             autoClose: false,
             hideProgressBar: false,
             closeOnClick: true,
