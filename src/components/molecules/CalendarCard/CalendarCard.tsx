@@ -6,6 +6,15 @@ import { BiCalendar, BiCalendarX } from 'react-icons/bi';
 
 import { CalendarEvent } from './types';
 
+const isBirthday = (summary: string) => {
+  // Summary contains substring 'verjaardag', 'birthday' or 'jarig'
+  return (
+    summary.toLowerCase().includes('verjaardag') ||
+    summary.toLowerCase().includes('birthday') ||
+    summary.toLowerCase().includes('jarig')
+  );
+};
+
 const CalendarCard = () => {
   const { callApi } = useHass();
 
@@ -83,14 +92,19 @@ const CalendarCard = () => {
                     event.start && 'bg-green-300'
                   )}
                 ></div>
-                <span className="text-slate-400">
+                <span className="w-28 text-slate-400">
                   {event.start.date && 'Hele dag'}
                   {event.start.dateTime &&
                     `${formatToTimeString(event.start.dateTime)} -
                         ${formatToTimeString(event.end.dateTime)}
                       `}
                 </span>
-                <span className="font-semibold">{event.summary}</span>
+                <span className="font-semibold">
+                  {`${isBirthday(event.summary) ? '🎉' : ''} ${event.summary}`}
+                </span>
+                {event.description && (
+                  <span className="text-slate-400">{`${event.description}`}</span>
+                )}
               </div>
             ))}
           </div>
