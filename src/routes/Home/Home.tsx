@@ -6,7 +6,6 @@ import { WeatherCard } from '@/components/atoms/WeatherCard/WeatherCard';
 import LowBatteryNotification from '@/components/layout/Sidebar/LowBatteryNotification';
 import { CalendarCard } from '@/components/molecules/CalendarCard/CalendarCard';
 import { GraphCard } from '@/components/molecules/GraphCard/GraphCard';
-import { LightCard } from '@/components/molecules/LightCard/LightCard';
 import { MediaCard } from '@/components/molecules/MediaCard/MediaCard';
 
 const Home = () => {
@@ -66,10 +65,10 @@ const Home = () => {
         <MediaCard entity={activeMediaPlayerKey ?? 'fallback'} />
 
         <div className="wrap grid grid-cols-2 gap-6">
-          <LightCard entity="light.kitchen_group" />
+          {/* <LightCard entity="light.kitchen_group" />
           <LightCard entity="light.living_room_group" />
           <LightCard entity="light.bedroom_group" />
-          <LightCard entity="light.garden_group" />
+          <LightCard entity="light.garden_group" /> */}
         </div>
       </div>
     </div>
