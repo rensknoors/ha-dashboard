@@ -82,28 +82,35 @@ const CalendarCard = () => {
             <BiCalendar className="h-5 w-5" />
             <span className="text-xl text-white">Kalender</span>
           </div>
-          <div>
+          <div className="flex flex-col gap-2">
             {events?.map((event) => (
-              <div className="flex items-center gap-4" key={event.uid}>
-                <div
-                  className={clsx(
-                    'h-2 w-2 rounded-full',
-                    event.start && 'bg-blue-300',
-                    event.start && 'bg-green-300'
-                  )}
-                ></div>
-                <span className="w-28 text-slate-400">
-                  {event.start.date && 'Hele dag'}
-                  {event.start.dateTime &&
-                    `${formatToTimeString(event.start.dateTime)} -
+              <div
+                key={event.uid}
+                className="grid grid-cols-[min-content_auto]"
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className={clsx(
+                      'h-2 w-2 rounded-full',
+                      event.start && 'bg-blue-300',
+                      event.start && 'bg-green-300'
+                    )}
+                  ></div>
+                  <span className="w-28 text-slate-400">
+                    {event.start.date && 'Hele dag'}
+                    {event.start.dateTime &&
+                      `${formatToTimeString(event.start.dateTime)} -
                         ${formatToTimeString(event.end.dateTime)}
                       `}
-                </span>
+                  </span>
+                </div>
+
                 <span className="font-semibold">
                   {`${isBirthday(event.summary) ? '🎉' : ''} ${event.summary}`}
                 </span>
+
                 {event.description && (
-                  <span className="text-slate-400">{`${event.description}`}</span>
+                  <span className="col-start-2 line-clamp-3 text-slate-400">{`${event.description}`}</span>
                 )}
               </div>
             ))}
