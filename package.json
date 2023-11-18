@@ -34,8 +34,8 @@
     "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
-    "@hakit/components": "^2.2.0",
-    "@hakit/core": "^2.2.0",
+    "@hakit/components": "^3.0.4",
+    "@hakit/core": "^3.0.4",
     "@tanstack/eslint-plugin-query": "^5.0.0",
     "@testing-library/react": "^14.0.0",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",

@@ -1,4 +1,4 @@
-import { SvgGraph } from '@hakit/components';
+import { Alert, SvgGraph } from '@hakit/components';
 import { EntityName, useEntity } from '@hakit/core';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
@@ -11,7 +11,12 @@ export type GraphCardProps = {
 } & CardProps;
 
 const GraphCard = ({ entity, label, unit }: GraphCardProps) => {
-  const { state, attributes, custom, history } = useEntity(entity);
+  const { state, attributes, custom, history } = useEntity(entity, {
+    historyOptions: {
+      disable: false,
+      hoursToShow: 24,
+    },
+  });
 
   return (
     <Card className="relative flex flex-col place-items-start bg-slate-400 text-black">
@@ -24,9 +29,9 @@ const GraphCard = ({ entity, label, unit }: GraphCardProps) => {
       <span className="text-sm">{custom.relativeTime}</span>
       <div className="absolute bottom-0 left-0 w-full">
         {history.loading ? (
-          <span>Loading...</span>
+          <Alert className={'loading'} description="Loading..." />
         ) : (
-          <SvgGraph coordinates={history.coordinates} strokeWidth={2} />
+          <SvgGraph coordinates={history.coordinates} />
         )}
       </div>
     </Card>

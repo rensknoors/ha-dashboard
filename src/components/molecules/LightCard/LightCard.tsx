@@ -1,7 +1,7 @@
 import { ModalByEntityDomain } from '@hakit/components';
 import {
   EntityName,
-  HassEntityWithApi,
+  HassEntityWithService,
   useEntity,
   useIconByEntity,
 } from '@hakit/core';
@@ -15,7 +15,7 @@ export type LightCardProps = {
 } & CardProps;
 
 const LightCard = ({ entity, className }: LightCardProps) => {
-  const light = useEntity(entity) as HassEntityWithApi<'light'>;
+  const light = useEntity(entity) as HassEntityWithService<'light'>;
   const icon = useIconByEntity(entity);
   const [open, setOpen] = useState(false);
   const brightness = light.attributes.brightness
@@ -36,7 +36,7 @@ const LightCard = ({ entity, className }: LightCardProps) => {
             ? `rgb(${light.attributes.rgb_color?.join(',')})`
             : undefined,
         }}
-        onClick={() => light.api.toggle()}
+        onClick={light.service.toggle}
         onLongPress={() => setOpen(true)}
       >
         <div>{icon}</div>

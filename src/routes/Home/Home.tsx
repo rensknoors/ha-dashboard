@@ -1,4 +1,4 @@
-import { EntityName, HassEntityWithApi, useEntity } from '@hakit/core';
+import { EntityName, HassEntityWithService, useEntity } from '@hakit/core';
 
 import { CurrentDate } from '@/components/atoms/CurrentDate/CurrentDate';
 import { Time } from '@/components/atoms/Time/Time';
@@ -6,12 +6,13 @@ import { WeatherCard } from '@/components/atoms/WeatherCard/WeatherCard';
 import LowBatteryNotification from '@/components/layout/Sidebar/LowBatteryNotification';
 import { CalendarCard } from '@/components/molecules/CalendarCard/CalendarCard';
 import { GraphCard } from '@/components/molecules/GraphCard/GraphCard';
+import { LightCard } from '@/components/molecules/LightCard/LightCard';
 import { MediaCard } from '@/components/molecules/MediaCard/MediaCard';
 
 const Home = () => {
   // Only the first active media player will be shown, in this order:
   const mediaPlayers: Partial<
-    Record<EntityName, HassEntityWithApi<'media_player'>>
+    Record<EntityName, HassEntityWithService<'media_player'>>
   > = {
     'media_player.tv': useEntity('media_player.tv'),
     'media_player.nest_hub': useEntity('media_player.nest_hub'),
@@ -65,10 +66,10 @@ const Home = () => {
         <MediaCard entity={activeMediaPlayerKey ?? 'fallback'} />
 
         <div className="wrap grid grid-cols-2 gap-6">
-          {/* <LightCard entity="light.kitchen_group" />
+          <LightCard entity="light.kitchen_group" />
           <LightCard entity="light.living_room_group" />
           <LightCard entity="light.bedroom_group" />
-          <LightCard entity="light.garden_group" /> */}
+          <LightCard entity="light.garden_group" />
         </div>
       </div>
     </div>
