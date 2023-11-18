@@ -110,7 +110,7 @@ const CalendarCard = () => {
                 </span>
 
                 {event.description && (
-                  <span className="col-start-2 line-clamp-3 text-slate-400">{`${event.description}`}</span>
+                  <span className="col-start-2 line-clamp-2 text-slate-400">{`${event.description}`}</span>
                 )}
               </div>
             ))}
