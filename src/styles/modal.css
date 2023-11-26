@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.modal-container {
+  @apply min-w-[600px] -translate-x-1/2 !bg-slate-800;
+}
+
+.modal-inner {
+  @apply !px-8;
+}
+
+.modal-close-button {
+  @apply !bg-slate-700/70 !transition-background hover:!bg-slate-700;
+}
+
+.tooltip-inner {
+  @apply !bg-slate-700;
+}
+.tooltip-inner::before {
+  @apply !border-transparent !border-l-slate-700;
+}
