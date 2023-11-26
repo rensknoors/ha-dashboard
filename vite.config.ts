@@ -19,29 +19,8 @@ export default defineConfig({
     environment: 'happy-dom',
   },
   resolve: {
-    alias: [
-      {
-        find: '@/',
-        replacement: fileURLToPath(new URL('./src', import.meta.url)),
-      },
-      {
-        find: '@/components',
-        replacement: fileURLToPath(
-          new URL('./src/components', import.meta.url)
-        ),
-      },
-      {
-        find: '@/hooks',
-        replacement: fileURLToPath(new URL('./src/hooks', import.meta.url)),
-      },
-      {
-        find: '@/routes',
-        replacement: fileURLToPath(new URL('./src/routes', import.meta.url)),
-      },
-      {
-        find: '@/assets',
-        replacement: fileURLToPath(new URL('./src/assets', import.meta.url)),
-      },
-    ],
+    alias: {
+      '@/': `${fileURLToPath(new URL('./src/', import.meta.url))}/`,
+    },
   },
 });
