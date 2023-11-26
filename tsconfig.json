@@ -26,7 +26,6 @@
   },
   "include": [
     "src",
-    "api",
     "sync-types.ts",
     "supported-types.d.ts",
     "src/components/molecules/CalendarCard/global.d.ts"
