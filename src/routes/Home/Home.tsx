@@ -3,13 +3,15 @@ import { EntityName, HassEntityWithService, useEntity } from '@hakit/core';
 import { CurrentDate } from '@/components/atoms/CurrentDate/CurrentDate';
 import { Time } from '@/components/atoms/Time/Time';
 import { WeatherCard } from '@/components/atoms/WeatherCard/WeatherCard';
-import LowBatteryNotification from '@/components/layout/Sidebar/LowBatteryNotification';
 import { CalendarCard } from '@/components/molecules/CalendarCard/CalendarCard';
 import { GraphCard } from '@/components/molecules/GraphCard/GraphCard';
 import { LightCard } from '@/components/molecules/LightCard/LightCard';
 import { MediaCard } from '@/components/molecules/MediaCard/MediaCard';
+import { useLowBatteryNotification } from '@/hooks/useLowBatteryNotification';
 
 const Home = () => {
+  useLowBatteryNotification();
+
   // Only the first active media player will be shown, in this order:
   const mediaPlayers: Partial<
     Record<EntityName, HassEntityWithService<'media_player'>>
@@ -39,7 +41,6 @@ const Home = () => {
   return (
     <div className="flex h-full w-full gap-6">
       <div className="flex-1">
-        <LowBatteryNotification />
         <div className="centered-row py-8">
           <Time />
         </div>

@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import { SideBar } from '@/components/layout/Sidebar/Sidebar';
+import { SideBar } from '@/components/organisms/Sidebar/Sidebar';
 
 const Root = () => {
   return (

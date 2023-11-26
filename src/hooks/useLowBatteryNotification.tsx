@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const LowBatteryNotification = () => {
+const useLowBatteryNotification = () => {
   const devices = useLowDevices();
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const LowBatteryNotification = () => {
         device.attributes.device_class === 'battery'
     );
 
-    if (lowBatteryDevices.length > 0) {
+    if (lowBatteryDevices.length) {
       lowBatteryDevices.forEach((device) => {
         toast(
           `Low battery: ${device.attributes.friendly_name}: ${device.state}${device.attributes.unit_of_measurement}`,
@@ -33,4 +33,4 @@ const LowBatteryNotification = () => {
   return null;
 };
 
-export default LowBatteryNotification;
+export { useLowBatteryNotification };
