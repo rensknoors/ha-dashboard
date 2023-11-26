@@ -86,7 +86,7 @@ const WeatherCard = () => {
           <FabCard
             icon="mdi:warning"
             onClick={() => setModalOpen(true)}
-            className="bg-red-500 bg-opacity-20 text-red-500"
+            className="!bg-red-500 !bg-opacity-20 !text-red-500"
           />
           <Modal id="test" open={modalOpen} onClose={() => setModalOpen(false)}>
             <div>{data?.liveweer[0]?.alarmtxt}</div>
