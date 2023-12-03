@@ -12,11 +12,13 @@ import { Card, CardProps } from '@/components/atoms/Card/Card';
 
 export type LightCardProps = {
   entity: EntityName;
+  Icon?: () => JSX.Element;
+  label?: string;
 } & CardProps;
 
-const LightCard = ({ entity, className }: LightCardProps) => {
+const LightCard = ({ entity, className, Icon, label }: LightCardProps) => {
   const light = useEntity(entity) as HassEntityWithService<'light'>;
-  const icon = useIconByEntity(entity);
+  const EntityIcon = useIconByEntity(entity);
   const [open, setOpen] = useState(false);
   const brightness = light.attributes.brightness
     ? Math.round(light.attributes.brightness / 2.55) + '%'
@@ -39,8 +41,8 @@ const LightCard = ({ entity, className }: LightCardProps) => {
         onClick={light.service.toggle}
         onLongPress={() => setOpen(true)}
       >
-        <div>{icon}</div>
-        <div className="flex-1">{light.attributes.friendly_name}</div>
+        {Icon ? <Icon /> : <div>{EntityIcon}</div>}
+        <div className="flex-1">{label ?? light.attributes.friendly_name}</div>
         <div
           className={clsx(
             'h-4 w-full rounded-lg px-2',
