@@ -22,19 +22,27 @@ const CalendarCard = () => {
   const endOfDay = new Date(new Date().setHours(23, 59, 59, 999)).toISOString();
 
   const fetchEvents = useCallback(async () => {
-    const response = await callApi<CalendarEvent[]>(
-      `/calendars/calendar.gezin?start=${startOfDay}&end=${endOfDay}`,
-      {
+    const fetchFromEntity = async (endpoint) => {
+      const response = await callApi<CalendarEvent[]>(endpoint, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${import.meta.env.VITE_HA_LONG_LIVED_TOKEN}`,
         },
+      });
+      if (response.status === 'error') {
+        throw new Error(response.data);
       }
+      return response.data;
+    };
+
+    const gezinEvents = await fetchFromEntity(
+      `/calendars/calendar.gezin?start=${startOfDay}&end=${endOfDay}`
     );
-    if (response.status === 'error') {
-      throw new Error(response.data);
-    }
-    return response.data;
+    const feestdagenEvents = await fetchFromEntity(
+      `/calendars/calendar.feestdagen_in_nederland?start=${startOfDay}&end=${endOfDay}`
+    );
+
+    return [...gezinEvents, ...feestdagenEvents];
   }, [callApi, endOfDay, startOfDay]);
 
   const formatToTimeString = (date: string | Date) => {
