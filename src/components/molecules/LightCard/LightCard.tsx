@@ -7,12 +7,20 @@ import {
 } from '@hakit/core';
 import { clsx } from 'clsx';
 import { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
 
+export type IconBaseProps = React.SVGAttributes<SVGElement> & {
+  children?: React.ReactNode;
+  size?: string | number;
+  color?: string;
+  title?: string;
+};
+
 export type LightCardProps = {
   entity: EntityName;
-  Icon?: () => JSX.Element;
+  Icon?: (props: IconBaseProps) => JSX.Element;
   label?: string;
 } & CardProps;
 
@@ -27,11 +35,13 @@ const LightCard = ({ entity, className, Icon, label }: LightCardProps) => {
   return (
     <>
       <Card
-        className={clsx(
-          className,
-          'flex min-h-[120px] cursor-pointer flex-col transition-background duration-1000',
-          light.state === 'on' && 'bg-orange-300 text-black',
-          light.state === 'off' && 'text-white'
+        className={twMerge(
+          clsx(
+            'flex min-h-[120px] cursor-pointer flex-col transition-background duration-1000',
+            light.state === 'on' && 'bg-orange-300 text-black',
+            light.state === 'off' && 'text-white'
+          ),
+          className
         )}
         style={{
           backgroundColor: light.attributes.rgb_color
@@ -41,8 +51,10 @@ const LightCard = ({ entity, className, Icon, label }: LightCardProps) => {
         onClick={light.service.toggle}
         onLongPress={() => setOpen(true)}
       >
-        {Icon ? <Icon /> : <div>{EntityIcon}</div>}
+        {Icon ? <Icon size={24} /> : <div>{EntityIcon}</div>}
+
         <div className="flex-1">{label ?? light.attributes.friendly_name}</div>
+
         <div
           className={clsx(
             'h-4 w-full rounded-lg px-2',
@@ -58,7 +70,7 @@ const LightCard = ({ entity, className, Icon, label }: LightCardProps) => {
                 light.state === 'off' && 'bg-white'
               )}
               style={{ left: brightness }}
-            ></div>
+            />
           </div>
         </div>
       </Card>
