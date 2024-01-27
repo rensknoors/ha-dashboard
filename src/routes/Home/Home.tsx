@@ -1,5 +1,4 @@
 import { EntityName, HassEntityWithService, useEntity } from '@hakit/core';
-import { BiSolidTree } from 'react-icons/bi';
 
 import { CurrentDate } from '@/components/atoms/CurrentDate/CurrentDate';
 import { Time } from '@/components/atoms/Time/Time';
@@ -62,7 +61,7 @@ const Home = () => {
             entity="sensor.living_room_temperature"
             label="Woonkamer"
           />
-          <GraphCard entity="sensor.bedroom_temperature" label="Slaapkamer" />
+          <GraphCard entity="sensor.garage_temperature" label="Garage" />
         </div>
 
         <MediaCard entity={activeMediaPlayerKey ?? 'fallback'} />
@@ -70,11 +69,7 @@ const Home = () => {
         <div className="wrap grid grid-cols-2 gap-6">
           <LightCard entity="light.kitchen_group" />
           <LightCard entity="light.living_room_group" />
-          <LightCard
-            entity="switch.smartplug_christmas_tree_switch"
-            label="Kerstboom"
-            Icon={BiSolidTree}
-          />
+          <LightCard entity="light.slaapkamer" />
           <LightCard entity="light.garden_group" />
         </div>
       </div>
