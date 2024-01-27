@@ -19,6 +19,8 @@ const getSourceThumbnail = (source: string) => {
       return '/logos/sonos.png';
     case 'PS5/Switch':
       return '/logos/playstation.jpg';
+    case 'Spotify':
+      return '/logos/spotify.png';
   }
 };
 
@@ -58,8 +60,9 @@ const MediaCard = ({ entity }: MediaCardProps) => {
     media.attributes.source ??
     media.attributes.friendly_name;
   const thumbnail =
-    media.attributes.device_class === 'tv'
-      ? getSourceThumbnail(media.attributes.source)
+    media.attributes.device_class === 'tv' ||
+    media.attributes.friendly_name === 'Tv'
+      ? getSourceThumbnail(media.attributes.source ?? media.attributes.app_name)
       : media.attributes.entity_picture ?? '/cast.png';
 
   return (
