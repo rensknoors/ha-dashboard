@@ -9,18 +9,12 @@ export type MediaCardProps = {
 
 const getSourceThumbnail = (source: string) => {
   switch (source) {
-    case 'Netflix':
-      return '/logos/netflix.jpg';
     case 'Ziggo':
       return '/logos/ziggo.png';
-    case 'Plex':
-      return '/logos/plex.jpg';
-    case 'Sonos':
-      return '/logos/sonos.png';
     case 'PS5/Switch':
-      return '/logos/playstation.jpg';
-    case 'Spotify':
-      return '/logos/spotify.png';
+      return '/logos/playstation.svg';
+    default:
+      return `/logos/${source.toLowerCase()}.svg`;
   }
 };
 
@@ -63,7 +57,7 @@ const MediaCard = ({ entity }: MediaCardProps) => {
     media.attributes.device_class === 'tv' ||
     media.attributes.friendly_name === 'Tv'
       ? getSourceThumbnail(media.attributes.source ?? media.attributes.app_name)
-      : media.attributes.entity_picture ?? '/cast.png';
+      : media.attributes.entity_picture ?? '/cast.svg';
 
   return (
     <Card className="relative z-0 flex min-h-[180px] place-items-center gap-6">
