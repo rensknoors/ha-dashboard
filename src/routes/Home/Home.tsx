@@ -61,7 +61,7 @@ const Home = () => {
             entity="sensor.living_room_temperature"
             label="Woonkamer"
           />
-          <GraphCard entity="sensor.garage_temperature" label="Garage" />
+          <GraphCard entity="sensor.bedroom_temperature" label="Slaapkamer" />
         </div>
 
         <MediaCard entity={activeMediaPlayerKey ?? 'fallback'} />
