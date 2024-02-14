@@ -14,7 +14,7 @@ const getSourceThumbnail = (source: string) => {
     case 'PS5/Switch':
       return '/logos/playstation.svg';
     default:
-      return `/logos/${source.toLowerCase()}.svg`;
+      return source ? `/logos/${source.toLowerCase()}.svg` : '/cast.svg';
   }
 };
 
