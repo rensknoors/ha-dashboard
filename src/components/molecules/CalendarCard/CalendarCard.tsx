@@ -34,15 +34,19 @@ const CalendarCard = () => {
       }
       return response.data;
     };
+    const periodString = `?start=${startOfDay}&end=${endOfDay}`;
 
-    const gezinEvents = await fetchFromEntity(
-      `/calendars/calendar.gezin?start=${startOfDay}&end=${endOfDay}`
+    const familyCalendar = await fetchFromEntity(
+      `/calendars/calendar.gezin${periodString}`
     );
-    const feestdagenEvents = await fetchFromEntity(
-      `/calendars/calendar.feestdagen_in_nederland?start=${startOfDay}&end=${endOfDay}`
+    const birthdayCalendar = await fetchFromEntity(
+      `/calendars/calendar.feestdagen_in_nederland${periodString}`
+    );
+    const holidayCalendar = await fetchFromEntity(
+      `/calendars/calendar.verjaardagen${periodString}`
     );
 
-    return [...gezinEvents, ...feestdagenEvents];
+    return [...familyCalendar, ...birthdayCalendar, ...holidayCalendar];
   }, [callApi, endOfDay, startOfDay]);
 
   const formatToTimeString = (date: string | Date) => {
@@ -100,8 +104,8 @@ const CalendarCard = () => {
                   <div
                     className={clsx(
                       'h-2 w-2 rounded-full',
-                      event.start && 'bg-blue-300',
-                      event.start && 'bg-green-300'
+                      event.start.date && 'bg-blue-300',
+                      event.start.dateTime && 'bg-green-300'
                     )}
                   ></div>
                   <span className="w-28 text-slate-400">
