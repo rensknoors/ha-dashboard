@@ -1,12 +1,16 @@
 // this is an auto generated file, do not change this manually
 
-import { ServiceFunction, ServiceFunctionTypes } from "@hakit/core";
+import {
+  ServiceFunction,
+  ServiceFunctionTypes,
+  VacuumEntityState,
+} from "@hakit/core";
 declare module "@hakit/core" {
   export interface CustomSupportedServices<
     T extends ServiceFunctionTypes = "target",
   > {
     persistentNotification: {
-      // Shows a notification on the **Notifications** panel.
+      // Shows a notification on the notifications panel.
       create: ServiceFunction<
         T,
         {
@@ -18,7 +22,7 @@ declare module "@hakit/core" {
           notification_id?: string;
         }
       >;
-      // Removes a notification from the **Notifications** panel.
+      // Removes a notification from the notifications panel.
       dismiss: ServiceFunction<
         T,
         {
@@ -26,17 +30,17 @@ declare module "@hakit/core" {
           notification_id: string;
         }
       >;
-      // Removes all notifications from the **Notifications** panel.
+      // Removes all notifications from the notifications panel.
       dismissAll: ServiceFunction<T, object>;
     };
     homeassistant: {
       // Saves the persistent states immediately. Maintains the normal periodic saving interval.
       savePersistentStates: ServiceFunction<T, object>;
-      // Generic service to turn devices off under any domain.
+      // Generic action to turn devices off under any domain.
       turnOff: ServiceFunction<T, object>;
-      // Generic service to turn devices on under any domain.
+      // Generic action to turn devices on under any domain.
       turnOn: ServiceFunction<T, object>;
-      // Generic service to toggle devices on/off under any domain.
+      // Generic action to toggle devices on/off under any domain.
       toggle: ServiceFunction<T, object>;
       // Stops Home Assistant.
       stop: ServiceFunction<T, object>;
@@ -122,6 +126,8 @@ declare module "@hakit/core" {
       purgeEntities: ServiceFunction<
         T,
         {
+          // List of entities for which the data is to be removed from the recorder database.
+          entity_id?: string;
           // List of domains for which the data needs to be removed from the recorder database. @example sun
           domains?: object;
           // List of glob patterns used to select the entities for which the data is to be removed from the recorder database. @example domain*.object_id*
@@ -174,7 +180,7 @@ declare module "@hakit/core" {
           addon: object;
         }
       >;
-      // Updates an add-on. This service should be used with caution since add-on updates can contain breaking changes. It is highly recommended that you review release notes/change logs before updating an add-on.
+      // Updates an add-on. This action should be used with caution since add-on updates can contain breaking changes. It is highly recommended that you review release notes/change logs before updating an add-on.
       addonUpdate: ServiceFunction<
         T,
         {
@@ -425,48 +431,6 @@ declare module "@hakit/core" {
         }
       >;
     };
-    conversation: {
-      // Launches a conversation from a transcribed text.
-      process: ServiceFunction<
-        T,
-        {
-          // Transcribed text input. @example Turn all lights on
-          text: string;
-          // Language of text. Defaults to server language. @example NL
-          language?: string;
-          // Conversation agent to process your request. The conversation agent is the brains of your assistant. It processes the incoming text commands. @example homeassistant
-          agent_id?: object;
-          // ID of the conversation, to be able to continue a previous conversation @example my_conversation_1
-          conversation_id?: string;
-        }
-      >;
-      // Reloads the intent configuration.
-      reload: ServiceFunction<
-        T,
-        {
-          // Language to clear cached intents for. Defaults to server language. @example NL
-          language?: string;
-          // Conversation agent to reload. @example homeassistant
-          agent_id?: object;
-        }
-      >;
-    };
-    inputNumber: {
-      // Reloads helpers from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-      // Sets the value.
-      setValue: ServiceFunction<
-        T,
-        {
-          // The target value.
-          value: number;
-        }
-      >;
-      // Increments the value by 1 step.
-      increment: ServiceFunction<T, object>;
-      // Decrements the current value by 1 step.
-      decrement: ServiceFunction<T, object>;
-    };
     logbook: {
       // Creates a custom entry in the logbook.
       log: ServiceFunction<
@@ -522,186 +486,18 @@ declare module "@hakit/core" {
         {
           // Duration it takes to get to next state.
           transition?: number;
-          // The color in RGB format. A list of three integers between 0 and 255 representing the values of red, green, and blue.
+          // The color in RGB format. A list of three integers between 0 and 255 representing the values of red, green, and blue. @example [255, 100, 100]
           rgb_color?: [number, number, number];
-          // The color in RGBW format. A list of four integers between 0 and 255 representing the values of red, green, blue, and white. @example [255, 100, 100, 50]
-          rgbw_color?: [number, number, number, number];
-          // The color in RGBWW format. A list of five integers between 0 and 255 representing the values of red, green, blue, cold white, and warm white. @example [255, 100, 100, 50, 70]
-          rgbww_color?: [number, number, number, number, number];
-          // A human-readable color name.
-          color_name?:
-            | "homeassistant"
-            | "aliceblue"
-            | "antiquewhite"
-            | "aqua"
-            | "aquamarine"
-            | "azure"
-            | "beige"
-            | "bisque"
-            | "blanchedalmond"
-            | "blue"
-            | "blueviolet"
-            | "brown"
-            | "burlywood"
-            | "cadetblue"
-            | "chartreuse"
-            | "chocolate"
-            | "coral"
-            | "cornflowerblue"
-            | "cornsilk"
-            | "crimson"
-            | "cyan"
-            | "darkblue"
-            | "darkcyan"
-            | "darkgoldenrod"
-            | "darkgray"
-            | "darkgreen"
-            | "darkgrey"
-            | "darkkhaki"
-            | "darkmagenta"
-            | "darkolivegreen"
-            | "darkorange"
-            | "darkorchid"
-            | "darkred"
-            | "darksalmon"
-            | "darkseagreen"
-            | "darkslateblue"
-            | "darkslategray"
-            | "darkslategrey"
-            | "darkturquoise"
-            | "darkviolet"
-            | "deeppink"
-            | "deepskyblue"
-            | "dimgray"
-            | "dimgrey"
-            | "dodgerblue"
-            | "firebrick"
-            | "floralwhite"
-            | "forestgreen"
-            | "fuchsia"
-            | "gainsboro"
-            | "ghostwhite"
-            | "gold"
-            | "goldenrod"
-            | "gray"
-            | "green"
-            | "greenyellow"
-            | "grey"
-            | "honeydew"
-            | "hotpink"
-            | "indianred"
-            | "indigo"
-            | "ivory"
-            | "khaki"
-            | "lavender"
-            | "lavenderblush"
-            | "lawngreen"
-            | "lemonchiffon"
-            | "lightblue"
-            | "lightcoral"
-            | "lightcyan"
-            | "lightgoldenrodyellow"
-            | "lightgray"
-            | "lightgreen"
-            | "lightgrey"
-            | "lightpink"
-            | "lightsalmon"
-            | "lightseagreen"
-            | "lightskyblue"
-            | "lightslategray"
-            | "lightslategrey"
-            | "lightsteelblue"
-            | "lightyellow"
-            | "lime"
-            | "limegreen"
-            | "linen"
-            | "magenta"
-            | "maroon"
-            | "mediumaquamarine"
-            | "mediumblue"
-            | "mediumorchid"
-            | "mediumpurple"
-            | "mediumseagreen"
-            | "mediumslateblue"
-            | "mediumspringgreen"
-            | "mediumturquoise"
-            | "mediumvioletred"
-            | "midnightblue"
-            | "mintcream"
-            | "mistyrose"
-            | "moccasin"
-            | "navajowhite"
-            | "navy"
-            | "navyblue"
-            | "oldlace"
-            | "olive"
-            | "olivedrab"
-            | "orange"
-            | "orangered"
-            | "orchid"
-            | "palegoldenrod"
-            | "palegreen"
-            | "paleturquoise"
-            | "palevioletred"
-            | "papayawhip"
-            | "peachpuff"
-            | "peru"
-            | "pink"
-            | "plum"
-            | "powderblue"
-            | "purple"
-            | "red"
-            | "rosybrown"
-            | "royalblue"
-            | "saddlebrown"
-            | "salmon"
-            | "sandybrown"
-            | "seagreen"
-            | "seashell"
-            | "sienna"
-            | "silver"
-            | "skyblue"
-            | "slateblue"
-            | "slategray"
-            | "slategrey"
-            | "snow"
-            | "springgreen"
-            | "steelblue"
-            | "tan"
-            | "teal"
-            | "thistle"
-            | "tomato"
-            | "turquoise"
-            | "violet"
-            | "wheat"
-            | "white"
-            | "whitesmoke"
-            | "yellow"
-            | "yellowgreen";
-          // Color in hue/sat format. A list of two integers. Hue is 0-360 and Sat is 0-100. @example [300, 70]
-          hs_color?: [number, number];
-          // Color in XY-format. A list of two decimal numbers between 0 and 1. @example [0.52, 0.43]
-          xy_color?: [number, number];
-          // Color temperature in mireds.
-          color_temp?: number | object;
           // Color temperature in Kelvin.
           kelvin?: number | object;
-          // Number indicating brightness, where 0 turns the light off, 1 is the minimum brightness, and 255 is the maximum brightness.
-          brightness?: number;
           // Number indicating the percentage of full brightness, where 0 turns the light off, 1 is the minimum brightness, and 100 is the maximum brightness.
           brightness_pct?: number;
-          // Change brightness by an amount.
-          brightness_step?: number;
           // Change brightness by a percentage.
           brightness_step_pct?: number;
-          // Set the light to white mode.
-          white?: boolean;
-          // Name of a light profile to use. @example relax
-          profile?: string;
-          // Tell light to flash, can be either value short or long.
-          flash?: "long" | "short";
           // Light effect.
           effect?: string;
+          // undefined
+          advanced_fields?: object;
         }
       >;
       // Turn off one or more lights.
@@ -710,8 +506,8 @@ declare module "@hakit/core" {
         {
           // Duration it takes to get to next state.
           transition?: number;
-          // Tell light to flash, can be either value short or long.
-          flash?: "long" | "short";
+          // undefined
+          advanced_fields?: object;
         }
       >;
       // Toggles one or more lights, from on to off, or, off to on, based on their current state.
@@ -722,198 +518,32 @@ declare module "@hakit/core" {
           transition?: number;
           // The color in RGB format. A list of three integers between 0 and 255 representing the values of red, green, and blue. @example [255, 100, 100]
           rgb_color?: [number, number, number];
-          // A human-readable color name.
-          color_name?:
-            | "homeassistant"
-            | "aliceblue"
-            | "antiquewhite"
-            | "aqua"
-            | "aquamarine"
-            | "azure"
-            | "beige"
-            | "bisque"
-            | "blanchedalmond"
-            | "blue"
-            | "blueviolet"
-            | "brown"
-            | "burlywood"
-            | "cadetblue"
-            | "chartreuse"
-            | "chocolate"
-            | "coral"
-            | "cornflowerblue"
-            | "cornsilk"
-            | "crimson"
-            | "cyan"
-            | "darkblue"
-            | "darkcyan"
-            | "darkgoldenrod"
-            | "darkgray"
-            | "darkgreen"
-            | "darkgrey"
-            | "darkkhaki"
-            | "darkmagenta"
-            | "darkolivegreen"
-            | "darkorange"
-            | "darkorchid"
-            | "darkred"
-            | "darksalmon"
-            | "darkseagreen"
-            | "darkslateblue"
-            | "darkslategray"
-            | "darkslategrey"
-            | "darkturquoise"
-            | "darkviolet"
-            | "deeppink"
-            | "deepskyblue"
-            | "dimgray"
-            | "dimgrey"
-            | "dodgerblue"
-            | "firebrick"
-            | "floralwhite"
-            | "forestgreen"
-            | "fuchsia"
-            | "gainsboro"
-            | "ghostwhite"
-            | "gold"
-            | "goldenrod"
-            | "gray"
-            | "green"
-            | "greenyellow"
-            | "grey"
-            | "honeydew"
-            | "hotpink"
-            | "indianred"
-            | "indigo"
-            | "ivory"
-            | "khaki"
-            | "lavender"
-            | "lavenderblush"
-            | "lawngreen"
-            | "lemonchiffon"
-            | "lightblue"
-            | "lightcoral"
-            | "lightcyan"
-            | "lightgoldenrodyellow"
-            | "lightgray"
-            | "lightgreen"
-            | "lightgrey"
-            | "lightpink"
-            | "lightsalmon"
-            | "lightseagreen"
-            | "lightskyblue"
-            | "lightslategray"
-            | "lightslategrey"
-            | "lightsteelblue"
-            | "lightyellow"
-            | "lime"
-            | "limegreen"
-            | "linen"
-            | "magenta"
-            | "maroon"
-            | "mediumaquamarine"
-            | "mediumblue"
-            | "mediumorchid"
-            | "mediumpurple"
-            | "mediumseagreen"
-            | "mediumslateblue"
-            | "mediumspringgreen"
-            | "mediumturquoise"
-            | "mediumvioletred"
-            | "midnightblue"
-            | "mintcream"
-            | "mistyrose"
-            | "moccasin"
-            | "navajowhite"
-            | "navy"
-            | "navyblue"
-            | "oldlace"
-            | "olive"
-            | "olivedrab"
-            | "orange"
-            | "orangered"
-            | "orchid"
-            | "palegoldenrod"
-            | "palegreen"
-            | "paleturquoise"
-            | "palevioletred"
-            | "papayawhip"
-            | "peachpuff"
-            | "peru"
-            | "pink"
-            | "plum"
-            | "powderblue"
-            | "purple"
-            | "red"
-            | "rosybrown"
-            | "royalblue"
-            | "saddlebrown"
-            | "salmon"
-            | "sandybrown"
-            | "seagreen"
-            | "seashell"
-            | "sienna"
-            | "silver"
-            | "skyblue"
-            | "slateblue"
-            | "slategray"
-            | "slategrey"
-            | "snow"
-            | "springgreen"
-            | "steelblue"
-            | "tan"
-            | "teal"
-            | "thistle"
-            | "tomato"
-            | "turquoise"
-            | "violet"
-            | "wheat"
-            | "white"
-            | "whitesmoke"
-            | "yellow"
-            | "yellowgreen";
-          // Color in hue/sat format. A list of two integers. Hue is 0-360 and Sat is 0-100. @example [300, 70]
-          hs_color?: [number, number];
-          // Color in XY-format. A list of two decimal numbers between 0 and 1. @example [0.52, 0.43]
-          xy_color?: [number, number];
-          // Color temperature in mireds.
-          color_temp?: number | object;
           // Color temperature in Kelvin.
           kelvin?: number | object;
-          // Number indicating brightness, where 0 turns the light off, 1 is the minimum brightness, and 255 is the maximum brightness.
-          brightness?: number;
           // Number indicating the percentage of full brightness, where 0 turns the light off, 1 is the minimum brightness, and 100 is the maximum brightness.
           brightness_pct?: number;
-          // Set the light to white mode.
-          white?: boolean;
-          // Name of a light profile to use. @example relax
-          profile?: string;
-          // Tell light to flash, can be either value short or long.
-          flash?: "long" | "short";
           // Light effect.
           effect?: string;
+          // undefined
+          advanced_fields?: object;
         }
       >;
     };
-    inputButton: {
+    inputNumber: {
       // Reloads helpers from the YAML-configuration.
       reload: ServiceFunction<T, object>;
-      // Mimics the physical button press on the device.
-      press: ServiceFunction<T, object>;
-    };
-    inputBoolean: {
-      // Reloads helpers from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-      // Turns on the helper.
-      turnOn: ServiceFunction<T, object>;
-      // Turns off the helper.
-      turnOff: ServiceFunction<T, object>;
-      // Toggles the helper on/off.
-      toggle: ServiceFunction<T, object>;
-    };
-    zone: {
-      // Reloads zones from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
+      // Sets the value.
+      setValue: ServiceFunction<
+        T,
+        {
+          // The target value.
+          value: number;
+        }
+      >;
+      // Increments the value by 1 step.
+      increment: ServiceFunction<T, object>;
+      // Decrements the current value by 1 step.
+      decrement: ServiceFunction<T, object>;
     };
     inputSelect: {
       // Reloads helpers from the YAML-configuration.
@@ -954,6 +584,26 @@ declare module "@hakit/core" {
           options: object;
         }
       >;
+    };
+    inputBoolean: {
+      // Reloads helpers from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+      // Turns on the helper.
+      turnOn: ServiceFunction<T, object>;
+      // Turns off the helper.
+      turnOff: ServiceFunction<T, object>;
+      // Toggles the helper on/off.
+      toggle: ServiceFunction<T, object>;
+    };
+    inputButton: {
+      // Reloads helpers from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+      // Mimics the physical button press on the device.
+      press: ServiceFunction<T, object>;
+    };
+    zone: {
+      // Reloads zones from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
     };
     template: {
       // Reloads template entities from the YAML-configuration.
@@ -1023,6 +673,32 @@ declare module "@hakit/core" {
         }
       >;
     };
+    conversation: {
+      // Launches a conversation from a transcribed text.
+      process: ServiceFunction<
+        T,
+        {
+          // Transcribed text input. @example Turn all lights on
+          text: string;
+          // Language of text. Defaults to server language. @example NL
+          language?: string;
+          // Conversation agent to process your request. The conversation agent is the brains of your assistant. It processes the incoming text commands. @example homeassistant
+          agent_id?: object;
+          // ID of the conversation, to be able to continue a previous conversation @example my_conversation_1
+          conversation_id?: string;
+        }
+      >;
+      // Reloads the intent configuration.
+      reload: ServiceFunction<
+        T,
+        {
+          // Language to clear cached intents for. Defaults to server language. @example NL
+          language?: string;
+          // Conversation agent to reload. @example homeassistant
+          agent_id?: object;
+        }
+      >;
+    };
     cover: {
       // Opens a cover.
       openCover: ServiceFunction<T, object>;
@@ -1057,259 +733,31 @@ declare module "@hakit/core" {
       // Toggles a cover tilt open/closed.
       toggleCoverTilt: ServiceFunction<T, object>;
     };
-    commandLine: {
-      // Reloads command line configuration from the YAML-configuration.
+    script: {
+      //
+      castCameraToDrivewayMonitor: ServiceFunction<T, object>;
+      //
+      turnOffAllLights: ServiceFunction<T, object>;
+      //
+      ventilationOnFullSpeed: ServiceFunction<T, object>;
+      //
+      turnVentilationOff: ServiceFunction<T, object>;
+      //
+      goodMorning: ServiceFunction<T, object>;
+      //
+      toggleVentilation: ServiceFunction<T, object>;
+      //
+      timedBedroomFan: ServiceFunction<T, object>;
+      //
+      showHaSettingsOnTablet: ServiceFunction<T, object>;
+      // Reloads all the available scripts.
       reload: ServiceFunction<T, object>;
-    };
-    webrtc: {
-      // Create a temporary or permanent link to a stream (enter 'url' or 'entity')
-      createLink: ServiceFunction<
-        T,
-        {
-          // Create a random or permanent ID for your link @example fd0a53ca-e9ab-4e7a-86a2-441642b16ae1
-          link_id: string;
-          // Link to RTSP-stream @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
-          url?: string;
-          // Camera entity @example camera.generic_stream
-          entity?: string;
-          // How many times a link can be opened (0 - unlimit) @example 1
-          open_limit?: number;
-          // How many seconds will the link live (0 - unlimit) @example 60
-          time_to_live?: number;
-        }
-      >;
-      // Cast stream to Chromecast device via DashCast application
-      dashCast: ServiceFunction<
-        T,
-        {
-          // Media player entity @example media_player.mibox4
-          entity_id: string;
-          // Link to RTSP-stream @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
-          url?: string;
-          // Force restart DashCast application
-          force?: boolean;
-          // Camera entity @example camera.generic_stream
-          entity?: string;
-        }
-      >;
-    };
-    tado: {
-      // Add meter readings to Tado Energy IQ.
-      addMeterReading: ServiceFunction<
-        T,
-        {
-          // Config entry to add meter readings to.
-          config_entry: object;
-          // Reading in m³ or kWh without decimals.
-          reading: number;
-        }
-      >;
-      // Turns on climate entities for a set time.
-      setClimateTimer: ServiceFunction<
-        T,
-        {
-          // Temperature to set climate entity to.
-          temperature: number;
-          // Choose this or Overlay. Set the time period for the change if you want to be specific. Alternatively use Overlay. @example 01:30:00
-          time_period?: string;
-          // Choose this or Time Period. Allows you to choose an overlay. MANUAL:=Overlay until user removes; NEXT_TIME_BLOCK:=Overlay until next timeblock; TADO_DEFAULT:=Overlay based on tado app setting. @example MANUAL
-          requested_overlay?: "NEXT_TIME_BLOCK" | "MANUAL" | "TADO_DEFAULT";
-        }
-      >;
-      // Sets the temperature offset of climate entities.
-      setClimateTemperatureOffset: ServiceFunction<
-        T,
-        {
-          // Offset you would like (depending on your device).
-          offset?: number;
-        }
-      >;
-      // Turns on water heater for a set time.
-      setWaterHeaterTimer: ServiceFunction<
-        T,
-        {
-          // Set the time period for the boost. @example 01:30:00
-          time_period: string;
-          // Temperature to set heater to.
-          temperature?: number;
-        }
-      >;
-    };
-    inputText: {
-      // Reloads helpers from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-      // Sets the value.
-      setValue: ServiceFunction<
-        T,
-        {
-          // The target value. @example This is an example text
-          value: string;
-        }
-      >;
-    };
-    mqtt: {
-      // Publishes a message to an MQTT topic.
-      publish: ServiceFunction<
-        T,
-        {
-          // Topic to publish to. @example /homeassistant/hello
-          topic: string;
-          // The payload to publish. @example This is great
-          payload?: string;
-          // Template to render as a payload value. If a payload is provided, the template is ignored. @example {{ states('sensor.temperature') }}
-          payload_template?: object;
-          // Quality of Service to use. 0: At most once. 1: At least once. 2: Exactly once.
-          qos?: "0" | "1" | "2";
-          // If the message should have the retain flag set. If set, the broker stores the most recent message on a topic.
-          retain?: boolean;
-        }
-      >;
-      // Writes all messages on a specific topic into the `mqtt_dump.txt` file in your configuration folder.
-      dump: ServiceFunction<
-        T,
-        {
-          // Topic to listen to. @example OpenZWave/#
-          topic?: string;
-          // How long we should listen for messages in seconds.
-          duration?: number;
-        }
-      >;
-      // Reloads MQTT entities from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-    };
-    counter: {
-      // Increments a counter.
-      increment: ServiceFunction<T, object>;
-      // Decrements a counter.
-      decrement: ServiceFunction<T, object>;
-      // Resets a counter.
-      reset: ServiceFunction<T, object>;
-      // Sets the counter value.
-      setValue: ServiceFunction<
-        T,
-        {
-          // The new counter value the entity should be set to.
-          value: number;
-        }
-      >;
-    };
-    browserMod: {
-      // Run a sequence of services
-      sequence: ServiceFunction<
-        T,
-        {
-          // List of services to run
-          sequence?: object;
-        }
-      >;
-      // Wait for a time
-      delay: ServiceFunction<
-        T,
-        {
-          // Time to wait (ms)
-          time?: number;
-        }
-      >;
-      // Display a popup
-      popup: ServiceFunction<
-        T,
-        {
-          // Popup title
-          title?: string;
-          // Popup content (Test or lovelace card configuration)
-          content: object;
-          //
-          size?: "normal" | "wide" | "fullscreen";
-          // Text of the right button
-          right_button?: string;
-          // Action to perform when the right button is pressed
-          right_button_action?: object;
-          // Text of the left button
-          left_button?: string;
-          // Action to perform when left button is pressed
-          left_button_action?: object;
-          // Whether the popup can be closed by the user without action
-          dismissable?: boolean;
-          // Action to perform when popup is dismissed
-          dismiss_action?: object;
-          // Close the popup automatically on mouse, pointer or keyboard activity
-          autoclose?: boolean;
-          // Time before closing (ms)
-          timeout?: number;
-          // Action to perform when popup is closed by timeout
-          timeout_action?: object;
-          // CSS code to apply to the popup window
-          style?: string;
-        }
-      >;
-      // Show more-info dialog
-      moreInfo: ServiceFunction<
-        T,
-        {
-          //
-          entity: string;
-          //
-          large?: boolean;
-          //
-          ignore_popup_card?: boolean;
-        }
-      >;
-      // Close a popup
-      closePopup: ServiceFunction<T, object>;
-      // Display a short notification
-      notification: ServiceFunction<
-        T,
-        {
-          // Message to display
-          message: string;
-          // Time before closing (ms)
-          duration?: number;
-          // Text of optional action button
-          action_text?: string;
-          // Action to perform when the action button is pressed
-          action?: object;
-        }
-      >;
-      // Navigate browser to a different page
-      navigate: ServiceFunction<
-        T,
-        {
-          // Target path
-          path?: string;
-        }
-      >;
-      // Refresh page
-      refresh: ServiceFunction<T, object>;
-      // Change the current theme
-      setTheme: ServiceFunction<
-        T,
-        {
-          // Name of theme or 'auto'
-          theme?: string;
-          // Dark/light mode
-          dark?: "auto" | "light" | "dark";
-          // Primary theme color
-          primaryColor?: object;
-          // Accent theme color
-          accentColor?: object;
-        }
-      >;
-      // Print text to browser console
-      console: ServiceFunction<
-        T,
-        {
-          // Text to print
-          message?: string;
-        }
-      >;
-      // Run arbitrary JavaScript code
-      javascript: ServiceFunction<
-        T,
-        {
-          // JavaScript code to run
-          code?: object;
-        }
-      >;
+      // Runs the sequence of actions defined in a script.
+      turnOn: ServiceFunction<T, object>;
+      // Stops a running script.
+      turnOff: ServiceFunction<T, object>;
+      // Toggle a script. Starts it, if isn't running, stops it otherwise.
+      toggle: ServiceFunction<T, object>;
     };
     mediaPlayer: {
       // Turns on the power of the media player.
@@ -1457,49 +905,123 @@ declare module "@hakit/core" {
         }
       >;
     };
-    wakeOnLan: {
-      // Sends a 'magic packet' to wake up a device with 'Wake-On-LAN' capabilities.
-      sendMagicPacket: ServiceFunction<
+    browserMod: {
+      // Run a sequence of services
+      sequence: ServiceFunction<
         T,
         {
-          // MAC address of the device to wake up. @example aa:bb:cc:dd:ee:ff
-          mac: string;
-          // Broadcast IP where to send the magic packet. @example 192.168.255.255
-          broadcast_address?: string;
-          // Port where to send the magic packet.
-          broadcast_port?: number;
+          // List of services to run
+          sequence?: object;
         }
       >;
-    };
-    script: {
-      //
-      castCameraToDrivewayMonitor: ServiceFunction<T, object>;
-      //
-      turnOffAllLights: ServiceFunction<T, object>;
-      //
-      ventilationOnFullSpeed: ServiceFunction<T, object>;
-      //
-      turnVentilationOff: ServiceFunction<T, object>;
-      //
-      goodMorning: ServiceFunction<T, object>;
-      //
-      toggleVentilation: ServiceFunction<T, object>;
-      //
-      timedBedroomFan: ServiceFunction<T, object>;
-      //
-      showHaSettingsOnTablet: ServiceFunction<T, object>;
-      // Reloads all the available scripts.
-      reload: ServiceFunction<T, object>;
-      // Runs the sequence of actions defined in a script.
-      turnOn: ServiceFunction<T, object>;
-      // Stops a running script.
-      turnOff: ServiceFunction<T, object>;
-      // Toggle a script. Starts it, if isn't running, stops it otherwise.
-      toggle: ServiceFunction<T, object>;
-    };
-    schedule: {
-      // Reloads schedules from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
+      // Wait for a time
+      delay: ServiceFunction<
+        T,
+        {
+          // Time to wait (ms)
+          time?: number;
+        }
+      >;
+      // Display a popup
+      popup: ServiceFunction<
+        T,
+        {
+          // Popup title
+          title?: string;
+          // Popup content (Test or lovelace card configuration)
+          content: object;
+          //
+          size?: "normal" | "wide" | "fullscreen";
+          // Text of the right button
+          right_button?: string;
+          // Action to perform when the right button is pressed
+          right_button_action?: object;
+          // Text of the left button
+          left_button?: string;
+          // Action to perform when left button is pressed
+          left_button_action?: object;
+          // Whether the popup can be closed by the user without action
+          dismissable?: boolean;
+          // Action to perform when popup is dismissed
+          dismiss_action?: object;
+          // Close the popup automatically on mouse, pointer or keyboard activity
+          autoclose?: boolean;
+          // Time before closing (ms)
+          timeout?: number;
+          // Action to perform when popup is closed by timeout
+          timeout_action?: object;
+          // CSS code to apply to the popup window
+          style?: string;
+        }
+      >;
+      // Show more-info dialog
+      moreInfo: ServiceFunction<
+        T,
+        {
+          //
+          entity: string;
+          //
+          large?: boolean;
+          //
+          ignore_popup_card?: boolean;
+        }
+      >;
+      // Close a popup
+      closePopup: ServiceFunction<T, object>;
+      // Display a short notification
+      notification: ServiceFunction<
+        T,
+        {
+          // Message to display
+          message: string;
+          // Time before closing (ms)
+          duration?: number;
+          // Text of optional action button
+          action_text?: string;
+          // Action to perform when the action button is pressed
+          action?: object;
+        }
+      >;
+      // Navigate browser to a different page
+      navigate: ServiceFunction<
+        T,
+        {
+          // Target path
+          path?: string;
+        }
+      >;
+      // Refresh page
+      refresh: ServiceFunction<T, object>;
+      // Change the current theme
+      setTheme: ServiceFunction<
+        T,
+        {
+          // Name of theme or 'auto'
+          theme?: string;
+          // Dark/light mode
+          dark?: "auto" | "light" | "dark";
+          // Primary theme color
+          primaryColor?: object;
+          // Accent theme color
+          accentColor?: object;
+        }
+      >;
+      // Print text to browser console
+      console: ServiceFunction<
+        T,
+        {
+          // Text to print
+          message?: string;
+        }
+      >;
+      // Run arbitrary JavaScript code
+      javascript: ServiceFunction<
+        T,
+        {
+          // JavaScript code to run
+          code?: object;
+        }
+      >;
     };
     inputDatetime: {
       // Reloads helpers from the YAML-configuration.
@@ -1516,6 +1038,144 @@ declare module "@hakit/core" {
           datetime?: string;
           // The target date & time, expressed by a UNIX timestamp.
           timestamp?: number;
+        }
+      >;
+    };
+    schedule: {
+      // Reloads schedules from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+    };
+    commandLine: {
+      // Reloads command line configuration from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+    };
+    inputText: {
+      // Reloads helpers from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+      // Sets the value.
+      setValue: ServiceFunction<
+        T,
+        {
+          // The target value. @example This is an example text
+          value: string;
+        }
+      >;
+    };
+    googleAssistant: {
+      // Sends a request_sync command to Google.
+      requestSync: ServiceFunction<
+        T,
+        {
+          // Only needed for automations. Specific Home Assistant user id (not username, ID in configuration > users > under username) to sync with Google Assistant. Do not need when you use this action through Home Assistant front end or API. Used in automation script or other place where context.user_id is missing.
+          agent_user_id?: string;
+        }
+      >;
+    };
+    tado: {
+      // Add meter readings to Tado Energy IQ.
+      addMeterReading: ServiceFunction<
+        T,
+        {
+          // Config entry to add meter readings to.
+          config_entry: object;
+          // Reading in m³ or kWh without decimals.
+          reading: number;
+        }
+      >;
+      // Turns on climate entities for a set time.
+      setClimateTimer: ServiceFunction<
+        T,
+        {
+          // Temperature to set climate entity to.
+          temperature: number;
+          // Choose this or Overlay. Set the time period for the change if you want to be specific. Alternatively use Overlay. @example 01:30:00
+          time_period?: string;
+          // Choose this or Time Period. Allows you to choose an overlay. MANUAL:=Overlay until user removes; NEXT_TIME_BLOCK:=Overlay until next timeblock; TADO_DEFAULT:=Overlay based on tado app setting. @example MANUAL
+          requested_overlay?: "NEXT_TIME_BLOCK" | "MANUAL" | "TADO_DEFAULT";
+        }
+      >;
+      // Sets the temperature offset of climate entities.
+      setClimateTemperatureOffset: ServiceFunction<
+        T,
+        {
+          // Offset you would like (depending on your device).
+          offset?: number;
+        }
+      >;
+      // Turns on water heater for a set time.
+      setWaterHeaterTimer: ServiceFunction<
+        T,
+        {
+          // Set the time period for the boost. @example 01:30:00
+          time_period: string;
+          // Temperature to set heater to.
+          temperature?: number;
+        }
+      >;
+    };
+    webrtc: {
+      // Create a temporary or permanent link to a stream (enter `url` or `entity`)
+      createLink: ServiceFunction<
+        T,
+        {
+          // Create a random or permanent ID for your link @example fd0a53ca-e9ab-4e7a-86a2-441642b16ae1
+          link_id: string;
+          // Link to RTSP-stream @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
+          url?: string;
+          // Camera entity_id @example camera.generic_stream
+          entity?: string;
+          // How many times a link can be opened (0 - unlimit)
+          open_limit?: number;
+          // How many seconds will the link live (0 - unlimit)
+          time_to_live?: number;
+        }
+      >;
+      // Cast stream to Chromecast device via DashCast application
+      dashCast: ServiceFunction<
+        T,
+        {
+          // Media player entity_id @example media_player.mibox4
+          entity_id: string;
+          // Link to RTSP-stream @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
+          url?: string;
+          // Camera entity_id @example camera.generic_stream
+          entity?: string;
+          // Additional card params
+          extra?: object;
+          // Force restart DashCast application
+          force?: boolean;
+          // Manual base URL to Hass server @example http://192.168.1.123:8123
+          hass_url?: string;
+        }
+      >;
+    };
+    wakeOnLan: {
+      // Sends a 'magic packet' to wake up a device with 'Wake-On-LAN' capabilities.
+      sendMagicPacket: ServiceFunction<
+        T,
+        {
+          // MAC address of the device to wake up. @example aa:bb:cc:dd:ee:ff
+          mac: string;
+          // Broadcast IP where to send the magic packet. @example 192.168.255.255
+          broadcast_address?: string;
+          // Port where to send the magic packet.
+          broadcast_port?: number;
+        }
+      >;
+    };
+    counter: {
+      // Increments a counter.
+      increment: ServiceFunction<T, object>;
+      // Decrements a counter.
+      decrement: ServiceFunction<T, object>;
+      // Resets a counter.
+      reset: ServiceFunction<T, object>;
+      // Sets the counter value.
+      setValue: ServiceFunction<
+        T,
+        {
+          // The new counter value the entity should be set to.
+          value: number;
         }
       >;
     };
@@ -1553,16 +1213,6 @@ declare module "@hakit/core" {
         }
       >;
     };
-    googleAssistant: {
-      // Sends a request_sync command to Google.
-      requestSync: ServiceFunction<
-        T,
-        {
-          // Only needed for automations. Specific Home Assistant user id (not username, ID in configuration > users > under username) to sync with Google Assistant. Do not need when you call this service through Home Assistant front end or API. Used in automation script or other place where context.user_id is missing.
-          agent_user_id?: string;
-        }
-      >;
-    };
     cast: {
       // Shows a dashboard view on a Chromecast device.
       showLovelaceView: ServiceFunction<
@@ -1577,26 +1227,18 @@ declare module "@hakit/core" {
         }
       >;
     };
-    weather: {
-      // Get weather forecast.
-      getForecast: ServiceFunction<
-        T,
-        {
-          // Forecast type: daily, hourly or twice daily.
-          type: "daily" | "hourly" | "twice_daily";
-        }
-      >;
-      // Get weather forecasts.
-      getForecasts: ServiceFunction<
-        T,
-        {
-          // Forecast type: daily, hourly or twice daily.
-          type: "daily" | "hourly" | "twice_daily";
-        }
-      >;
-    };
     notify: {
-      // Sends a notification that is visible in the **Notifications** panel.
+      // Sends a notification message.
+      sendMessage: ServiceFunction<
+        T,
+        {
+          // Your notification message.
+          message: string;
+          // Title for your notification message.
+          title?: string;
+        }
+      >;
+      // Sends a notification that is visible in the notifications panel.
       persistentNotification: ServiceFunction<
         T,
         {
@@ -1743,47 +1385,61 @@ declare module "@hakit/core" {
         }
       >;
     };
-    button: {
-      // Press the button entity.
-      press: ServiceFunction<T, object>;
+    mqtt: {
+      // Publishes a message to an MQTT topic.
+      publish: ServiceFunction<
+        T,
+        {
+          // Topic to publish to. @example /homeassistant/hello
+          topic: string;
+          // The payload to publish. @example This is great
+          payload?: string;
+          // Template to render as a payload value. If a payload is provided, the template is ignored. @example {{ states('sensor.temperature') }}
+          payload_template?: object;
+          // Quality of Service to use. 0: At most once. 1: At least once. 2: Exactly once.
+          qos?: "0" | "1" | "2";
+          // If the message should have the retain flag set. If set, the broker stores the most recent message on a topic.
+          retain?: boolean;
+        }
+      >;
+      // Writes all messages on a specific topic into the `mqtt_dump.txt` file in your configuration folder.
+      dump: ServiceFunction<
+        T,
+        {
+          // Topic to listen to. @example OpenZWave/#
+          topic?: string;
+          // How long we should listen for messages in seconds.
+          duration?: number;
+        }
+      >;
+      // Reloads MQTT entities from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
     };
-    number: {
-      // Sets the value of a number.
-      setValue: ServiceFunction<
+    hue: {
+      // Activates a Hue scene with more control over the options.
+      activateScene: ServiceFunction<
         T,
         {
-          // The target value to set. @example 42
-          value?: string;
+          // Transition duration it takes to bring devices to the state defined in the scene.
+          transition?: number;
+          // Enable dynamic mode of the scene.
+          dynamic?: boolean;
+          // Speed of dynamic palette for this scene.
+          speed?: number;
+          // Set brightness for the scene.
+          brightness?: number;
         }
       >;
-    };
-    select: {
-      // Selects the first option.
-      selectFirst: ServiceFunction<T, object>;
-      // Selects the last option.
-      selectLast: ServiceFunction<T, object>;
-      // Selects the next option.
-      selectNext: ServiceFunction<
+      // Activates a hue scene stored in the hue hub.
+      hueActivateScene: ServiceFunction<
         T,
         {
-          // If the option should cycle from the last to the first.
-          cycle?: boolean;
-        }
-      >;
-      // Selects an option.
-      selectOption: ServiceFunction<
-        T,
-        {
-          // Option to be selected. @example 'Item A'
-          option: string;
-        }
-      >;
-      // Selects the previous option.
-      selectPrevious: ServiceFunction<
-        T,
-        {
-          // If the option should cycle from the first to the last.
-          cycle?: boolean;
+          // Name of hue group/room from the hue app. @example Living Room
+          group_name?: string;
+          // Name of hue scene from the hue app. @example Energize
+          scene_name?: string;
+          // Enable dynamic mode of the scene (V2 bridges and supported scenes only).
+          dynamic?: boolean;
         }
       >;
     };
@@ -1851,31 +1507,139 @@ declare module "@hakit/core" {
         }
       >;
     };
-    fullyKiosk: {
-      // Loads a URL on Fully Kiosk Browser.
-      loadUrl: ServiceFunction<
+    button: {
+      // Press the button entity.
+      press: ServiceFunction<T, object>;
+    };
+    number: {
+      // Sets the value of a number.
+      setValue: ServiceFunction<
         T,
         {
-          // URL to load. @example https://home-assistant.io
-          url: string;
+          // The target value to set. @example 42
+          value?: string;
         }
       >;
-      // Starts an application on the device running Fully Kiosk Browser.
-      startApplication: ServiceFunction<
+    };
+    select: {
+      // Selects the first option.
+      selectFirst: ServiceFunction<T, object>;
+      // Selects the last option.
+      selectLast: ServiceFunction<T, object>;
+      // Selects the next option.
+      selectNext: ServiceFunction<
         T,
         {
-          // Package name of the application to start. @example de.ozerov.fully
-          application: string;
+          // If the option should cycle from the last to the first.
+          cycle?: boolean;
         }
       >;
-      // Sets a configuration parameter on Fully Kiosk Browser.
-      setConfig: ServiceFunction<
+      // Selects an option.
+      selectOption: ServiceFunction<
         T,
         {
-          // Configuration parameter to set. @example motionSensitivity
-          key: string;
-          // Value for the configuration parameter. @example 90
-          value: string;
+          // Option to be selected. @example 'Item A'
+          option: string;
+        }
+      >;
+      // Selects the previous option.
+      selectPrevious: ServiceFunction<
+        T,
+        {
+          // If the option should cycle from the first to the last.
+          cycle?: boolean;
+        }
+      >;
+    };
+    time: {
+      // Sets the time.
+      setValue: ServiceFunction<
+        T,
+        {
+          // The time to set. @example 22:15
+          time: object;
+        }
+      >;
+    };
+    vacuum: {
+      // Starts or resumes the cleaning task.
+      start: ServiceFunction<T, object>;
+      // Pauses the cleaning task.
+      pause: ServiceFunction<T, object>;
+      // Tells the vacuum cleaner to return to its dock.
+      returnToBase: ServiceFunction<T, object>;
+      // Tells the vacuum cleaner to do a spot clean-up.
+      cleanSpot: ServiceFunction<T, object>;
+      // Locates the vacuum cleaner robot.
+      locate: ServiceFunction<T, object>;
+      // Stops the current cleaning task.
+      stop: ServiceFunction<T, object>;
+      // Sets the fan speed of the vacuum cleaner.
+      setFanSpeed: ServiceFunction<
+        T,
+        {
+          // Fan speed. The value depends on the integration. Some integrations have speed steps, like 'medium'. Some use a percentage, between 0 and 100. @example low
+          fan_speed: string;
+        }
+      >;
+      // Sends a command to the vacuum cleaner.
+      sendCommand: ServiceFunction<
+        T,
+        {
+          // Command to execute. The commands are integration-specific. @example set_dnd_timer
+          command: string;
+          // Parameters for the command. The parameters are integration-specific. @example { 'key': 'value' }
+          params?: object;
+        }
+      >;
+    };
+    roborock: {
+      // Get the map and room information of your device.
+      getMaps: ServiceFunction<T, object>;
+    };
+    weather: {
+      // Get weather forecasts.
+      getForecasts: ServiceFunction<
+        T,
+        {
+          // Forecast type: daily, hourly or twice daily.
+          type: "daily" | "hourly" | "twice_daily";
+        }
+      >;
+    };
+    calendar: {
+      // Adds a new calendar event.
+      createEvent: ServiceFunction<
+        T,
+        {
+          // Defines the short summary or subject for the event. @example Department Party
+          summary: string;
+          // A more complete description of the event than the one provided by the summary. @example Meeting to provide technical review for 'Phoenix' design.
+          description?: string;
+          // The date and time the event should start. @example 2022-03-22 20:00:00
+          start_date_time?: object;
+          // The date and time the event should end. @example 2022-03-22 22:00:00
+          end_date_time?: object;
+          // The date the all-day event should start. @example 2022-03-22
+          start_date?: object;
+          // The date the all-day event should end (exclusive). @example 2022-03-23
+          end_date?: object;
+          // Days or weeks that you want to create the event in. @example {'days': 2} or {'weeks': 2}
+          in?: object;
+          // The location of the event. @example Conference Room - F123, Bldg. 002
+          location?: string;
+        }
+      >;
+      // Get events on a calendar within a time range.
+      getEvents: ServiceFunction<
+        T,
+        {
+          // Returns active events after this time (exclusive). When not set, defaults to now. @example 2022-03-22 20:00:00
+          start_date_time?: object;
+          // Returns active events before this time (exclusive). Cannot be used with 'duration'. @example 2022-03-22 22:00:00
+          end_date_time?: object;
+          // Returns active events from start_date_time until the specified duration.
+          duration?: object;
         }
       >;
     };
@@ -1995,76 +1759,6 @@ declare module "@hakit/core" {
         }
       >;
     };
-    time: {
-      // Sets the time.
-      setValue: ServiceFunction<
-        T,
-        {
-          // The time to set. @example 22:15
-          time: object;
-        }
-      >;
-    };
-    vacuum: {
-      // Starts or resumes the cleaning task.
-      start: ServiceFunction<T, object>;
-      // Pauses the cleaning task.
-      pause: ServiceFunction<T, object>;
-      // Tells the vacuum cleaner to return to its dock.
-      returnToBase: ServiceFunction<T, object>;
-      // Tells the vacuum cleaner to do a spot clean-up.
-      cleanSpot: ServiceFunction<T, object>;
-      // Locates the vacuum cleaner robot.
-      locate: ServiceFunction<T, object>;
-      // Stops the current cleaning task.
-      stop: ServiceFunction<T, object>;
-      // Sets the fan speed of the vacuum cleaner.
-      setFanSpeed: ServiceFunction<
-        T,
-        {
-          // Fan speed. The value depends on the integration. Some integrations have speed steps, like 'medium'. Some use a percentage, between 0 and 100. @example low
-          fan_speed: string;
-        }
-      >;
-      // Sends a command to the vacuum cleaner.
-      sendCommand: ServiceFunction<
-        T,
-        {
-          // Command to execute. The commands are integration-specific. @example set_dnd_timer
-          command: string;
-          // Parameters for the command. The parameters are integration-specific. @example { 'key': 'value' }
-          params?: object;
-        }
-      >;
-    };
-    hue: {
-      // Activates a Hue scene with more control over the options.
-      activateScene: ServiceFunction<
-        T,
-        {
-          // Transition duration it takes to bring devices to the state defined in the scene.
-          transition?: number;
-          // Enable dynamic mode of the scene.
-          dynamic?: boolean;
-          // Speed of dynamic palette for this scene.
-          speed?: number;
-          // Set brightness for the scene.
-          brightness?: number;
-        }
-      >;
-      // Activates a hue scene stored in the hue hub.
-      hueActivateScene: ServiceFunction<
-        T,
-        {
-          // Name of hue group/room from the hue app. @example Living Room
-          group_name?: string;
-          // Name of hue scene from the hue app. @example Energize
-          scene_name?: string;
-          // Enable dynamic mode of the scene (V2 bridges and supported scenes only).
-          dynamic?: boolean;
-        }
-      >;
-    };
     valve: {
       // Opens a valve.
       openValve: ServiceFunction<T, object>;
@@ -2082,6 +1776,10 @@ declare module "@hakit/core" {
       stopValve: ServiceFunction<T, object>;
       // Toggles a valve open/closed.
       toggle: ServiceFunction<T, object>;
+    };
+    uiLovelaceMinimalist: {
+      // Reload dashboard configuration for UI Lovelace Minimalist.
+      reload: ServiceFunction<T, object>;
     };
     sonos: {
       // Takes a snapshot of the media player.
@@ -2147,51 +1845,31 @@ declare module "@hakit/core" {
         }
       >;
     };
-    calendar: {
-      // Adds a new calendar event.
-      createEvent: ServiceFunction<
+    fullyKiosk: {
+      // Loads a URL on Fully Kiosk Browser.
+      loadUrl: ServiceFunction<
         T,
         {
-          // Defines the short summary or subject for the event. @example Department Party
-          summary: string;
-          // A more complete description of the event than the one provided by the summary. @example Meeting to provide technical review for 'Phoenix' design.
-          description?: string;
-          // The date and time the event should start. @example 2022-03-22 20:00:00
-          start_date_time?: object;
-          // The date and time the event should end. @example 2022-03-22 22:00:00
-          end_date_time?: object;
-          // The date the all-day event should start. @example 2022-03-22
-          start_date?: object;
-          // The date the all-day event should end (exclusive). @example 2022-03-23
-          end_date?: object;
-          // Days or weeks that you want to create the event in. @example {'days': 2} or {'weeks': 2}
-          in?: object;
-          // The location of the event. @example Conference Room - F123, Bldg. 002
-          location?: string;
+          // URL to load. @example https://home-assistant.io
+          url: string;
         }
       >;
-      // Lists events on a calendar within a time range.
-      listEvents: ServiceFunction<
+      // Starts an application on the device running Fully Kiosk Browser.
+      startApplication: ServiceFunction<
         T,
         {
-          // Returns active events after this time (exclusive). When not set, defaults to now. @example 2022-03-22 20:00:00
-          start_date_time?: object;
-          // Returns active events before this time (exclusive). Cannot be used with 'duration'. @example 2022-03-22 22:00:00
-          end_date_time?: object;
-          // Returns active events from start_date_time until the specified duration.
-          duration?: object;
+          // Package name of the application to start. @example de.ozerov.fully
+          application: string;
         }
       >;
-      // Get events on a calendar within a time range.
-      getEvents: ServiceFunction<
+      // Sets a configuration parameter on Fully Kiosk Browser.
+      setConfig: ServiceFunction<
         T,
         {
-          // Returns active events after this time (exclusive). When not set, defaults to now. @example 2022-03-22 20:00:00
-          start_date_time?: object;
-          // Returns active events before this time (exclusive). Cannot be used with 'duration'. @example 2022-03-22 22:00:00
-          end_date_time?: object;
-          // Returns active events from start_date_time until the specified duration.
-          duration?: object;
+          // Configuration parameter to set. @example motionSensitivity
+          key: string;
+          // Value for the configuration parameter. @example 90
+          value: string;
         }
       >;
     };
@@ -2276,268 +1954,6 @@ declare module "@hakit/core" {
       >;
       // Reloads the automation configuration.
       reload: ServiceFunction<T, object>;
-    };
-    uiLovelaceMinimalist: {
-      // Reload dashboard configuration for UI Lovelace Minimalist.
-      reload: ServiceFunction<T, object>;
-    };
-    zha: {
-      // Allows nodes to join the Zigbee network.
-      permit: ServiceFunction<
-        T,
-        {
-          // Time to permit joins.
-          duration?: number;
-          // IEEE address of the node permitting new joins. @example 00:0d:6f:00:05:7d:2d:34
-          ieee?: string;
-          // IEEE address of the joining device (must be used with the install code). @example 00:0a:bf:00:01:10:23:35
-          source_ieee?: string;
-          // Install code of the joining device (must be used with the source_ieee). @example 1234-5678-1234-5678-AABB-CCDD-AABB-CCDD-EEFF
-          install_code?: string;
-          // Value of the QR install code (different between vendors). @example Z:000D6FFFFED4163B$I:52797BF4A5084DAA8E1712B61741CA024051
-          qr_code?: string;
-        }
-      >;
-      // Removes a node from the Zigbee network.
-      remove: ServiceFunction<
-        T,
-        {
-          // IEEE address of the node to remove. @example 00:0d:6f:00:05:7d:2d:34
-          ieee: string;
-        }
-      >;
-      // Sets an attribute value for the specified cluster on the specified entity.
-      setZigbeeClusterAttribute: ServiceFunction<
-        T,
-        {
-          // IEEE address for the device. @example 00:0d:6f:00:05:7d:2d:34
-          ieee: string;
-          // Endpoint ID for the cluster.
-          endpoint_id: number;
-          // ZCL cluster to retrieve attributes for.
-          cluster_id: number;
-          // Type of the cluster.
-          cluster_type?: "in" | "out";
-          // ID of the attribute to set.
-          attribute: number;
-          // Value to write to the attribute. @example 1
-          value: string;
-          // Manufacturer code. Use a value of '-1' to force no code to be set. @example 252
-          manufacturer?: string;
-        }
-      >;
-      // Issues a command on the specified cluster on the specified entity.
-      issueZigbeeClusterCommand: ServiceFunction<
-        T,
-        {
-          // IEEE address for the device. @example 00:0d:6f:00:05:7d:2d:34
-          ieee: string;
-          // Endpoint ID for the cluster.
-          endpoint_id: number;
-          // ZCL cluster to retrieve attributes for.
-          cluster_id: number;
-          // Type of the cluster.
-          cluster_type?: "in" | "out";
-          // ID of the command to execute.
-          command: number;
-          // Type of the command to execute.
-          command_type: "client" | "server";
-          // Arguments to pass to the command. @example [arg1, arg2, argN]
-          args?: object;
-          // Parameters to pass to the command.
-          params?: object;
-          // Manufacturer code. Use a value of '-1' to force no code to be set. @example 252
-          manufacturer?: string;
-        }
-      >;
-      // Issue command on the specified cluster on the specified group.
-      issueZigbeeGroupCommand: ServiceFunction<
-        T,
-        {
-          // Hexadecimal address of the group. @example 546
-          group: string;
-          // ZCL cluster to send command to.
-          cluster_id: number;
-          // Type of the cluster.
-          cluster_type?: "in" | "out";
-          // ID of the command to execute.
-          command: number;
-          // Arguments to pass to the command. @example [arg1, arg2, argN]
-          args?: object;
-          // Manufacturer code. Use a value of '-1' to force no code to be set. @example 252
-          manufacturer?: string;
-        }
-      >;
-      // This service uses the WD capabilities to emit a quick audible/visible pulse called a 'squawk'. The squawk command has no effect if the WD is currently active (warning in progress).
-      warningDeviceSquawk: ServiceFunction<
-        T,
-        {
-          // IEEE address for the device. @example 00:0d:6f:00:05:7d:2d:34
-          ieee: string;
-          // The Squawk Mode field is used as a 4-bit enumeration, and can have one of the values shown in Table 8-24 of the ZCL spec - Squawk Mode Field. The exact operation of each mode (how the WD “squawks”) is implementation specific.
-          mode?: number;
-          // The strobe field is used as a Boolean, and determines if the visual indication is also required in addition to the audible squawk, as shown in Table 8-25 of the ZCL spec - Strobe Bit.
-          strobe?: number;
-          // The squawk level field is used as a 2-bit enumeration, and determines the intensity of audible squawk sound as shown in Table 8-26 of the ZCL spec - Squawk Level Field Values.
-          level?: number;
-        }
-      >;
-      // This service starts the operation of the warning device. The warning device alerts the surrounding area by audible (siren) and visual (strobe) signals.
-      warningDeviceWarn: ServiceFunction<
-        T,
-        {
-          // IEEE address for the device. @example 00:0d:6f:00:05:7d:2d:34
-          ieee: string;
-          // The Warning Mode field is used as a 4-bit enumeration, can have one of the values 0-6 defined below in table 8-20 of the ZCL spec. The exact behavior of the warning device in each mode is according to the relevant security standards.
-          mode?: number;
-          // The Strobe field is used as a 2-bit enumeration, and determines if the visual indication is required in addition to the audible siren, as indicated in Table 8-21 of the ZCL spec. '0' means no strobe, '1' means strobe. If the strobe field is “1” and the Warning Mode is “0” (“Stop”), then only the strobe is activated.
-          strobe?: number;
-          // The Siren Level field is used as a 2-bit enumeration, and indicates the intensity of audible squawk sound as shown in Table 8-22 of the ZCL spec.
-          level?: number;
-          // Requested duration of warning, in seconds (16 bit). If both Strobe and Warning Mode are '0' this field is ignored.
-          duration?: number;
-          // Indicates the length of the flash cycle. This allows you to vary the flash duration for different alarm types (e.g., fire, police, burglar). The valid range is 0-100 in increments of 10. All other values must be rounded to the nearest valid value. Strobe calculates a duty cycle over a duration of one second. The ON state must precede the OFF state. For example, if the Strobe Duty Cycle field specifies “40,”, then the strobe flashes ON for 4/10ths of a second and then turns OFF for 6/10ths of a second.
-          duty_cycle?: number;
-          // Indicates the intensity of the strobe as shown in Table 8-23 of the ZCL spec. This attribute is designed to vary the output of the strobe (i.e., brightness) and not its frequency, which is detailed in section 8.4.2.3.1.6 of the ZCL spec.
-          intensity?: number;
-        }
-      >;
-      // Sets a user code on a lock.
-      setLockUserCode: ServiceFunction<
-        T,
-        {
-          // Code slot to set the code in. @example 1
-          code_slot: string;
-          // Code to set. @example 1234
-          user_code: string;
-        }
-      >;
-      // Enables a user code on a lock.
-      enableLockUserCode: ServiceFunction<
-        T,
-        {
-          // Code slot to enable. @example 1
-          code_slot: string;
-        }
-      >;
-      // Disables a user code on a lock.
-      disableLockUserCode: ServiceFunction<
-        T,
-        {
-          // Code slot to disable. @example 1
-          code_slot: string;
-        }
-      >;
-      // Clears a user code from a lock.
-      clearLockUserCode: ServiceFunction<
-        T,
-        {
-          // Code slot to clear code from. @example 1
-          code_slot: string;
-        }
-      >;
-    };
-    alarmControlPanel: {
-      // Disarms the alarm.
-      alarmDisarm: ServiceFunction<
-        T,
-        {
-          // Code to disarm the alarm. @example 1234
-          code?: string;
-        }
-      >;
-      // Sets the alarm to: _armed, but someone is home_.
-      alarmArmHome: ServiceFunction<
-        T,
-        {
-          // Code to arm the alarm. @example 1234
-          code?: string;
-        }
-      >;
-      // Sets the alarm to: _armed, no one home_.
-      alarmArmAway: ServiceFunction<
-        T,
-        {
-          // Code to arm the alarm. @example 1234
-          code?: string;
-        }
-      >;
-      // Sets the alarm to: _armed for the night_.
-      alarmArmNight: ServiceFunction<
-        T,
-        {
-          // Code to arm the alarm. @example 1234
-          code?: string;
-        }
-      >;
-      // Sets the alarm to: _armed for vacation_.
-      alarmArmVacation: ServiceFunction<
-        T,
-        {
-          // Code to arm the alarm. @example 1234
-          code?: string;
-        }
-      >;
-      // Arms the alarm while allowing to bypass a custom area.
-      alarmArmCustomBypass: ServiceFunction<
-        T,
-        {
-          // Code to arm the alarm. @example 1234
-          code?: string;
-        }
-      >;
-      // Enables an external alarm trigger.
-      alarmTrigger: ServiceFunction<
-        T,
-        {
-          // Code to arm the alarm. @example 1234
-          code?: string;
-        }
-      >;
-    };
-    lock: {
-      // Unlocks a lock.
-      unlock: ServiceFunction<
-        T,
-        {
-          // Code used to unlock the lock. @example 1234
-          code?: string;
-        }
-      >;
-      // Locks a lock.
-      lock: ServiceFunction<
-        T,
-        {
-          // Code used to lock the lock. @example 1234
-          code?: string;
-        }
-      >;
-      // Opens a lock.
-      open: ServiceFunction<
-        T,
-        {
-          // Code used to open the lock. @example 1234
-          code?: string;
-        }
-      >;
-    };
-    siren: {
-      // Turns the siren on.
-      turnOn: ServiceFunction<
-        T,
-        {
-          // The tone to emit. When `available_tones` property is a map, either the key or the value can be used. Must be supported by the integration. @example fire
-          tone?: string;
-          // The volume. 0 is inaudible, 1 is the maximum volume. Must be supported by the integration. @example 0.5
-          volume_level?: number;
-          // Number of seconds the sound is played. Must be supported by the integration. @example 15
-          duration?: string;
-        }
-      >;
-      // Turns the siren off.
-      turnOff: ServiceFunction<T, object>;
-      // Toggles the siren on/off.
-      toggle: ServiceFunction<T, object>;
     };
     eufySecurity: {
       // Pull latest data from cloud and update internal state
@@ -2658,6 +2074,264 @@ declare module "@hakit/core" {
         }
       >;
     };
+    lock: {
+      // Unlocks a lock.
+      unlock: ServiceFunction<
+        T,
+        {
+          // Code used to unlock the lock. @example 1234
+          code?: string;
+        }
+      >;
+      // Locks a lock.
+      lock: ServiceFunction<
+        T,
+        {
+          // Code used to lock the lock. @example 1234
+          code?: string;
+        }
+      >;
+      // Opens a lock.
+      open: ServiceFunction<
+        T,
+        {
+          // Code used to open the lock. @example 1234
+          code?: string;
+        }
+      >;
+    };
+    alarmControlPanel: {
+      // Disarms the alarm.
+      alarmDisarm: ServiceFunction<
+        T,
+        {
+          // Code to disarm the alarm. @example 1234
+          code?: string;
+        }
+      >;
+      // Sets the alarm to: _armed, but someone is home_.
+      alarmArmHome: ServiceFunction<
+        T,
+        {
+          // Code to arm the alarm. @example 1234
+          code?: string;
+        }
+      >;
+      // Sets the alarm to: _armed, no one home_.
+      alarmArmAway: ServiceFunction<
+        T,
+        {
+          // Code to arm the alarm. @example 1234
+          code?: string;
+        }
+      >;
+      // Sets the alarm to: _armed for the night_.
+      alarmArmNight: ServiceFunction<
+        T,
+        {
+          // Code to arm the alarm. @example 1234
+          code?: string;
+        }
+      >;
+      // Sets the alarm to: _armed for vacation_.
+      alarmArmVacation: ServiceFunction<
+        T,
+        {
+          // Code to arm the alarm. @example 1234
+          code?: string;
+        }
+      >;
+      // Arms the alarm while allowing to bypass a custom area.
+      alarmArmCustomBypass: ServiceFunction<
+        T,
+        {
+          // Code to arm the alarm. @example 1234
+          code?: string;
+        }
+      >;
+      // Enables an external alarm trigger.
+      alarmTrigger: ServiceFunction<
+        T,
+        {
+          // Code to arm the alarm. @example 1234
+          code?: string;
+        }
+      >;
+    };
+    zha: {
+      // Allows nodes to join the Zigbee network.
+      permit: ServiceFunction<
+        T,
+        {
+          // Time to permit joins.
+          duration?: number;
+          // IEEE address of the node permitting new joins. @example 00:0d:6f:00:05:7d:2d:34
+          ieee?: string;
+          // IEEE address of the joining device (must be used with the install code). @example 00:0a:bf:00:01:10:23:35
+          source_ieee?: string;
+          // Install code of the joining device (must be used with the source_ieee). @example 1234-5678-1234-5678-AABB-CCDD-AABB-CCDD-EEFF
+          install_code?: string;
+          // Value of the QR install code (different between vendors). @example Z:000D6FFFFED4163B$I:52797BF4A5084DAA8E1712B61741CA024051
+          qr_code?: string;
+        }
+      >;
+      // Removes a node from the Zigbee network.
+      remove: ServiceFunction<
+        T,
+        {
+          // IEEE address of the node to remove. @example 00:0d:6f:00:05:7d:2d:34
+          ieee: string;
+        }
+      >;
+      // Sets an attribute value for the specified cluster on the specified entity.
+      setZigbeeClusterAttribute: ServiceFunction<
+        T,
+        {
+          // IEEE address for the device. @example 00:0d:6f:00:05:7d:2d:34
+          ieee: string;
+          // Endpoint ID for the cluster.
+          endpoint_id: number;
+          // ZCL cluster to retrieve attributes for.
+          cluster_id: number;
+          // Type of the cluster.
+          cluster_type?: "in" | "out";
+          // ID of the attribute to set.
+          attribute: number;
+          // Value to write to the attribute. @example 1
+          value: string;
+          // Manufacturer code. Use a value of '-1' to force no code to be set. @example 252
+          manufacturer?: string;
+        }
+      >;
+      // Issues a command on the specified cluster on the specified entity.
+      issueZigbeeClusterCommand: ServiceFunction<
+        T,
+        {
+          // IEEE address for the device. @example 00:0d:6f:00:05:7d:2d:34
+          ieee: string;
+          // Endpoint ID for the cluster.
+          endpoint_id: number;
+          // ZCL cluster to retrieve attributes for.
+          cluster_id: number;
+          // Type of the cluster.
+          cluster_type?: "in" | "out";
+          // ID of the command to execute.
+          command: number;
+          // Type of the command to execute.
+          command_type: "client" | "server";
+          // Arguments to pass to the command. @example [arg1, arg2, argN]
+          args?: object;
+          // Parameters to pass to the command.
+          params?: object;
+          // Manufacturer code. Use a value of '-1' to force no code to be set. @example 252
+          manufacturer?: string;
+        }
+      >;
+      // Issue command on the specified cluster on the specified group.
+      issueZigbeeGroupCommand: ServiceFunction<
+        T,
+        {
+          // Hexadecimal address of the group. @example 546
+          group: string;
+          // ZCL cluster to send command to.
+          cluster_id: number;
+          // Type of the cluster.
+          cluster_type?: "in" | "out";
+          // ID of the command to execute.
+          command: number;
+          // Arguments to pass to the command. @example [arg1, arg2, argN]
+          args?: object;
+          // Manufacturer code. Use a value of '-1' to force no code to be set. @example 252
+          manufacturer?: string;
+        }
+      >;
+      // This action uses the WD capabilities to emit a quick audible/visible pulse called a 'squawk'. The squawk command has no effect if the WD is currently active (warning in progress).
+      warningDeviceSquawk: ServiceFunction<
+        T,
+        {
+          // IEEE address for the device. @example 00:0d:6f:00:05:7d:2d:34
+          ieee: string;
+          // The Squawk Mode field is used as a 4-bit enumeration, and can have one of the values shown in Table 8-24 of the ZCL spec - Squawk Mode Field. The exact operation of each mode (how the WD “squawks”) is implementation specific.
+          mode?: number;
+          // The strobe field is used as a Boolean, and determines if the visual indication is also required in addition to the audible squawk, as shown in Table 8-25 of the ZCL spec - Strobe Bit.
+          strobe?: number;
+          // The squawk level field is used as a 2-bit enumeration, and determines the intensity of audible squawk sound as shown in Table 8-26 of the ZCL spec - Squawk Level Field Values.
+          level?: number;
+        }
+      >;
+      // This action starts the operation of the warning device. The warning device alerts the surrounding area by audible (siren) and visual (strobe) signals.
+      warningDeviceWarn: ServiceFunction<
+        T,
+        {
+          // IEEE address for the device. @example 00:0d:6f:00:05:7d:2d:34
+          ieee: string;
+          // The Warning Mode field is used as a 4-bit enumeration, can have one of the values 0-6 defined below in table 8-20 of the ZCL spec. The exact behavior of the warning device in each mode is according to the relevant security standards.
+          mode?: number;
+          // The Strobe field is used as a 2-bit enumeration, and determines if the visual indication is required in addition to the audible siren, as indicated in Table 8-21 of the ZCL spec. '0' means no strobe, '1' means strobe. If the strobe field is “1” and the Warning Mode is “0” (“Stop”), then only the strobe is activated.
+          strobe?: number;
+          // The Siren Level field is used as a 2-bit enumeration, and indicates the intensity of audible squawk sound as shown in Table 8-22 of the ZCL spec.
+          level?: number;
+          // Requested duration of warning, in seconds (16 bit). If both Strobe and Warning Mode are '0' this field is ignored.
+          duration?: number;
+          // Indicates the length of the flash cycle. This allows you to vary the flash duration for different alarm types (e.g., fire, police, burglar). The valid range is 0-100 in increments of 10. All other values must be rounded to the nearest valid value. Strobe calculates a duty cycle over a duration of one second. The ON state must precede the OFF state. For example, if the Strobe Duty Cycle field specifies “40,”, then the strobe flashes ON for 4/10ths of a second and then turns OFF for 6/10ths of a second.
+          duty_cycle?: number;
+          // Indicates the intensity of the strobe as shown in Table 8-23 of the ZCL spec. This attribute is designed to vary the output of the strobe (i.e., brightness) and not its frequency, which is detailed in section 8.4.2.3.1.6 of the ZCL spec.
+          intensity?: number;
+        }
+      >;
+      // Sets a user code on a lock.
+      setLockUserCode: ServiceFunction<
+        T,
+        {
+          // Code slot to set the code in. @example 1
+          code_slot: string;
+          // Code to set. @example 1234
+          user_code: string;
+        }
+      >;
+      // Enables a user code on a lock.
+      enableLockUserCode: ServiceFunction<
+        T,
+        {
+          // Code slot to enable. @example 1
+          code_slot: string;
+        }
+      >;
+      // Disables a user code on a lock.
+      disableLockUserCode: ServiceFunction<
+        T,
+        {
+          // Code slot to disable. @example 1
+          code_slot: string;
+        }
+      >;
+      // Clears a user code from a lock.
+      clearLockUserCode: ServiceFunction<
+        T,
+        {
+          // Code slot to clear code from. @example 1
+          code_slot: string;
+        }
+      >;
+    };
+    siren: {
+      // Turns the siren on.
+      turnOn: ServiceFunction<
+        T,
+        {
+          // The tone to emit. When `available_tones` property is a map, either the key or the value can be used. Must be supported by the integration. @example fire
+          tone?: string;
+          // The volume. 0 is inaudible, 1 is the maximum volume. Must be supported by the integration. @example 0.5
+          volume_level?: number;
+          // Number of seconds the sound is played. Must be supported by the integration. @example 15
+          duration?: string;
+        }
+      >;
+      // Turns the siren off.
+      turnOff: ServiceFunction<T, object>;
+      // Toggles the siren on/off.
+      toggle: ServiceFunction<T, object>;
+    };
   }
   export interface CustomEntityNameContainer {
     names:
@@ -2673,7 +2347,6 @@ declare module "@hakit/core" {
       | "update.samba_share_update"
       | "update.studio_code_server_update"
       | "update.eufy_security_ws_update"
-      | "update.emulated_hue_update"
       | "update.home_assistant_operating_system_update"
       | "binary_sensor.humidity_rising"
       | "scene.ventilation_off"
@@ -2685,13 +2358,6 @@ declare module "@hakit/core" {
       | "group.office_lights"
       | "group.bedroom_lights"
       | "group.garden_lights"
-      | "input_boolean.minimalist_welcome_toggle"
-      | "zone.work_claire"
-      | "zone.ordina"
-      | "zone.parents_rens"
-      | "zone.parents_claire"
-      | "zone.vgz"
-      | "input_select.wled_live_override"
       | "light.bedroom_group"
       | "light.office_group"
       | "light.garden_group"
@@ -2701,6 +2367,13 @@ declare module "@hakit/core" {
       | "light.kitchen_group"
       | "light.living_room_spots"
       | "light.attic_group"
+      | "input_select.wled_live_override"
+      | "input_boolean.minimalist_welcome_toggle"
+      | "zone.work_claire"
+      | "zone.ordina"
+      | "zone.parents_rens"
+      | "zone.parents_claire"
+      | "zone.vgz"
       | "zone.home"
       | "sensor.count_lights_on"
       | "sensor.living_room_temperature"
@@ -2717,15 +2390,8 @@ declare module "@hakit/core" {
       | "sensor.time_date"
       | "sensor.time_utc"
       | "fan.mechanical_ventilation"
+      | "conversation.home_assistant"
       | "cover.garage_door_cover"
-      | "sensor.plex_recently_added"
-      | "sun.sun"
-      | "sensor.sun_next_dawn"
-      | "sensor.sun_next_dusk"
-      | "sensor.sun_next_midnight"
-      | "sensor.sun_next_noon"
-      | "sensor.sun_next_rising"
-      | "sensor.sun_next_setting"
       | "script.1638709314016"
       | "script.cast_camera_to_driveway_monitor"
       | "script.turn_off_all_lights"
@@ -2735,11 +2401,15 @@ declare module "@hakit/core" {
       | "script.toggle_ventilation"
       | "script.timed_bedroom_fan"
       | "script.show_ha_settings_on_tablet"
-      | "binary_sensor.morning"
-      | "binary_sensor.evening"
-      | "binary_sensor.night"
-      | "binary_sensor.afternoon"
-      | "camera.buienradar"
+      | "tag.217c05de_0873_415d_988f_9716201958eb"
+      | "sun.sun"
+      | "sensor.sun_next_dawn"
+      | "sensor.sun_next_dusk"
+      | "sensor.sun_next_midnight"
+      | "sensor.sun_next_noon"
+      | "sensor.sun_next_rising"
+      | "sensor.sun_next_setting"
+      | "sensor.plex_recently_added"
       | "binary_sensor.iphone_focus"
       | "device_tracker.iphone"
       | "sensor.iphone_sim_1"
@@ -2771,82 +2441,10 @@ declare module "@hakit/core" {
       | "sensor.pixel_5_battery_level"
       | "sensor.pixel_5_battery_state"
       | "sensor.pixel_5_charger_type"
-      | "weather.buienradar"
       | "device_tracker.oneplus_7t_pro"
       | "device_tracker.claire_s_telefoon"
       | "device_tracker.rens_iphone"
-      | "button.wled_restart_2"
-      | "light.wled_2"
-      | "number.wled_speed_2"
-      | "number.wled_intensity_2"
-      | "select.wled_live_override_2"
-      | "select.wled_playlist_2"
-      | "select.wled_preset_2"
-      | "select.wled_color_palette_2"
-      | "sensor.wled_estimated_current_2"
-      | "sensor.wled_led_count_2"
-      | "sensor.wled_max_current_2"
-      | "sensor.wled_ip"
-      | "switch.wled_nightlight_2"
-      | "switch.wled_sync_send_2"
-      | "switch.wled_sync_receive_2"
-      | "switch.wled_reverse_2"
-      | "update.wled_firmware_2"
-      | "sensor.cpu_temperature"
-      | "media_player.chromecast"
-      | "remote.chromecast"
-      | "sensor.neerslag_buienalarm_regen_data"
-      | "sensor.neerslag_buienradar_regen_data"
-      | "sensor.hacs"
-      | "binary_sensor.ib0819992320_connection_state"
-      | "binary_sensor.ru1795430400_battery"
-      | "binary_sensor.ru1795430400_connection_state"
-      | "binary_sensor.tado_power"
-      | "binary_sensor.tado_connectivity"
-      | "binary_sensor.tado_overlay"
-      | "binary_sensor.tado_window"
-      | "binary_sensor.tado_early_start"
-      | "binary_sensor.warm_water_power"
-      | "binary_sensor.warm_water_connectivity"
-      | "binary_sensor.warm_water_overlay"
-      | "device_tracker.claire_s_telefoon_2"
-      | "device_tracker.rens_iphone_2"
-      | "sensor.thuis_outdoor_temperature"
-      | "sensor.thuis_solar_percentage"
-      | "sensor.thuis_weather_condition"
-      | "sensor.thuis_tado_mode"
-      | "sensor.thuis_geofencing_mode"
-      | "sensor.thuis_automatic_geofencing"
-      | "sensor.tado_temperature"
-      | "sensor.tado_humidity"
-      | "sensor.tado_tado_mode"
-      | "sensor.tado_heating"
-      | "sensor.warm_water_tado_mode"
-      | "climate.tado"
-      | "water_heater.warm_water"
-      | "weather.huis"
-      | "binary_sensor.roborock_s8_mop_attached"
-      | "binary_sensor.roborock_s8_water_box_attached"
-      | "binary_sensor.roborock_s8_water_shortage"
-      | "binary_sensor.roborock_s8_cleaning"
-      | "select.roborock_s8_mop_intensity"
-      | "select.roborock_s8_mop_mode"
-      | "sensor.roborock_s8_main_brush_time_left"
-      | "sensor.roborock_s8_side_brush_time_left"
-      | "sensor.roborock_s8_filter_time_left"
-      | "sensor.roborock_s8_sensor_time_left"
-      | "sensor.roborock_s8_cleaning_time"
-      | "sensor.roborock_s8_total_cleaning_time"
-      | "sensor.roborock_s8_status"
-      | "sensor.roborock_s8_cleaning_area"
-      | "sensor.roborock_s8_total_cleaning_area"
-      | "sensor.roborock_s8_vacuum_error"
-      | "sensor.roborock_s8_battery"
-      | "sensor.roborock_s8_last_clean_begin"
-      | "sensor.roborock_s8_last_clean_end"
-      | "sensor.roborock_s8_cleaning_progress"
-      | "vacuum.roborock_s8"
-      | "number.roborock_s8_volume"
+      | "sensor.sonarr_upcoming"
       | "binary_sensor.hue_motion_sensor_hal_motion"
       | "binary_sensor.tv_entertainment_configuration"
       | "binary_sensor.entertainmentruimte_1_entertainment_configuration"
@@ -2875,7 +2473,6 @@ declare module "@hakit/core" {
       | "event.zolder_dimmer_button_1"
       | "event.niko_eetkamer_button_1"
       | "light.hue_go_1"
-      | "light.hue_milliskin_spot_3"
       | "light.hue_filament_bulb_3"
       | "light.hue_ambiance_spot_6"
       | "light.hue_ambiance_spot_1"
@@ -2893,6 +2490,7 @@ declare module "@hakit/core" {
       | "light.hue_sana"
       | "light.buitenverlichting_tuin"
       | "light.hue_filament_bulb_2"
+      | "light.hue_ambiance_spot_7"
       | "light.kantoor"
       | "light.garagedeur"
       | "light.hue_play_1"
@@ -2909,6 +2507,7 @@ declare module "@hakit/core" {
       | "scene.kantoor_savanne_zonsondergang"
       | "scene.bovenverdieping_savanne_zonsondergang"
       | "scene.benedenverdieping_nachtlampje"
+      | "scene.spotjes_keuken_concentrate"
       | "scene.slaapkamer_lentebloesem"
       | "scene.kantoor_concentreren"
       | "scene.spotjes_tropische_schemering"
@@ -2950,6 +2549,7 @@ declare module "@hakit/core" {
       | "scene.kleedkamer_gedimd"
       | "scene.kantoor_work_nighttime"
       | "scene.bovenverdieping_gedimd"
+      | "scene.spotjes_keuken_energize"
       | "scene.kantoor_lezen"
       | "scene.zolder_tokio"
       | "scene.hal_ontspannen"
@@ -2963,6 +2563,7 @@ declare module "@hakit/core" {
       | "scene.woonkamer_movie_scene"
       | "scene.woonkamer_night"
       | "scene.hal_nachtlampje"
+      | "scene.spotjes_keuken_read"
       | "scene.tuin_helder"
       | "scene.spotjes_nachtlampje"
       | "scene.tuin_gedimd"
@@ -2976,6 +2577,7 @@ declare module "@hakit/core" {
       | "scene.slaapkamer_savanne_zonsondergang"
       | "scene.woonkamer_de_rens_scene"
       | "scene.slaapkamer_avond"
+      | "scene.spotjes_keuken_rest"
       | "scene.zolder_energie"
       | "scene.woonkamer_soho"
       | "scene.slaapkamer_tropische_schemering"
@@ -2991,6 +2593,7 @@ declare module "@hakit/core" {
       | "scene.kleedkamer_nachtlampje"
       | "scene.woonkamer_rest"
       | "scene.bovenverdieping_tropische_schemering"
+      | "scene.spotjes_keuken_nightlight"
       | "scene.hal_lezen"
       | "scene.kantoor_tropische_schemering"
       | "scene.kantoor_helder"
@@ -3013,7 +2616,9 @@ declare module "@hakit/core" {
       | "scene.zolder_ontspannen"
       | "scene.benedenverdieping_gedimd"
       | "scene.hal_savanne_zonsondergang"
+      | "scene.spotjes_keuken_relax"
       | "scene.slaapkamer_concentreren"
+      | "scene.spotjes_keuken_natural_light"
       | "scene.woonkamer_natural_light"
       | "sensor.hue_motion_sensor_hal_temperature"
       | "sensor.hue_motion_sensor_hal_light_level"
@@ -3038,6 +2643,102 @@ declare module "@hakit/core" {
       | "switch.automation_hue_motion_sensor_hal"
       | "switch.automation_leaving_home"
       | "switch.automation_tuin_aan"
+      | "media_player.odido_tv_2"
+      | "remote.odido_tv"
+      | "media_player.chromecast"
+      | "remote.chromecast"
+      | "binary_sensor.roborock_s8_mop_attached"
+      | "binary_sensor.roborock_s8_water_box_attached"
+      | "binary_sensor.roborock_s8_water_shortage"
+      | "binary_sensor.roborock_s8_cleaning"
+      | "select.roborock_s8_mop_intensity"
+      | "select.roborock_s8_mop_mode"
+      | "sensor.roborock_s8_main_brush_time_left"
+      | "sensor.roborock_s8_side_brush_time_left"
+      | "sensor.roborock_s8_filter_time_left"
+      | "sensor.roborock_s8_sensor_time_left"
+      | "sensor.roborock_s8_cleaning_time"
+      | "sensor.roborock_s8_total_cleaning_time"
+      | "sensor.roborock_s8_status"
+      | "sensor.roborock_s8_cleaning_area"
+      | "sensor.roborock_s8_total_cleaning_area"
+      | "sensor.roborock_s8_vacuum_error"
+      | "sensor.roborock_s8_battery"
+      | "sensor.roborock_s8_last_clean_begin"
+      | "sensor.roborock_s8_last_clean_end"
+      | "sensor.roborock_s8_cleaning_progress"
+      | "vacuum.roborock_s8"
+      | "number.roborock_s8_volume"
+      | "switch.roborock_s8_child_lock"
+      | "switch.roborock_s8_do_not_disturb"
+      | "time.roborock_s8_do_not_disturb_begin"
+      | "time.roborock_s8_do_not_disturb_end"
+      | "binary_sensor.morning"
+      | "binary_sensor.evening"
+      | "binary_sensor.night"
+      | "binary_sensor.afternoon"
+      | "sensor.cpu_temperature"
+      | "sensor.neerslag_buienradar_regen_data"
+      | "sensor.neerslag_buienalarm_regen_data"
+      | "sensor.hacs"
+      | "weather.huis"
+      | "button.synchronize_devices"
+      | "camera.buienradar"
+      | "sensor.dcp_l2530dw_status"
+      | "sensor.dcp_l2530dw_page_counter"
+      | "sensor.dcp_l2530dw_duplex_unit_page_counter"
+      | "sensor.dcp_l2530dw_drum_remaining_lifetime"
+      | "sensor.dcp_l2530dw_drum_remaining_pages"
+      | "sensor.dcp_l2530dw_drum_page_counter"
+      | "sensor.dcp_l2530dw_black_toner_remaining"
+      | "binary_sensor.radarr_health"
+      | "calendar.radarr"
+      | "sensor.radarr_disk_space_movies"
+      | "binary_sensor.ib0819992320_connection_state"
+      | "binary_sensor.ru1795430400_battery"
+      | "binary_sensor.ru1795430400_connection_state"
+      | "binary_sensor.tado_power"
+      | "binary_sensor.tado_connectivity"
+      | "binary_sensor.tado_overlay"
+      | "binary_sensor.tado_window"
+      | "binary_sensor.tado_early_start"
+      | "binary_sensor.warm_water_power"
+      | "binary_sensor.warm_water_connectivity"
+      | "binary_sensor.warm_water_overlay"
+      | "device_tracker.claire_s_telefoon_2"
+      | "device_tracker.rens_iphone_2"
+      | "sensor.thuis_outdoor_temperature"
+      | "sensor.thuis_solar_percentage"
+      | "sensor.thuis_weather_condition"
+      | "sensor.thuis_tado_mode"
+      | "sensor.thuis_geofencing_mode"
+      | "sensor.thuis_automatic_geofencing"
+      | "sensor.tado_temperature"
+      | "sensor.tado_humidity"
+      | "sensor.tado_tado_mode"
+      | "sensor.tado_heating"
+      | "sensor.warm_water_tado_mode"
+      | "climate.tado"
+      | "button.wled_restart_2"
+      | "light.wled_2"
+      | "number.wled_speed_2"
+      | "number.wled_intensity_2"
+      | "select.wled_live_override_2"
+      | "select.wled_playlist_2"
+      | "select.wled_preset_2"
+      | "select.wled_color_palette_2"
+      | "sensor.wled_estimated_current_2"
+      | "sensor.wled_led_count_2"
+      | "sensor.wled_max_current_2"
+      | "sensor.wled_ip"
+      | "switch.wled_nightlight_2"
+      | "switch.wled_sync_send_2"
+      | "switch.wled_sync_receive_2"
+      | "switch.wled_reverse_2"
+      | "update.wled_firmware_2"
+      | "water_heater.warm_water"
+      | "binary_sensor.rpi_power_status"
+      | "weather.buienradar"
       | "button.shelly_plus_1_reboot"
       | "event.shellyplus1_a8032ab8a210_input_0"
       | "switch.garage_door"
@@ -3047,18 +2748,6 @@ declare module "@hakit/core" {
       | "cover.zonnescherm"
       | "sensor.zonnescherm_power"
       | "sensor.zonnescherm_energy"
-      | "media_player.lg_c8"
-      | "sensor.sonarr_upcoming"
-      | "switch.roborock_s8_child_lock"
-      | "switch.roborock_s8_do_not_disturb"
-      | "time.roborock_s8_do_not_disturb_begin"
-      | "time.roborock_s8_do_not_disturb_end"
-      | "button.synchronize_devices"
-      | "binary_sensor.rpi_power_status"
-      | "light.woonkamer"
-      | "light.kantoor_2"
-      | "light.keuken"
-      | "media_player.nest_wifi_kantoor"
       | "sensor.energy_production_today"
       | "sensor.energy_production_today_remaining"
       | "sensor.energy_production_tomorrow"
@@ -3067,18 +2756,63 @@ declare module "@hakit/core" {
       | "sensor.power_production_now"
       | "sensor.energy_current_hour"
       | "sensor.energy_next_hour"
-      | "binary_sensor.radarr_health"
-      | "calendar.radarr"
-      | "sensor.radarr_disk_space_movies"
+      | "media_player.lg_c8"
+      | "light.woonkamer"
+      | "light.kantoor_2"
+      | "light.keuken"
+      | "light.benedenverdieping"
+      | "light.kleedkamer_2"
+      | "light.slaapkamer"
+      | "light.hal"
+      | "light.spotjes_keuken"
+      | "light.bovenverdieping"
+      | "light.spotjes"
+      | "light.zolder"
+      | "media_player.nest_wifi_kantoor"
+      | "media_player.google_home_mini"
+      | "media_player.tv"
+      | "media_player.nest_hub"
+      | "media_player.odido_tv"
+      | "sensor.zonneplan_current_usage"
+      | "sensor.zonneplan_current_usage_measured_at"
+      | "sensor.zonneplan_sustainability_score"
+      | "sensor.zonneplan_current_electricity_tariff"
+      | "sensor.zonneplan_current_gas_tariff"
+      | "sensor.zonneplan_next_gas_tariff"
+      | "sensor.zonneplan_status_tip"
+      | "sensor.zonneplan_forcast_tariff_hour_1"
+      | "sensor.zonneplan_forcast_tariff_hour_2"
+      | "sensor.zonneplan_forcast_tariff_hour_3"
+      | "sensor.zonneplan_forcast_tariff_hour_4"
+      | "sensor.zonneplan_forcast_tariff_hour_5"
+      | "sensor.zonneplan_forcast_tariff_hour_6"
+      | "sensor.zonneplan_forcast_tariff_hour_7"
+      | "sensor.zonneplan_forcast_tariff_hour_8"
+      | "sensor.zonneplan_forcast_tariff_group_hour_1"
+      | "sensor.zonneplan_forcast_tariff_group_hour_2"
+      | "sensor.zonneplan_forcast_tariff_group_hour_3"
+      | "sensor.zonneplan_forcast_tariff_group_hour_4"
+      | "sensor.zonneplan_forcast_tariff_group_hour_5"
+      | "sensor.zonneplan_forcast_tariff_group_hour_6"
+      | "sensor.zonneplan_forcast_tariff_group_hour_7"
+      | "sensor.zonneplan_forcast_tariff_group_hour_8"
+      | "sensor.zonneplan_yield_today"
+      | "sensor.zonneplan_yield_total"
+      | "sensor.zonneplan_last_measured_value"
+      | "sensor.zonneplan_last_measured"
       | "binary_sensor.xiaomi_pad_5_kiosk_mode"
       | "binary_sensor.xiaomi_pad_5_plugged_in"
       | "binary_sensor.xiaomi_pad_5_device_admin"
       | "button.xiaomi_pad_5_restart_browser"
-      | "button.xiaomi_pad_5_reboot_device"
+      | "button.xiaomi_pad_5_restart_device"
       | "button.xiaomi_pad_5_bring_to_foreground"
       | "button.xiaomi_pad_5_send_to_background"
       | "button.xiaomi_pad_5_load_start_url"
+      | "camera.xiaomi_pad_5"
+      | "image.xiaomi_pad_5_screenshot"
       | "media_player.xiaomi_pad_5"
+      | "notify.xiaomi_pad_5_overlay_message"
+      | "notify.xiaomi_pad_5_text_to_speech"
       | "number.xiaomi_pad_5_screensaver_timer"
       | "number.xiaomi_pad_5_screensaver_brightness"
       | "number.xiaomi_pad_5_screen_off_timer"
@@ -3096,16 +2830,23 @@ declare module "@hakit/core" {
       | "switch.xiaomi_pad_5_kiosk_lock"
       | "switch.xiaomi_pad_5_motion_detection"
       | "switch.xiaomi_pad_5_screen"
-      | "media_player.tv"
-      | "media_player.google_home_mini"
-      | "media_player.nest_hub"
-      | "sensor.zonneplan_yield_total"
-      | "sensor.zonneplan_last_measured_value"
-      | "sensor.zonneplan_last_measured"
-      | "sensor.zonneplan_yield_today"
       | "sensor.woonkamer_audio_input_format"
       | "binary_sensor.woonkamer_microphone"
       | "media_player.woonkamer"
+      | "switch.sonos_woonkamer_crossfade"
+      | "switch.woonkamer_loudness"
+      | "switch.woonkamer_surround_music_full_volume"
+      | "switch.sonos_woonkamer_night_sound"
+      | "switch.sonos_woonkamer_speech_enhancement"
+      | "switch.sonos_woonkamer_subwoofer_enabled"
+      | "switch.sonos_woonkamer_surround_enabled"
+      | "number.woonkamer_audio_delay"
+      | "number.woonkamer_bass"
+      | "number.living_room_balance"
+      | "number.woonkamer_treble"
+      | "number.woonkamer_sub_gain"
+      | "number.woonkamer_surround_level"
+      | "number.woonkamer_music_surround_level"
       | "calendar.rensknoors_gmail_com"
       | "calendar.clairebongers_gmail_com"
       | "calendar.feestdagen_in_nederland"
@@ -3118,6 +2859,10 @@ declare module "@hakit/core" {
       | "sensor.power_monitoring_plug_restart_reason"
       | "sensor.power_monitoring_plug_ssid"
       | "switch.power_monitoring_plug"
+      | "image.roborock_s8_onderverdieping"
+      | "image.roborock_s8_bovenverdieping"
+      | "image.roborock_s8"
+      | "image.roborock_s8_zolder"
       | "sensor.power_monitoring_plug_energy_totalstarttime"
       | "sensor.power_monitoring_plug_energy_total"
       | "sensor.power_monitoring_plug_energy_yesterday"
@@ -3128,28 +2873,6 @@ declare module "@hakit/core" {
       | "sensor.power_monitoring_plug_energy_factor"
       | "sensor.power_monitoring_plug_energy_voltage"
       | "sensor.power_monitoring_plug_energy_current"
-      | "number.woonkamer_audio_delay"
-      | "number.woonkamer_bass"
-      | "number.living_room_balance"
-      | "number.woonkamer_treble"
-      | "number.woonkamer_sub_gain"
-      | "number.woonkamer_surround_level"
-      | "number.woonkamer_music_surround_level"
-      | "switch.sonos_woonkamer_crossfade"
-      | "switch.woonkamer_loudness"
-      | "switch.woonkamer_surround_music_full_volume"
-      | "switch.sonos_woonkamer_night_sound"
-      | "switch.sonos_woonkamer_speech_enhancement"
-      | "switch.sonos_woonkamer_subwoofer_enabled"
-      | "switch.sonos_woonkamer_surround_enabled"
-      | "light.benedenverdieping"
-      | "light.kleedkamer_2"
-      | "light.slaapkamer"
-      | "light.hal"
-      | "light.spotjes_keuken"
-      | "light.bovenverdieping"
-      | "light.spotjes"
-      | "light.zolder"
       | "automation.leaving_home"
       | "automation.coming_home"
       | "automation.start_movie_mode"
@@ -3166,9 +2889,8 @@ declare module "@hakit/core" {
       | "automation.ventilatie_aan_tijdens_douchen"
       | "automation.turn_off_hyperion_when_dimming_living_room_lights"
       | "automation.morning_routine"
-      | "automation.room_occupancy"
       | "automation.new_automation"
-      | "automation.new_automation_2"
+      | "automation.turn_on_garden_lights_when_door_opens"
       | "automation.turn_off_garage_door_switch_in_the_night"
       | "automation.humidity_notification"
       | "automation.close_sunshade"
@@ -3179,84 +2901,7 @@ declare module "@hakit/core" {
       | "automation.widget_open_garage_on_widget_click"
       | "automation.toggle_christmas_tree_lights_on_via_niko_switch"
       | "automation.toggle_front_window_cover"
-      | "image.roborock_s8_onderverdieping"
-      | "image.roborock_s8_bovenverdieping"
-      | "image.roborock_s8"
-      | "image.roborock_s8_zolder"
-      | "binary_sensor.toilet_occupancy"
-      | "binary_sensor.toilet_motion"
-      | "binary_sensor.door_garden_livingroom_on_off"
-      | "binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off"
-      | "binary_sensor.door_sensor_garage_door_opening"
-      | "button.sonoff_temperature_garage_identify"
-      | "button.garage_door_ce78080a_identify"
-      | "button.sonoff_temperature_bedroom_identify"
-      | "button.sonoff_temperature_bathroom_identify"
-      | "button.smartplug_wallpanel_identify"
-      | "button.texasinstruments_ti_router_identify"
-      | "button.smartplug_hal_bovenverdieping_fab5090a_identify"
-      | "button.sonoff_temperature_attic_identify"
-      | "button.ventilation_identify"
-      | "button.lumi_lumi_sensor_motion_aq2_59e17007_identify"
-      | "button.door_garden_livingroom_identify"
-      | "button.lumi_lumi_sensor_magnet_aq2_identify"
-      | "button.smartplug_christmas_tree_identify"
-      | "button.smartplug_washing_machine_identify"
-      | "button.texasinstruments_ti_router_identify_2"
-      | "button.zigbee_router_office_identify"
-      | "button.door_sensor_garage_door_identify"
-      | "cover.front_window_cover_cover"
-      | "light.ventilation_on_off"
-      | "number.ventilation_level_start_up_current_level"
-      | "select.ventilation_on_off_startuponoff"
-      | "select.smartplug_christmas_tree_power_on_state"
-      | "select.smartplug_christmas_tree_backlight_mode"
-      | "select.smartplug_washing_machine_power_on_state"
-      | "select.smartplug_washing_machine_backlight_mode"
-      | "sensor.sonoff_temperature_garage_power"
-      | "sensor.garage_temperature"
-      | "sensor.garage_humidity"
-      | "sensor.sonoff_temperature_bedroom_power"
-      | "sensor.bedroom_temperature"
-      | "sensor.bedroom_humidity"
-      | "sensor.sonoff_temperature_bathroom_power"
-      | "sensor.bathroom_temperature"
-      | "sensor.bathroom_humidity"
-      | "sensor.sonoff_temperature_attic_power"
-      | "sensor.attic_temperature"
-      | "sensor.attic_humidity"
-      | "sensor.lumi_lumi_sensor_motion_aq2_59e17007_power"
-      | "sensor.toilet_illuminance"
-      | "sensor.toilet_temperature"
-      | "sensor.door_garden_livingroom_power"
-      | "sensor.door_garden_livingroom_temperature"
-      | "sensor.lumi_lumi_sensor_magnet_aq2_power"
-      | "sensor.lumi_lumi_sensor_magnet_aq2_device_temperature"
-      | "sensor.smartplug_christmas_tree_rms_current"
-      | "sensor.smartplug_christmas_tree_rms_voltage"
-      | "sensor.smartplug_christmas_tree_active_power"
-      | "sensor.smartplug_christmas_tree_summation_delivered"
-      | "sensor.smartplug_washing_machine_rms_current"
-      | "sensor.smartplug_washing_machine_rms_voltage"
-      | "sensor.smartplug_washing_machine_power_factor"
-      | "sensor.smartplug_washing_machine_active_power"
-      | "sensor.smartplug_washing_machine_summation_delivered"
-      | "sensor.door_sensor_garage_door_battery"
-      | "switch.garage_door_plug"
-      | "switch.smartplug_wallpanel"
-      | "switch.smartplug_hal_bovenverdieping"
-      | "switch.smartplug_christmas_tree_switch"
-      | "switch.smartplug_christmas_tree_child_lock"
-      | "switch.smartplug_washing_machine_switch"
-      | "switch.smartplug_washing_machine_child_lock"
-      | "update.garage_door_firmware"
-      | "update.smartplug_wallpanel_firmware"
-      | "update.smartplug_hal_bovenverdieping_firmware"
-      | "update.toilet_motion_firmware"
-      | "update.smartplug_christmas_tree_firmware"
-      | "update.smartplug_washing_machine_firmware"
-      | "update.zigbee_router_office_firmware"
-      | "update.front_window_cover_firmware"
+      | "automation.auto_stop_sleeping_noises"
       | "binary_sensor.voordeur_motion_detected"
       | "binary_sensor.voordeur_person_detected"
       | "binary_sensor.voordeur_snooze"
@@ -3353,11 +2998,82 @@ declare module "@hakit/core" {
       | "button.homebase_reboot"
       | "image.voordeur_event_image"
       | "image.garage_event_image"
+      | "binary_sensor.toilet_occupancy"
+      | "binary_sensor.toilet_motion"
+      | "binary_sensor.door_garden_livingroom_on_off"
+      | "binary_sensor.lumi_lumi_sensor_magnet_aq2_on_off"
+      | "binary_sensor.door_sensor_garage_door_opening"
+      | "button.sonoff_temperature_garage_identify"
+      | "button.garage_door_ce78080a_identify"
+      | "button.sonoff_temperature_bedroom_identify"
+      | "button.sonoff_temperature_bathroom_identify"
+      | "button.smartplug_wallpanel_identify"
+      | "button.texasinstruments_ti_router_identify"
+      | "button.smartplug_hal_bovenverdieping_fab5090a_identify"
+      | "button.sonoff_temperature_attic_identify"
+      | "button.ventilation_identify"
+      | "button.lumi_lumi_sensor_motion_aq2_59e17007_identify"
+      | "button.door_garden_livingroom_identify"
+      | "button.lumi_lumi_sensor_magnet_aq2_identify"
+      | "button.smartplug_christmas_tree_identify"
+      | "button.smartplug_washing_machine_identify"
+      | "button.texasinstruments_ti_router_identify_2"
+      | "button.zigbee_router_office_identify"
+      | "button.door_sensor_garage_door_identify"
+      | "cover.front_window_cover_cover"
+      | "light.ventilation_on_off"
+      | "number.ventilation_level_start_up_current_level"
+      | "select.ventilation_on_off_startuponoff"
+      | "select.smartplug_christmas_tree_power_on_state"
+      | "select.smartplug_christmas_tree_backlight_mode"
+      | "select.smartplug_washing_machine_power_on_state"
+      | "select.smartplug_washing_machine_backlight_mode"
+      | "sensor.sonoff_temperature_garage_power"
+      | "sensor.garage_temperature"
+      | "sensor.garage_humidity"
+      | "sensor.sonoff_temperature_bedroom_power"
+      | "sensor.bedroom_temperature"
+      | "sensor.bedroom_humidity"
+      | "sensor.sonoff_temperature_bathroom_power"
+      | "sensor.bathroom_temperature"
+      | "sensor.bathroom_humidity"
+      | "sensor.sonoff_temperature_attic_power"
+      | "sensor.attic_temperature"
+      | "sensor.attic_humidity"
+      | "sensor.lumi_lumi_sensor_motion_aq2_59e17007_power"
+      | "sensor.toilet_illuminance"
+      | "sensor.toilet_temperature"
+      | "sensor.door_garden_livingroom_power"
+      | "sensor.door_garden_livingroom_temperature"
+      | "sensor.lumi_lumi_sensor_magnet_aq2_power"
+      | "sensor.lumi_lumi_sensor_magnet_aq2_device_temperature"
+      | "sensor.smartplug_christmas_tree_rms_current"
+      | "sensor.smartplug_christmas_tree_rms_voltage"
+      | "sensor.smartplug_christmas_tree_active_power"
+      | "sensor.smartplug_christmas_tree_summation_delivered"
+      | "sensor.smartplug_washing_machine_rms_current"
+      | "sensor.smartplug_washing_machine_rms_voltage"
+      | "sensor.smartplug_washing_machine_power_factor"
+      | "sensor.smartplug_washing_machine_active_power"
+      | "sensor.smartplug_washing_machine_summation_delivered"
+      | "sensor.door_sensor_garage_door_battery"
+      | "switch.garage_door_plug"
+      | "switch.smartplug_wallpanel"
+      | "switch.smartplug_hal_bovenverdieping"
+      | "switch.smartplug_christmas_tree_switch"
+      | "switch.smartplug_christmas_tree_child_lock"
+      | "switch.smartplug_washing_machine_switch"
+      | "switch.smartplug_washing_machine_child_lock"
+      | "update.garage_door_firmware"
+      | "update.smartplug_wallpanel_firmware"
+      | "update.smartplug_hal_bovenverdieping_firmware"
+      | "update.toilet_motion_firmware"
+      | "update.smartplug_christmas_tree_firmware"
+      | "update.smartplug_washing_machine_firmware"
+      | "update.zigbee_router_office_firmware"
+      | "update.front_window_cover_firmware"
       | "binary_sensor.updater"
       | "media_player.android_tv"
-      | "sensor.zonneplan_current_usage"
-      | "sensor.zonneplan_sustainability_score"
-      | "sensor.zonneplan_status_tip"
       | "fan.test_fan"
       | "sensor.030e8bf0_5c3c260a"
       | "sensor.16f2bb7b_bb8ea7b7"
@@ -3394,7 +3110,12 @@ declare module "@hakit/core" {
       | "switch.automation_avond"
       | "sensor.front_window_cover_window_covering_type"
       | "media_player.wallpanel"
+      | "media_player.4k_tv_box"
       | "binary_sensor.backups_stale"
-      | "sensor.backup_state";
+      | "sensor.backup_state"
+      | "sensor.zonneplan_current_tariff_group"
+      | "sensor.zonneplan_status_message"
+      | "sensor.zonneplan_one_omvormer_current_scenario"
+      | "binary_sensor.zonneplan_one_omvormer_power_limit_active";
   }
 }
