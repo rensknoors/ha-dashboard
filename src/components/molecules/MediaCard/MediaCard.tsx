@@ -1,4 +1,5 @@
 import { EntityName, useEntity, useHass } from '@hakit/core';
+import clsx from 'clsx';
 import { BiMusic, BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
@@ -48,7 +49,7 @@ const Placeholder = () => {
   );
 };
 
-const MediaCard = ({ entity }: MediaCardProps) => {
+const MediaCard = ({ entity, className }: MediaCardProps) => {
   const media = useEntity(entity as EntityName, {
     returnNullIfNotFound: true,
   });
@@ -70,7 +71,12 @@ const MediaCard = ({ entity }: MediaCardProps) => {
       : media.attributes.entity_picture ?? '/cast.svg';
 
   return (
-    <Card className="relative z-0 flex min-h-[180px] place-items-center gap-6">
+    <Card
+      className={clsx(
+        'relative z-0 flex min-h-[180px] place-items-center gap-6',
+        className
+      )}
+    >
       {/* Background image */}
       <div
         className="absolute inset-0 z-0 scale-150 bg-cover bg-center bg-no-repeat blur-2xl filter"
