@@ -13,7 +13,11 @@ const App = () => {
     <HassConnect hassUrl={HASS_URL}>
       <QueryClientProvider client={queryClient}>
         <Router />
-        <ToastContainer />
+        <ToastContainer
+          position="bottom-left"
+          theme="dark"
+          closeOnClick={true}
+        />
       </QueryClientProvider>
     </HassConnect>
   );
