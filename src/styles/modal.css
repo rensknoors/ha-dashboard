@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .modal-container {
-  @apply min-w-[600px] -translate-x-1/2 !bg-slate-800;
+  @apply min-w-[600px] !-translate-x-1/2 !bg-slate-800;
 }
 
 .modal-inner {
