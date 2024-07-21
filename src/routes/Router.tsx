@@ -2,15 +2,16 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import { ErrorPage } from '@/routes/ErrorPage/ErrorPage';
 
+import { Energy } from './Energy/Energy';
 import { Home } from './Home/Home';
-import { Media } from './Media/Media';
 import { Root } from './Root';
 import { Vacuum } from './Vacuum/Vacuum';
 import { Weather } from './Weather/Weather';
+import { ROUTES } from './routes';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.HOME,
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
@@ -19,20 +20,16 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/vacuum',
+        path: ROUTES.VACUUM,
         element: <Vacuum />,
       },
       {
-        path: '/weather',
+        path: ROUTES.WEATHER,
         element: <Weather />,
       },
       {
-        path: '/media',
-        element: <Media />,
-      },
-      {
-        path: '/settings',
-        element: <div>Settings</div>,
+        path: ROUTES.ENERGY,
+        element: <Energy />,
       },
     ],
   },
