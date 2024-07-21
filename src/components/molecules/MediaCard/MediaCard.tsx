@@ -9,12 +9,22 @@ export type MediaCardProps = {
 
 const getSourceThumbnail = (source: string) => {
   switch (source) {
-    case 'Ziggo':
-      return '/logos/ziggo.png';
     case 'PS5/Switch':
       return '/logos/playstation.svg';
+    case 'Youtube':
+      return '/logos/youtube.svg';
+    case 'Plex':
+      return '/logos/plex.svg';
+    case 'Spotify':
+      return '/logos/spotify.svg';
+    case 'Sonos':
+      return '/logos/sonos.svg';
+    case 'Netflix':
+      return '/logos/netflix.svg';
+    case 'Videoland':
+      return '/logos/videoland.svg';
     default:
-      return source ? `/logos/${source.toLowerCase()}.svg` : '/cast.svg';
+      return '/cast.svg';
   }
 };
 
