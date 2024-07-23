@@ -1,30 +1,45 @@
 import { useIcon } from '@hakit/core';
+import clsx from 'clsx';
 import { ComponentType } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export interface TileButtonProps {
   path: string;
   icon: string;
-  color: string;
+  background: string;
+  border?: string;
   Badge?: ComponentType;
 }
 
 /**
- * @param color tailwindcss color classes
- * @param icon mdi icon name
- * @param badge badge text
  * @param path path to the route
+ * @param icon mdi icon name
+ * @param background tailwindcss color classes
+ * @param border tailwindcss border classes
+ * @param badge badge text
  */
-const TileButton = ({ icon, color, Badge, path }: TileButtonProps) => {
+const TileButton = ({
+  icon,
+  background,
+  border = 'bg-black',
+  Badge,
+  path,
+}: TileButtonProps) => {
   const svg = useIcon(icon);
   return (
-    <Link
+    <NavLink
       to={path}
-      className={`${color} relative m-2 flex aspect-square w-16 place-content-center place-items-center rounded-3xl text-black`}
+      className={({ isActive }) =>
+        clsx(
+          'relative m-2 flex aspect-square w-16 place-content-center place-items-center rounded-3xl text-black',
+          background,
+          border && isActive && `border-4 ${border}`
+        )
+      }
     >
       {svg}
       {Badge && <Badge />}
-    </Link>
+    </NavLink>
   );
 };
 

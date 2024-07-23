@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { TileButton, TileButtonProps } from './TileButton';
 
 const mockProps: TileButtonProps = {
-  color: 'bg-blue-300',
+  background: 'bg-blue-300',
   icon: 'mdi:home',
   path: '/home',
 };

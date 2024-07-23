@@ -29,23 +29,27 @@ const useSideBarButtons = (): TileButtonProps[] => {
     {
       path: ROUTES.HOME,
       icon: 'mdi:tablet-dashboard',
-      color: 'bg-blue-300',
+      background: 'bg-blue-300',
+      border: 'border-white',
     },
     {
       path: ROUTES.ENERGY,
       icon: 'mdi:lightning-bolt',
-      color: 'bg-green-300',
+      background: 'bg-green-300',
+      border: 'border-white',
       Badge: TariffGroupBadge,
     },
     {
       path: ROUTES.WEATHER,
       icon: 'mdi:weather-partly-cloudy',
-      color: 'bg-amber-200',
+      background: 'bg-amber-200',
+      border: 'border-white',
     },
     {
       path: ROUTES.VACUUM,
       icon: 'mdi:vacuum',
-      color: 'bg-white',
+      background: 'bg-white',
+      border: 'border-gray-400',
     },
   ];
 };
