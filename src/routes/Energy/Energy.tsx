@@ -30,7 +30,7 @@ const getTimeLabels = () => {
   now.setMinutes(0, 0, 0); // Round down to the nearest hour
   const labels = [];
   for (let i = 0; i < 8; i++) {
-    const time = new Date(now.getTime() + i * 60 * 60 * 1000);
+    const time = new Date(now.getTime() + i * 60 * 60 * 1000 - 60 * 60);
     const hours = String(time.getHours()).padStart(2, '0');
     labels.push(`${hours}:00`);
   }
