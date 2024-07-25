@@ -1,9 +1,11 @@
 import { useEntity } from '@hakit/core';
+import chroma from 'chroma-js';
 import clsx from 'clsx';
 import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -12,6 +14,28 @@ import {
 
 import { Card } from '@/components/atoms/Card/Card';
 import { formatCurrency } from '@/utils/formatCurrency';
+
+const getColor = (value: string): string => {
+  const colorScale = chroma
+    .scale(['#00ff00', '#ffffff', '#ff0000'])
+    .domain([0.2, 0.25]);
+  const amount = parseFloat(value);
+  return colorScale(amount).desaturate(2).hex();
+};
+
+const getTimeLabels = () => {
+  const now = new Date();
+  console.log(now);
+
+  now.setMinutes(0, 0, 0); // Round down to the nearest hour
+  const labels = [];
+  for (let i = 0; i < 8; i++) {
+    const time = new Date(now.getTime() + i * 60 * 60 * 1000);
+    const hours = String(time.getHours()).padStart(2, '0');
+    labels.push(`${hours}:00`);
+  }
+  return labels;
+};
 
 const Energy = () => {
   const tariff = useEntity('sensor.zonneplan_current_electricity_tariff');
@@ -24,15 +48,17 @@ const Energy = () => {
   const tariffHour7 = useEntity('sensor.zonneplan_forcast_tariff_hour_7');
   const tariffHour8 = useEntity('sensor.zonneplan_forcast_tariff_hour_8');
 
+  const timeLabels = getTimeLabels();
+
   const tariffData = [
-    { name: '1', tariff: tariffHour1.state },
-    { name: '2', tariff: tariffHour2.state },
-    { name: '3', tariff: tariffHour3.state },
-    { name: '4', tariff: tariffHour4.state },
-    { name: '5', tariff: tariffHour5.state },
-    { name: '6', tariff: tariffHour6.state },
-    { name: '7', tariff: tariffHour7.state },
-    { name: '8', tariff: tariffHour8.state },
+    { name: timeLabels[1], tariff: tariffHour1.state },
+    { name: timeLabels[2], tariff: tariffHour2.state },
+    { name: timeLabels[3], tariff: tariffHour3.state },
+    { name: timeLabels[4], tariff: tariffHour4.state },
+    { name: timeLabels[5], tariff: tariffHour5.state },
+    { name: timeLabels[6], tariff: tariffHour6.state },
+    { name: timeLabels[7], tariff: tariffHour7.state },
+    { name: timeLabels[8], tariff: tariffHour8.state },
   ];
   const tariffGroup = useEntity('sensor.zonneplan_current_tariff_group');
   const formattedTariff = formatCurrency(tariff.state);
@@ -41,7 +67,7 @@ const Energy = () => {
   return (
     <div className="flex h-full w-full gap-6">
       <div className="grid w-full grid-cols-1 grid-rows-1 place-items-center gap-6">
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={500}>
           <BarChart
             data={tariffData}
             margin={{
@@ -51,17 +77,20 @@ const Energy = () => {
               bottom: 5,
             }}
           >
-            <CartesianGrid strokeDasharray="2 2" strokeOpacity="0.4" />
+            <CartesianGrid strokeDasharray="2 2" strokeOpacity="0.2" />
             <XAxis dataKey="name" />
             <YAxis />
             <Tooltip />
             <Bar
               dataKey="tariff"
-              fill="#2ca95a"
               barSize={10}
-              radius={[10, 10, 10, 10]}
-              background={false}
-            />
+              radius={10}
+              enableBackground={25}
+            >
+              {tariffData.map((entry, index) => (
+                <Cell key={index} fill={getColor(entry.tariff)} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </div>
