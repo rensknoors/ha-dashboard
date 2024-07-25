@@ -65,7 +65,7 @@ const Energy = () => {
 
   // Replace recharts with tremor
   return (
-    <div className="flex h-full w-full gap-6">
+    <div className="flex h-full w-full place-items-center gap-6">
       <div className="grid w-full grid-cols-1 grid-rows-1 place-items-center gap-6">
         <ResponsiveContainer width="100%" height={500}>
           <BarChart
@@ -83,8 +83,8 @@ const Energy = () => {
             <Tooltip />
             <Bar
               dataKey="tariff"
-              barSize={10}
-              radius={10}
+              barSize={20}
+              radius={[10, 10, 0, 0]}
               enableBackground={25}
             >
               {tariffData.map((entry, index) => (
@@ -95,10 +95,10 @@ const Energy = () => {
         </ResponsiveContainer>
       </div>
 
-      <div className="grid w-full grid-cols-1 grid-rows-2 gap-6">
+      <div className="grid h-1/2 w-1/3 grid-cols-1 grid-rows-2 gap-6">
         <Card
           className={clsx(
-            'flex w-full flex-col justify-center',
+            'flex w-full flex-col justify-center text-center',
             tariffGroup.state === 'low' && 'bg-green-300 text-black',
             tariffGroup.state === 'normal' && 'bg-white text-black',
             tariffGroup.state === 'high' && 'bg-red-500 text-black'
@@ -107,7 +107,7 @@ const Energy = () => {
           <span className="text-md mb-2">Huidige tarief groep</span>
           <span className="text-4xl font-semibold">{tariffGroup.state}</span>
         </Card>
-        <Card className="flex w-full flex-col justify-center">
+        <Card className="flex w-full flex-col justify-center text-center">
           <span className="text-md mb-2">Huidig tarief</span>
           <span className="text-4xl font-semibold">{formattedTariff}</span>
         </Card>
