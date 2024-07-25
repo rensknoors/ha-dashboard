@@ -30,26 +30,22 @@ const useSideBarButtons = (): TileButtonProps[] => {
       path: ROUTES.HOME,
       icon: 'mdi:tablet-dashboard',
       background: 'bg-blue-300',
-      border: 'border-white',
     },
     {
       path: ROUTES.ENERGY,
       icon: 'mdi:lightning-bolt',
       background: 'bg-green-300',
-      border: 'border-white',
       Badge: TariffGroupBadge,
     },
     {
       path: ROUTES.WEATHER,
       icon: 'mdi:weather-partly-cloudy',
       background: 'bg-amber-200',
-      border: 'border-white',
     },
     {
       path: ROUTES.VACUUM,
       icon: 'mdi:vacuum',
       background: 'bg-white',
-      border: 'border-gray-400',
     },
   ];
 };

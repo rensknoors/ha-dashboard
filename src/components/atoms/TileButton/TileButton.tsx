@@ -7,7 +7,6 @@ export interface TileButtonProps {
   path: string;
   icon: string;
   background: string;
-  border?: string;
   Badge?: ComponentType;
 }
 
@@ -15,25 +14,20 @@ export interface TileButtonProps {
  * @param path path to the route
  * @param icon mdi icon name
  * @param background tailwindcss color classes
- * @param border tailwindcss border classes
- * @param badge badge text
+ * @param Badge badge text
  */
-const TileButton = ({
-  icon,
-  background,
-  border = 'bg-black',
-  Badge,
-  path,
-}: TileButtonProps) => {
+const TileButton = ({ path, icon, background, Badge }: TileButtonProps) => {
   const svg = useIcon(icon);
   return (
     <NavLink
       to={path}
       className={({ isActive }) =>
         clsx(
-          'relative m-2 flex aspect-square w-16 place-content-center place-items-center rounded-3xl text-black',
+          'relative m-2 flex aspect-square w-16 place-content-center place-items-center rounded-3xl text-black transition-all duration-200',
           background,
-          border && isActive && `border-4 ${border}`
+          !isActive &&
+            '[background-image:radial-gradient(circle,rgba(0,0,0,0.1),rgba(0,0,0,0.4))]',
+          isActive && 'scale-105'
         )
       }
     >
