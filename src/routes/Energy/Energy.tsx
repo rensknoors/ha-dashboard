@@ -29,11 +29,34 @@ const getTimeLabels = () => {
   now.setMinutes(0, 0, 0); // Round down to the nearest hour
   const labels = [];
   for (let i = 0; i <= 9; i++) {
-    const time = new Date(now.getTime() + i * 60 * 60 * 1000 - 60 * 60);
+    const time = new Date(now.getTime() + i * 60 * 60 * 1000);
     const hours = String(time.getHours());
     labels.push(hours);
   }
   return labels;
+};
+
+// Clean up
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: {
+  active: boolean;
+  payload: { value: string }[];
+  label: string;
+}) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="rounded-lg bg-neutral-950 px-4 py-3">
+        <p className="font-bold">{`${label.padStart(2, '0')}:00`}</p>
+        <p className={` font-bold text-[${getColor(payload[0].value)}]`}>
+          {formatCurrency(payload[0].value)}
+        </p>
+      </div>
+    );
+  }
+  return null;
 };
 
 const Energy = () => {
@@ -52,7 +75,7 @@ const Energy = () => {
   const timeLabels = getTimeLabels();
 
   const tariffData = [
-    { name: timeLabels[1], tariff: currentTariff.state },
+    { name: timeLabels[0], tariff: currentTariff.state },
     { name: timeLabels[1], tariff: tariffHour1.state },
     { name: timeLabels[2], tariff: tariffHour2.state },
     { name: timeLabels[3], tariff: tariffHour3.state },
@@ -70,7 +93,7 @@ const Energy = () => {
     <div className="flex h-full w-full place-items-center gap-6">
       <div className="grid h-full w-full grid-cols-1 grid-rows-1 place-items-center gap-6">
         <Card className="flex h-full w-full place-items-center bg-neutral-900">
-          <ResponsiveContainer width="100%" height={500}>
+          <ResponsiveContainer width="100%" height={550}>
             <BarChart
               data={tariffData}
               margin={{
@@ -86,7 +109,16 @@ const Energy = () => {
                 axisLine={false}
                 tickLine={false}
               />
-              <Tooltip />
+              <Tooltip
+                cursor={{ fill: '#262626', radius: 10 }}
+                contentStyle={{
+                  background: '#404040',
+                  border: 'none',
+                  borderRadius: 10,
+                }}
+                labelStyle={{ color: '#fff' }}
+                content={CustomTooltip}
+              />
               <Bar
                 dataKey="tariff"
                 barSize={20}
