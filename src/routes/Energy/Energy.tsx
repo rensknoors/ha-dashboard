@@ -1,10 +1,8 @@
 import { useEntity } from '@hakit/core';
-import chroma from 'chroma-js';
 import clsx from 'clsx';
 import {
   Bar,
   BarChart,
-  CartesianGrid,
   Cell,
   ResponsiveContainer,
   Tooltip,
@@ -16,29 +14,32 @@ import { Card } from '@/components/atoms/Card/Card';
 import { formatCurrency } from '@/utils/formatCurrency';
 
 const getColor = (value: string): string => {
-  const colorScale = chroma
-    .scale(['#00ff00', '#ffffff', '#ff0000'])
-    .domain([0.2, 0.25]);
   const amount = parseFloat(value);
-  return colorScale(amount).desaturate(2).hex();
+  if (amount <= 0.26) {
+    return '#4BA66A';
+  }
+  if (amount <= 0.3) {
+    return '#3C5551';
+  } else return '#DC6731';
 };
 
 const getTimeLabels = () => {
   const now = new Date();
-  console.log(now);
 
   now.setMinutes(0, 0, 0); // Round down to the nearest hour
   const labels = [];
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i <= 9; i++) {
     const time = new Date(now.getTime() + i * 60 * 60 * 1000 - 60 * 60);
-    const hours = String(time.getHours()).padStart(2, '0');
-    labels.push(`${hours}:00`);
+    const hours = String(time.getHours());
+    labels.push(hours);
   }
   return labels;
 };
 
 const Energy = () => {
-  const tariff = useEntity('sensor.zonneplan_current_electricity_tariff');
+  const currentTariff = useEntity(
+    'sensor.zonneplan_current_electricity_tariff'
+  );
   const tariffHour1 = useEntity('sensor.zonneplan_forcast_tariff_hour_1');
   const tariffHour2 = useEntity('sensor.zonneplan_forcast_tariff_hour_2');
   const tariffHour3 = useEntity('sensor.zonneplan_forcast_tariff_hour_3');
@@ -51,6 +52,7 @@ const Energy = () => {
   const timeLabels = getTimeLabels();
 
   const tariffData = [
+    { name: timeLabels[1], tariff: currentTariff.state },
     { name: timeLabels[1], tariff: tariffHour1.state },
     { name: timeLabels[2], tariff: tariffHour2.state },
     { name: timeLabels[3], tariff: tariffHour3.state },
@@ -61,53 +63,58 @@ const Energy = () => {
     { name: timeLabels[8], tariff: tariffHour8.state },
   ];
   const tariffGroup = useEntity('sensor.zonneplan_current_tariff_group');
-  const formattedTariff = formatCurrency(tariff.state);
+  const formattedTariff = formatCurrency(currentTariff.state);
 
   // Replace recharts with tremor
   return (
     <div className="flex h-full w-full place-items-center gap-6">
-      <div className="grid w-full grid-cols-1 grid-rows-1 place-items-center gap-6">
-        <ResponsiveContainer width="100%" height={500}>
-          <BarChart
-            data={tariffData}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="2 2" strokeOpacity="0.2" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Bar
-              dataKey="tariff"
-              barSize={20}
-              radius={[10, 10, 0, 0]}
-              enableBackground={25}
+      <div className="grid h-full w-full grid-cols-1 grid-rows-1 place-items-center gap-6">
+        <Card className="flex h-full w-full place-items-center bg-neutral-900">
+          <ResponsiveContainer width="100%" height={500}>
+            <BarChart
+              data={tariffData}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
             >
-              {tariffData.map((entry, index) => (
-                <Cell key={index} fill={getColor(entry.tariff)} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
+              <XAxis dataKey="name" axisLine={false} tickLine={false} />
+              <YAxis
+                padding={{ bottom: 10, top: 10 }}
+                axisLine={false}
+                tickLine={false}
+              />
+              <Tooltip />
+              <Bar
+                dataKey="tariff"
+                barSize={20}
+                radius={10}
+                enableBackground={25}
+              >
+                {tariffData.map((entry, index) => (
+                  <Cell key={index} fill={getColor(entry.tariff)} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
       </div>
 
-      <div className="grid h-1/2 w-1/3 grid-cols-1 grid-rows-2 gap-6">
+      <div className="grid h-full w-1/2 grid-cols-1 grid-rows-2 gap-6">
         <Card
           className={clsx(
-            'flex w-full flex-col justify-center text-center',
-            tariffGroup.state === 'low' && 'bg-green-300 text-black',
-            tariffGroup.state === 'normal' && 'bg-white text-black',
-            tariffGroup.state === 'high' && 'bg-red-500 text-black'
+            'flex w-full flex-col justify-center bg-neutral-900 text-center',
+            tariffGroup.state === 'low' && 'text-[#4BA66A]',
+            tariffGroup.state === 'normal' && 'text-[#3C5551]',
+            tariffGroup.state === 'high' && 'text-[#DC6731]'
           )}
         >
           <span className="text-md mb-2">Huidige tarief groep</span>
           <span className="text-4xl font-semibold">{tariffGroup.state}</span>
         </Card>
-        <Card className="flex w-full flex-col justify-center text-center">
+        <Card className="flex w-full flex-col justify-center bg-neutral-900 text-center">
           <span className="text-md mb-2">Huidig tarief</span>
           <span className="text-4xl font-semibold">{formattedTariff}</span>
         </Card>
