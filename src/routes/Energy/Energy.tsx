@@ -4,24 +4,16 @@ import {
   Bar,
   BarChart,
   Cell,
+  Tooltip as ReTooltip,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from 'recharts';
 
+import { Tooltip } from '@/components/atoms';
 import { Card } from '@/components/atoms/Card/Card';
+import { getTariffColor } from '@/utils';
 import { formatCurrency } from '@/utils/formatCurrency';
-
-const getColor = (value: string): string => {
-  const amount = parseFloat(value);
-  if (amount <= 0.26) {
-    return '#4BA66A';
-  }
-  if (amount <= 0.3) {
-    return '#3C5551';
-  } else return '#DC6731';
-};
 
 const getTimeLabels = () => {
   const now = new Date();
@@ -34,29 +26,6 @@ const getTimeLabels = () => {
     labels.push(hours);
   }
   return labels;
-};
-
-// Clean up
-const CustomTooltip = ({
-  active,
-  payload,
-  label,
-}: {
-  active: boolean;
-  payload: { value: string }[];
-  label: string;
-}) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="rounded-lg bg-neutral-950 px-4 py-3">
-        <p className="font-bold">{`${label.padStart(2, '0')}:00`}</p>
-        <p className={` font-bold text-[${getColor(payload[0].value)}]`}>
-          {formatCurrency(payload[0].value)}
-        </p>
-      </div>
-    );
-  }
-  return null;
 };
 
 const Energy = () => {
@@ -93,14 +62,12 @@ const Energy = () => {
     <div className="flex h-full w-full place-items-center gap-6">
       <div className="grid h-full w-full grid-cols-1 grid-rows-1 place-items-center gap-6">
         <Card className="flex h-full w-full place-items-center bg-neutral-900">
-          <ResponsiveContainer width="100%" height={550}>
+          <ResponsiveContainer width="100%" height={500}>
             <BarChart
               data={tariffData}
               margin={{
-                top: 20,
-                right: 30,
+                right: 40,
                 left: 20,
-                bottom: 5,
               }}
             >
               <XAxis dataKey="name" axisLine={false} tickLine={false} />
@@ -108,8 +75,9 @@ const Energy = () => {
                 padding={{ bottom: 10, top: 10 }}
                 axisLine={false}
                 tickLine={false}
+                tickFormatter={formatCurrency}
               />
-              <Tooltip
+              <ReTooltip
                 cursor={{ fill: '#262626', radius: 10 }}
                 contentStyle={{
                   background: '#404040',
@@ -117,7 +85,7 @@ const Energy = () => {
                   borderRadius: 10,
                 }}
                 labelStyle={{ color: '#fff' }}
-                content={CustomTooltip}
+                content={Tooltip}
               />
               <Bar
                 dataKey="tariff"
@@ -126,7 +94,7 @@ const Energy = () => {
                 enableBackground={25}
               >
                 {tariffData.map((entry, index) => (
-                  <Cell key={index} fill={getColor(entry.tariff)} />
+                  <Cell key={index} fill={getTariffColor(entry.tariff)} />
                 ))}
               </Bar>
             </BarChart>
