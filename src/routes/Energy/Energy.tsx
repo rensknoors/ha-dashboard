@@ -4,13 +4,15 @@ import {
   Bar,
   BarChart,
   Cell,
+  Label as ReLabel,
   Tooltip as ReTooltip,
+  ReferenceLine,
   ResponsiveContainer,
   XAxis,
   YAxis,
 } from 'recharts';
 
-import { Tooltip } from '@/components/atoms';
+import { Label, Tooltip } from '@/components/atoms';
 import { Card } from '@/components/atoms/Card/Card';
 import { getTariffColor } from '@/utils';
 import { formatCurrency } from '@/utils/formatCurrency';
@@ -26,6 +28,29 @@ const getTimeLabels = () => {
     labels.push(hours);
   }
   return labels;
+};
+
+const CustomLabel = ({
+  value,
+  viewBox,
+}: {
+  value: number;
+  viewBox: { x: number; y: number };
+}) => {
+  const width = 30;
+
+  return (
+    <foreignObject
+      x={viewBox.x - width / 2}
+      y={viewBox.y + 10}
+      width={width}
+      height={40}
+    >
+      <Label className="flex h-[40] w-[40] justify-center px-1 py-1 font-bold">
+        {value.toFixed(2).toString().split('.')[1]}
+      </Label>
+    </foreignObject>
+  );
 };
 
 const Energy = () => {
@@ -44,20 +69,26 @@ const Energy = () => {
   const timeLabels = getTimeLabels();
 
   const tariffData = [
-    { name: timeLabels[0], tariff: currentTariff.state },
-    { name: timeLabels[1], tariff: tariffHour1.state },
-    { name: timeLabels[2], tariff: tariffHour2.state },
-    { name: timeLabels[3], tariff: tariffHour3.state },
-    { name: timeLabels[4], tariff: tariffHour4.state },
-    { name: timeLabels[5], tariff: tariffHour5.state },
-    { name: timeLabels[6], tariff: tariffHour6.state },
-    { name: timeLabels[7], tariff: tariffHour7.state },
-    { name: timeLabels[8], tariff: tariffHour8.state },
+    { name: timeLabels[0], tariff: parseFloat(currentTariff.state) },
+    { name: timeLabels[1], tariff: parseFloat(tariffHour1.state) },
+    { name: timeLabels[2], tariff: parseFloat(tariffHour2.state) },
+    { name: timeLabels[3], tariff: parseFloat(tariffHour3.state) },
+    { name: timeLabels[4], tariff: parseFloat(tariffHour4.state) },
+    { name: timeLabels[5], tariff: parseFloat(tariffHour5.state) },
+    { name: timeLabels[6], tariff: parseFloat(tariffHour6.state) },
+    { name: timeLabels[7], tariff: parseFloat(tariffHour7.state) },
+    { name: timeLabels[8], tariff: parseFloat(tariffHour8.state) },
   ];
-  const tariffGroup = useEntity('sensor.zonneplan_current_tariff_group');
-  const formattedTariff = formatCurrency(currentTariff.state);
 
-  // Replace recharts with tremor
+  const lowestTariffs = tariffData.filter(
+    (data) =>
+      data.tariff.toFixed(2) ===
+      Math.min(...tariffData.map((data) => data.tariff)).toFixed(2)
+  );
+
+  const tariffGroup = useEntity('sensor.zonneplan_current_tariff_group');
+  const formattedTariff = formatCurrency(parseFloat(currentTariff.state));
+
   return (
     <div className="flex h-full w-full place-items-center gap-6">
       <div className="grid h-full w-full grid-cols-1 grid-rows-1 place-items-center gap-6">
@@ -97,6 +128,24 @@ const Energy = () => {
                   <Cell key={index} fill={getTariffColor(entry.tariff)} />
                 ))}
               </Bar>
+              {lowestTariffs.map(({ name, tariff }) => (
+                <ReferenceLine
+                  key={name}
+                  x={name}
+                  stroke={getTariffColor(tariff)}
+                  strokeOpacity={0.2}
+                  strokeDasharray="10 10"
+                  strokeDashoffset={10}
+                  label={
+                    <ReLabel
+                      position="insideTop"
+                      value={tariff}
+                      formatter={formatCurrency}
+                      content={CustomLabel}
+                    />
+                  }
+                />
+              ))}
             </BarChart>
           </ResponsiveContainer>
         </Card>
