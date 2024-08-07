@@ -46,7 +46,7 @@ const CustomLabel = ({
       width={width}
       height={40}
     >
-      <Label className="flex h-[40] w-[40] justify-center px-1 py-1 font-bold">
+      <Label className="flex justify-center px-1 py-1 font-bold">
         {value.toFixed(2).toString().split('.')[1]}
       </Label>
     </foreignObject>
