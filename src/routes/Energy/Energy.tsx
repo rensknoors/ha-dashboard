@@ -38,6 +38,10 @@ const CustomLabel = ({
   viewBox: { x: number; y: number };
 }) => {
   const width = 30;
+  // Converts the tariff to cents
+  const cents = Math.round(value * 100)
+    .toString()
+    .replace(/^0+/, ''); // Remove leading zeros
 
   return (
     <foreignObject
@@ -49,7 +53,7 @@ const CustomLabel = ({
       <Label
         className={`flex justify-center px-1 py-1 font-bold bg-[${getTariffColor(value)}]`}
       >
-        {value.toFixed(2).toString().split('.')[1]}
+        {cents}
       </Label>
     </foreignObject>
   );
@@ -135,7 +139,7 @@ const Energy = () => {
                   key={name}
                   x={name}
                   stroke={getTariffColor(tariff)}
-                  strokeOpacity={0.2}
+                  strokeOpacity={0.5}
                   strokeDasharray="10 10"
                   strokeDashoffset={10}
                   label={
