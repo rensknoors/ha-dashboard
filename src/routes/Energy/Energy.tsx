@@ -39,9 +39,6 @@ const CustomLabel = ({
 }) => {
   const width = 30;
 
-  console.log(getTariffColor(value));
-  console.log(`bg-[${getTariffColor(value)}]`);
-
   return (
     <foreignObject
       x={viewBox.x - width / 2}
@@ -50,10 +47,7 @@ const CustomLabel = ({
       height={40}
     >
       <Label
-        className={clsx(
-          'flex justify-center px-1 py-1 font-bold',
-          `bg-[${getTariffColor(value)}]`
-        )}
+        className={`flex justify-center px-1 py-1 font-bold bg-[${getTariffColor(value)}]`}
       >
         {value.toFixed(2).toString().split('.')[1]}
       </Label>
