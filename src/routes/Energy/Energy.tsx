@@ -50,9 +50,7 @@ const CustomLabel = ({
       width={width}
       height={40}
     >
-      <Label
-        className={`flex justify-center px-1 py-1 font-bold bg-[${getTariffColor(value)}]`}
-      >
+      <Label className="flex justify-center bg-[#4BA66A] bg-none px-1 py-1 font-bold">
         {cents}
       </Label>
     </foreignObject>
