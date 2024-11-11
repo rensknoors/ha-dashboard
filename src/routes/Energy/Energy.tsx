@@ -15,7 +15,7 @@ import {
 
 import { Label, Tooltip } from '@/components/atoms';
 import { Card } from '@/components/atoms/Card/Card';
-import { getTariffColor } from '@/utils';
+import { formatDecimal, getTariffColor } from '@/utils';
 import { formatCurrency } from '@/utils/formatCurrency';
 
 const getTimeLabels = () => {
@@ -186,9 +186,9 @@ const Energy = () => {
         <Card className="flex w-full flex-col justify-center gap-1 bg-neutral-900 text-center">
           <span className="text-md mb-2">Huidig tarief</span>
           <span className="text-4xl font-semibold">
-            {formatCurrency(parseFloat(currentElectricityTariff.state))}
+            {formatDecimal(currentElectricityTariff.state)}
           </span>
-          <span className="text-md text-sm opacity-40">/kWh</span>
+          <span className="text-md text-sm opacity-40">€/kWh</span>
         </Card>
         <Card className="flex w-full flex-col justify-center gap-1 bg-neutral-900 text-center">
           <span className="text-md mb-2">Verbruikt</span>
@@ -222,9 +222,9 @@ const Energy = () => {
         <Card className="flex w-full flex-col items-center justify-center gap-1 bg-neutral-900 text-center">
           <span className="text-md mb-2">Huidig tarief</span>
           <span className="text-4xl font-semibold">
-            {formatCurrency(parseFloat(currentGasTariff.state))}
+            {formatDecimal(currentGasTariff.state)}
           </span>
-          <span className="text-md text-sm opacity-40">/m3</span>
+          <span className="text-md text-sm opacity-40">€/m3</span>
         </Card>
         <Card className="flex w-full flex-col justify-center bg-neutral-900 text-center">
           <span className="text-md mb-2">Verbruikt</span>
