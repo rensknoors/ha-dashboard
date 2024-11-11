@@ -49,7 +49,13 @@ declare module "@hakit/core" {
       // Checks the Home Assistant YAML-configuration files for errors. Errors will be shown in the Home Assistant logs.
       checkConfig: ServiceFunction<T, object>;
       // Forces one or more entities to update its data.
-      updateEntity: ServiceFunction<T, object>;
+      updateEntity: ServiceFunction<
+        T,
+        {
+          // List of entities to force update.
+          entity_id: string;
+        }
+      >;
       // Reloads the core configuration from the YAML-configuration.
       reloadCoreConfig: ServiceFunction<T, object>;
       // Updates the Home Assistant location.
@@ -109,6 +115,20 @@ declare module "@hakit/core" {
       // Reloads persons from the YAML-configuration.
       reload: ServiceFunction<T, object>;
     };
+    frontend: {
+      // Sets the default theme Home Assistant uses. Can be overridden by a user.
+      setTheme: ServiceFunction<
+        T,
+        {
+          // Name of a theme. @example default
+          name: object;
+          // Theme mode.
+          mode?: "dark" | "light";
+        }
+      >;
+      // Reloads themes from the YAML-configuration.
+      reloadThemes: ServiceFunction<T, object>;
+    };
     recorder: {
       // Starts purge task - to clean up old data from your database.
       purge: ServiceFunction<
@@ -140,20 +160,6 @@ declare module "@hakit/core" {
       enable: ServiceFunction<T, object>;
       // Stops the recording of events and state changes.
       disable: ServiceFunction<T, object>;
-    };
-    frontend: {
-      // Sets the default theme Home Assistant uses. Can be overridden by a user.
-      setTheme: ServiceFunction<
-        T,
-        {
-          // Name of a theme. @example default
-          name: object;
-          // Theme mode.
-          mode?: "dark" | "light";
-        }
-      >;
-      // Reloads themes from the YAML-configuration.
-      reloadThemes: ServiceFunction<T, object>;
     };
     hassio: {
       // Starts an add-on.
@@ -369,6 +375,46 @@ declare module "@hakit/core" {
       // Reloads trend sensors from the YAML-configuration.
       reload: ServiceFunction<T, object>;
     };
+    camera: {
+      // Enables the motion detection.
+      enableMotionDetection: ServiceFunction<T, object>;
+      // Disables the motion detection.
+      disableMotionDetection: ServiceFunction<T, object>;
+      // Turns off the camera.
+      turnOff: ServiceFunction<T, object>;
+      // Turns on the camera.
+      turnOn: ServiceFunction<T, object>;
+      // Takes a snapshot from a camera.
+      snapshot: ServiceFunction<
+        T,
+        {
+          // Full path to filename. @example /tmp/snapshot_{{ entity_id.name }}.jpg
+          filename: string;
+        }
+      >;
+      // Plays the camera stream on a supported media player.
+      playStream: ServiceFunction<
+        T,
+        {
+          // Media players to stream to.
+          media_player: string;
+          // Stream format supported by the media player.
+          format?: "hls";
+        }
+      >;
+      // Creates a recording of a live camera feed.
+      record: ServiceFunction<
+        T,
+        {
+          // Full path to filename. Must be mp4. @example /tmp/snapshot_{{ entity_id.name }}.mp4
+          filename: string;
+          // Planned duration of the recording. The actual duration may vary.
+          duration?: number;
+          // Planned lookback period to include in the recording (in addition to the duration). Only available if there is currently an active HLS stream. The actual length of the lookback period may vary.
+          lookback?: number;
+        }
+      >;
+    };
     scene: {
       // Reloads the scenes from the YAML-configuration.
       reload: ServiceFunction<T, object>;
@@ -405,32 +451,6 @@ declare module "@hakit/core" {
         }
       >;
     };
-    timer: {
-      // Reloads timers from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-      // Starts a timer.
-      start: ServiceFunction<
-        T,
-        {
-          // Duration the timer requires to finish. [optional]. @example 00:01:00 or 60
-          duration?: string;
-        }
-      >;
-      // Pauses a timer.
-      pause: ServiceFunction<T, object>;
-      // Cancels a timer.
-      cancel: ServiceFunction<T, object>;
-      // Finishes a timer.
-      finish: ServiceFunction<T, object>;
-      // Changes a timer.
-      change: ServiceFunction<
-        T,
-        {
-          // Duration to add or subtract to the running timer. @example 00:01:00, 60 or -60
-          duration: string;
-        }
-      >;
-    };
     logbook: {
       // Creates a custom entry in the logbook.
       log: ServiceFunction<
@@ -446,6 +466,22 @@ declare module "@hakit/core" {
           domain?: string;
         }
       >;
+    };
+    inputNumber: {
+      // Reloads helpers from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+      // Sets the value.
+      setValue: ServiceFunction<
+        T,
+        {
+          // The target value.
+          value: number;
+        }
+      >;
+      // Increments the value by 1 step.
+      increment: ServiceFunction<T, object>;
+      // Decrements the current value by 1 step.
+      decrement: ServiceFunction<T, object>;
     };
     group: {
       // Reloads group configuration, entities, and notify services from YAML-configuration.
@@ -529,21 +565,41 @@ declare module "@hakit/core" {
         }
       >;
     };
-    inputNumber: {
-      // Reloads helpers from the YAML-configuration.
+    timer: {
+      // Reloads timers from the YAML-configuration.
       reload: ServiceFunction<T, object>;
-      // Sets the value.
-      setValue: ServiceFunction<
+      // Starts a timer.
+      start: ServiceFunction<
         T,
         {
-          // The target value.
-          value: number;
+          // Duration the timer requires to finish. [optional]. @example 00:01:00 or 60
+          duration?: string;
         }
       >;
-      // Increments the value by 1 step.
-      increment: ServiceFunction<T, object>;
-      // Decrements the current value by 1 step.
-      decrement: ServiceFunction<T, object>;
+      // Pauses a timer.
+      pause: ServiceFunction<T, object>;
+      // Cancels a timer.
+      cancel: ServiceFunction<T, object>;
+      // Finishes a timer.
+      finish: ServiceFunction<T, object>;
+      // Changes a timer.
+      change: ServiceFunction<
+        T,
+        {
+          // Duration to add or subtract to the running timer. @example 00:01:00, 60 or -60
+          duration: string;
+        }
+      >;
+    };
+    inputButton: {
+      // Reloads helpers from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+      // Mimics the physical button press on the device.
+      press: ServiceFunction<T, object>;
+    };
+    zone: {
+      // Reloads zones from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
     };
     inputSelect: {
       // Reloads helpers from the YAML-configuration.
@@ -581,7 +637,7 @@ declare module "@hakit/core" {
         T,
         {
           // List of options. @example ['Item A', 'Item B', 'Item C']
-          options: object;
+          options: string;
         }
       >;
     };
@@ -595,19 +651,35 @@ declare module "@hakit/core" {
       // Toggles the helper on/off.
       toggle: ServiceFunction<T, object>;
     };
-    inputButton: {
-      // Reloads helpers from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-      // Mimics the physical button press on the device.
-      press: ServiceFunction<T, object>;
-    };
-    zone: {
-      // Reloads zones from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-    };
     template: {
       // Reloads template entities from the YAML-configuration.
       reload: ServiceFunction<T, object>;
+    };
+    conversation: {
+      // Launches a conversation from a transcribed text.
+      process: ServiceFunction<
+        T,
+        {
+          // Transcribed text input. @example Turn all lights on
+          text: string;
+          // Language of text. Defaults to server language. @example NL
+          language?: string;
+          // Conversation agent to process your request. The conversation agent is the brains of your assistant. It processes the incoming text commands. @example homeassistant
+          agent_id?: object;
+          // ID of the conversation, to be able to continue a previous conversation @example my_conversation_1
+          conversation_id?: string;
+        }
+      >;
+      // Reloads the intent configuration.
+      reload: ServiceFunction<
+        T,
+        {
+          // Language to clear cached intents for. Defaults to server language. @example NL
+          language?: string;
+          // Conversation agent to reload. @example homeassistant
+          agent_id?: object;
+        }
+      >;
     };
     fan: {
       // Turns fan on.
@@ -673,32 +745,6 @@ declare module "@hakit/core" {
         }
       >;
     };
-    conversation: {
-      // Launches a conversation from a transcribed text.
-      process: ServiceFunction<
-        T,
-        {
-          // Transcribed text input. @example Turn all lights on
-          text: string;
-          // Language of text. Defaults to server language. @example NL
-          language?: string;
-          // Conversation agent to process your request. The conversation agent is the brains of your assistant. It processes the incoming text commands. @example homeassistant
-          agent_id?: object;
-          // ID of the conversation, to be able to continue a previous conversation @example my_conversation_1
-          conversation_id?: string;
-        }
-      >;
-      // Reloads the intent configuration.
-      reload: ServiceFunction<
-        T,
-        {
-          // Language to clear cached intents for. Defaults to server language. @example NL
-          language?: string;
-          // Conversation agent to reload. @example homeassistant
-          agent_id?: object;
-        }
-      >;
-    };
     cover: {
       // Opens a cover.
       openCover: ServiceFunction<T, object>;
@@ -733,7 +779,27 @@ declare module "@hakit/core" {
       // Toggles a cover tilt open/closed.
       toggleCoverTilt: ServiceFunction<T, object>;
     };
+    inputDatetime: {
+      // Reloads helpers from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+      // Sets the date and/or time.
+      setDatetime: ServiceFunction<
+        T,
+        {
+          // The target date. @example '2019-04-20'
+          date?: string;
+          // The target time. @example '05:04:20'
+          time?: object;
+          // The target date & time. @example '2019-04-20 05:04:20'
+          datetime?: string;
+          // The target date & time, expressed by a UNIX timestamp.
+          timestamp?: number;
+        }
+      >;
+    };
     script: {
+      //
+      1638709314016: ServiceFunction<T, object>;
       //
       castCameraToDrivewayMonitor: ServiceFunction<T, object>;
       //
@@ -758,6 +824,192 @@ declare module "@hakit/core" {
       turnOff: ServiceFunction<T, object>;
       // Toggle a script. Starts it, if isn't running, stops it otherwise.
       toggle: ServiceFunction<T, object>;
+    };
+    wakeOnLan: {
+      // Sends a 'magic packet' to wake up a device with 'Wake-On-LAN' capabilities.
+      sendMagicPacket: ServiceFunction<
+        T,
+        {
+          // MAC address of the device to wake up. @example aa:bb:cc:dd:ee:ff
+          mac: string;
+          // The IP address of the host to send the magic packet to. Defaults to `255.255.255.255` and is normally not changed. @example 192.168.255.255
+          broadcast_address?: string;
+          // The port to send the magic packet to. Defaults to `9` and is normally not changed.
+          broadcast_port?: number;
+        }
+      >;
+    };
+    tado: {
+      // Add meter readings to Tado Energy IQ.
+      addMeterReading: ServiceFunction<
+        T,
+        {
+          // Config entry to add meter readings to.
+          config_entry: object;
+          // Reading in m³ or kWh without decimals.
+          reading: number;
+        }
+      >;
+      // Turns on climate entities for a set time.
+      setClimateTimer: ServiceFunction<
+        T,
+        {
+          // Temperature to set climate entity to.
+          temperature: number;
+          // Choose this or Overlay. Set the time period for the change if you want to be specific. Alternatively use Overlay. @example 01:30:00
+          time_period?: string;
+          // Choose this or Time Period. Allows you to choose an overlay. MANUAL:=Overlay until user removes; NEXT_TIME_BLOCK:=Overlay until next timeblock; TADO_DEFAULT:=Overlay based on tado app setting. @example MANUAL
+          requested_overlay?: "NEXT_TIME_BLOCK" | "MANUAL" | "TADO_DEFAULT";
+        }
+      >;
+      // Sets the temperature offset of climate entities.
+      setClimateTemperatureOffset: ServiceFunction<
+        T,
+        {
+          // Offset you would like (depending on your device).
+          offset?: number;
+        }
+      >;
+      // Turns on water heater for a set time.
+      setWaterHeaterTimer: ServiceFunction<
+        T,
+        {
+          // Set the time period for the boost. @example 01:30:00
+          time_period: string;
+          // Temperature to set heater to.
+          temperature?: number;
+        }
+      >;
+    };
+    commandLine: {
+      // Reloads command line configuration from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+    };
+    webrtc: {
+      // Create a temporary or permanent link to a stream (enter `url` or `entity`)
+      createLink: ServiceFunction<
+        T,
+        {
+          // Create a random or permanent ID for your link @example fd0a53ca-e9ab-4e7a-86a2-441642b16ae1
+          link_id: string;
+          // Link to RTSP-stream @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
+          url?: string;
+          // Camera entity_id @example camera.generic_stream
+          entity?: string;
+          // How many times a link can be opened (0 - unlimit)
+          open_limit?: number;
+          // How many seconds will the link live (0 - unlimit)
+          time_to_live?: number;
+        }
+      >;
+      // Cast stream to Chromecast device via DashCast application
+      dashCast: ServiceFunction<
+        T,
+        {
+          // Media player entity_id @example media_player.mibox4
+          entity_id: string;
+          // Link to RTSP-stream @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
+          url?: string;
+          // Camera entity_id @example camera.generic_stream
+          entity?: string;
+          // Additional card params
+          extra?: object;
+          // Force restart DashCast application
+          force?: boolean;
+          // Manual base URL to Hass server @example http://192.168.1.123:8123
+          hass_url?: string;
+        }
+      >;
+    };
+    googleAssistant: {
+      // Sends a request_sync command to Google.
+      requestSync: ServiceFunction<
+        T,
+        {
+          // Only needed for automations. Specific Home Assistant user id (not username, ID in configuration > users > under username) to sync with Google Assistant. Do not need when you use this action through Home Assistant front end or API. Used in automation script or other place where context.user_id is missing.
+          agent_user_id?: string;
+        }
+      >;
+    };
+    counter: {
+      // Increments a counter.
+      increment: ServiceFunction<T, object>;
+      // Decrements a counter.
+      decrement: ServiceFunction<T, object>;
+      // Resets a counter.
+      reset: ServiceFunction<T, object>;
+      // Sets the counter value.
+      setValue: ServiceFunction<
+        T,
+        {
+          // The new counter value the entity should be set to.
+          value: number;
+        }
+      >;
+    };
+    webostv: {
+      // Sends a button press command.
+      button: ServiceFunction<
+        T,
+        {
+          // Name(s) of the webostv entities where to run the API method.
+          entity_id: string;
+          // Name of the button to press.  Known possible values are LEFT, RIGHT, DOWN, UP, HOME, MENU, BACK, ENTER, DASH, INFO, ASTERISK, CC, EXIT, MUTE, RED, GREEN, BLUE, YELLOW, VOLUMEUP, VOLUMEDOWN, CHANNELUP, CHANNELDOWN, PLAY, PAUSE, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. @example LEFT
+          button: string;
+        }
+      >;
+      // Sends a command.
+      command: ServiceFunction<
+        T,
+        {
+          // Name(s) of the webostv entities where to run the API method.
+          entity_id: string;
+          // Endpoint of the command. @example system.launcher/open
+          command: string;
+          // An optional payload to provide to the endpoint in the format of key value pair(s). @example target: https://www.google.com
+          payload?: object;
+        }
+      >;
+      // Sends the TV the command to change sound output.
+      selectSoundOutput: ServiceFunction<
+        T,
+        {
+          // Name(s) of the webostv entities to change sound output on.
+          entity_id: string;
+          // Name of the sound output to switch to. @example external_speaker
+          sound_output: string;
+        }
+      >;
+    };
+    uiLovelaceMinimalist: {
+      // Reload dashboard configuration for UI Lovelace Minimalist.
+      reload: ServiceFunction<T, object>;
+    };
+    cast: {
+      // Shows a dashboard view on a Chromecast device.
+      showLovelaceView: ServiceFunction<
+        T,
+        {
+          // Media player entity to show the dashboard view on.
+          entity_id: string;
+          // The URL path of the dashboard to show. @example lovelace-cast
+          dashboard_path: string;
+          // The path of the dashboard view to show. @example downstairs
+          view_path?: string;
+        }
+      >;
+    };
+    inputText: {
+      // Reloads helpers from the YAML-configuration.
+      reload: ServiceFunction<T, object>;
+      // Sets the value.
+      setValue: ServiceFunction<
+        T,
+        {
+          // The target value. @example This is an example text
+          value: string;
+        }
+      >;
     };
     mediaPlayer: {
       // Turns on the power of the media player.
@@ -865,51 +1117,13 @@ declare module "@hakit/core" {
         }
       >;
     };
-    camera: {
-      // Enables the motion detection.
-      enableMotionDetection: ServiceFunction<T, object>;
-      // Disables the motion detection.
-      disableMotionDetection: ServiceFunction<T, object>;
-      // Turns off the camera.
-      turnOff: ServiceFunction<T, object>;
-      // Turns on the camera.
-      turnOn: ServiceFunction<T, object>;
-      // Takes a snapshot from a camera.
-      snapshot: ServiceFunction<
-        T,
-        {
-          // Template of a filename. Variable available is `entity_id`. @example /tmp/snapshot_{{ entity_id.name }}.jpg
-          filename: string;
-        }
-      >;
-      // Plays the camera stream on a supported media player.
-      playStream: ServiceFunction<
-        T,
-        {
-          // Media players to stream to.
-          media_player: string;
-          // Stream format supported by the media player.
-          format?: "hls";
-        }
-      >;
-      // Creates a recording of a live camera feed.
-      record: ServiceFunction<
-        T,
-        {
-          // Template of a filename. Variable available is `entity_id`. Must be mp4. @example /tmp/snapshot_{{ entity_id.name }}.mp4
-          filename: string;
-          // Planned duration of the recording. The actual duration may vary.
-          duration?: number;
-          // Planned lookback period to include in the recording (in addition to the duration). Only available if there is currently an active HLS stream. The actual length of the lookback period may vary.
-          lookback?: number;
-        }
-      >;
-    };
     browserMod: {
       // Run a sequence of services
       sequence: ServiceFunction<
         T,
         {
+          // undefined
+          browser_id?: object;
           // List of services to run
           sequence?: object;
         }
@@ -918,6 +1132,8 @@ declare module "@hakit/core" {
       delay: ServiceFunction<
         T,
         {
+          // undefined
+          browser_id?: object;
           // Time to wait (ms)
           time?: number;
         }
@@ -926,6 +1142,8 @@ declare module "@hakit/core" {
       popup: ServiceFunction<
         T,
         {
+          // undefined
+          browser_id?: object;
           // Popup title
           title?: string;
           // Popup content (Test or lovelace card configuration)
@@ -958,6 +1176,8 @@ declare module "@hakit/core" {
       moreInfo: ServiceFunction<
         T,
         {
+          // undefined
+          browser_id?: object;
           //
           entity: string;
           //
@@ -967,11 +1187,19 @@ declare module "@hakit/core" {
         }
       >;
       // Close a popup
-      closePopup: ServiceFunction<T, object>;
+      closePopup: ServiceFunction<
+        T,
+        {
+          // undefined
+          browser_id?: object;
+        }
+      >;
       // Display a short notification
       notification: ServiceFunction<
         T,
         {
+          // undefined
+          browser_id?: object;
           // Message to display
           message: string;
           // Time before closing (ms)
@@ -986,16 +1214,26 @@ declare module "@hakit/core" {
       navigate: ServiceFunction<
         T,
         {
+          // undefined
+          browser_id?: object;
           // Target path
           path?: string;
         }
       >;
       // Refresh page
-      refresh: ServiceFunction<T, object>;
+      refresh: ServiceFunction<
+        T,
+        {
+          // undefined
+          browser_id?: object;
+        }
+      >;
       // Change the current theme
       setTheme: ServiceFunction<
         T,
         {
+          // undefined
+          browser_id?: object;
           // Name of theme or 'auto'
           theme?: string;
           // Dark/light mode
@@ -1010,6 +1248,8 @@ declare module "@hakit/core" {
       console: ServiceFunction<
         T,
         {
+          // undefined
+          browser_id?: object;
           // Text to print
           message?: string;
         }
@@ -1018,26 +1258,10 @@ declare module "@hakit/core" {
       javascript: ServiceFunction<
         T,
         {
+          // undefined
+          browser_id?: object;
           // JavaScript code to run
           code?: object;
-        }
-      >;
-    };
-    inputDatetime: {
-      // Reloads helpers from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-      // Sets the date and/or time.
-      setDatetime: ServiceFunction<
-        T,
-        {
-          // The target date. @example '2019-04-20'
-          date?: string;
-          // The target time. @example '05:04:20'
-          time?: object;
-          // The target date & time. @example '2019-04-20 05:04:20'
-          datetime?: string;
-          // The target date & time, expressed by a UNIX timestamp.
-          timestamp?: number;
         }
       >;
     };
@@ -1045,185 +1269,122 @@ declare module "@hakit/core" {
       // Reloads schedules from the YAML-configuration.
       reload: ServiceFunction<T, object>;
     };
-    commandLine: {
-      // Reloads command line configuration from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-    };
-    inputText: {
-      // Reloads helpers from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-      // Sets the value.
-      setValue: ServiceFunction<
+    eufySecurity: {
+      // Pull latest data from cloud and update internal state
+      forceSync: ServiceFunction<T, object>;
+      // Send a JSON message to Web Socket
+      sendMessage: ServiceFunction<
         T,
         {
-          // The target value. @example This is an example text
-          value: string;
+          // Raw message in JSON format
+          message: string;
         }
       >;
-    };
-    googleAssistant: {
-      // Sends a request_sync command to Google.
-      requestSync: ServiceFunction<
+      // Set Log Level of Add-on, this is needed to debug issues happening in eufy-security-ws add-on. Before calling a problematic command, set the log level (preferable to debug), execute your command and revert it back to info.
+      setLogLevel: ServiceFunction<
         T,
         {
-          // Only needed for automations. Specific Home Assistant user id (not username, ID in configuration > users > under username) to sync with Google Assistant. Do not need when you use this action through Home Assistant front end or API. Used in automation script or other place where context.user_id is missing.
-          agent_user_id?: string;
+          // Log Level Option
+          log_level:
+            | "silly"
+            | "trace"
+            | "debug"
+            | "info"
+            | "warn"
+            | "error"
+            | "fatal";
         }
       >;
-    };
-    tado: {
-      // Add meter readings to Tado Energy IQ.
-      addMeterReading: ServiceFunction<
+      // Trigger Alarm for a Duration
+      triggerBaseAlarmWithDuration: ServiceFunction<
         T,
         {
-          // Config entry to add meter readings to.
-          config_entry: object;
-          // Reading in m³ or kWh without decimals.
-          reading: number;
+          // Duration in seconds @example 10
+          duration: number;
         }
       >;
-      // Turns on climate entities for a set time.
-      setClimateTimer: ServiceFunction<
+      // Reset Alarm for Alarm Panel
+      resetAlarm: ServiceFunction<T, object>;
+      // Arm Customer 1 for Alarm Panel
+      alarmArmCustom1: ServiceFunction<T, object>;
+      // Arm Customer 2 for Alarm Panel
+      alarmArmCustom2: ServiceFunction<T, object>;
+      // Arm Customer 3 for Alarm Panel
+      alarmArmCustom3: ServiceFunction<T, object>;
+      // Switch to geofence mode
+      geofence: ServiceFunction<T, object>;
+      // Switch to schedule mode
+      schedule: ServiceFunction<T, object>;
+      // Only supported if no doorbell device is registered at the station where the chime is to be performed
+      chime: ServiceFunction<
         T,
         {
-          // Temperature to set climate entity to.
-          temperature: number;
-          // Choose this or Overlay. Set the time period for the change if you want to be specific. Alternatively use Overlay. @example 01:30:00
-          time_period?: string;
-          // Choose this or Time Period. Allows you to choose an overlay. MANUAL:=Overlay until user removes; NEXT_TIME_BLOCK:=Overlay until next timeblock; TADO_DEFAULT:=Overlay based on tado app setting. @example MANUAL
-          requested_overlay?: "NEXT_TIME_BLOCK" | "MANUAL" | "TADO_DEFAULT";
+          // Ringtone ID? @example 419
+          ringtone: number;
         }
       >;
-      // Sets the temperature offset of climate entities.
-      setClimateTemperatureOffset: ServiceFunction<
+      // Reboot station
+      reboot: ServiceFunction<T, object>;
+      // Turn Alarm off for Alarm Panel
+      alarmOff: ServiceFunction<T, object>;
+      // Generate Image for Camera
+      generateImage: ServiceFunction<T, object>;
+      // Send start live stream command to camera
+      startP2PLivestream: ServiceFunction<T, object>;
+      // Send stop live stream command to camera
+      stopP2PLivestream: ServiceFunction<T, object>;
+      // Send start live stream command to camera
+      startRtspLivestream: ServiceFunction<T, object>;
+      // Send stop live stream command to camera
+      stopRtspLivestream: ServiceFunction<T, object>;
+      // Call PTZ command for supported PTZ cameras
+      ptz: ServiceFunction<
         T,
         {
-          // Offset you would like (depending on your device).
-          offset?: number;
+          // Direction Option
+          direction: "ROTATE360" | "DOWN" | "UP" | "RIGHT" | "LEFT";
         }
       >;
-      // Turns on water heater for a set time.
-      setWaterHeaterTimer: ServiceFunction<
+      // Look up for supported PTZ cameras
+      ptzUp: ServiceFunction<T, object>;
+      // Look down for supported PTZ cameras
+      ptzDown: ServiceFunction<T, object>;
+      // Look left for supported PTZ cameras
+      ptzLeft: ServiceFunction<T, object>;
+      // Look right for supported PTZ cameras
+      ptzRight: ServiceFunction<T, object>;
+      // Rotate 360 degrees for supported PTZ cameras
+      ptz360: ServiceFunction<T, object>;
+      // Calibrate supported cameras
+      calibrate: ServiceFunction<T, object>;
+      // Trigger Alarm for a Duration
+      triggerCameraAlarmWithDuration: ServiceFunction<
         T,
         {
-          // Set the time period for the boost. @example 01:30:00
-          time_period: string;
-          // Temperature to set heater to.
-          temperature?: number;
+          // Duration in seconds @example 10
+          duration: number;
         }
       >;
-    };
-    webrtc: {
-      // Create a temporary or permanent link to a stream (enter `url` or `entity`)
-      createLink: ServiceFunction<
+      // Send quick response, this works ONLY when camera is streaming via P2P (not RTSP)
+      quickResponse: ServiceFunction<
         T,
         {
-          // Create a random or permanent ID for your link @example fd0a53ca-e9ab-4e7a-86a2-441642b16ae1
-          link_id: string;
-          // Link to RTSP-stream @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
-          url?: string;
-          // Camera entity_id @example camera.generic_stream
-          entity?: string;
-          // How many times a link can be opened (0 - unlimit)
-          open_limit?: number;
-          // How many seconds will the link live (0 - unlimit)
-          time_to_live?: number;
+          // Voice ID stored in attributes @example 419
+          voice_id: number;
         }
       >;
-      // Cast stream to Chromecast device via DashCast application
-      dashCast: ServiceFunction<
+      // Snooze Alarm for a Duration
+      snooze: ServiceFunction<
         T,
         {
-          // Media player entity_id @example media_player.mibox4
-          entity_id: string;
-          // Link to RTSP-stream @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
-          url?: string;
-          // Camera entity_id @example camera.generic_stream
-          entity?: string;
-          // Additional card params
-          extra?: object;
-          // Force restart DashCast application
-          force?: boolean;
-          // Manual base URL to Hass server @example http://192.168.1.123:8123
-          hass_url?: string;
-        }
-      >;
-    };
-    wakeOnLan: {
-      // Sends a 'magic packet' to wake up a device with 'Wake-On-LAN' capabilities.
-      sendMagicPacket: ServiceFunction<
-        T,
-        {
-          // MAC address of the device to wake up. @example aa:bb:cc:dd:ee:ff
-          mac: string;
-          // Broadcast IP where to send the magic packet. @example 192.168.255.255
-          broadcast_address?: string;
-          // Port where to send the magic packet.
-          broadcast_port?: number;
-        }
-      >;
-    };
-    counter: {
-      // Increments a counter.
-      increment: ServiceFunction<T, object>;
-      // Decrements a counter.
-      decrement: ServiceFunction<T, object>;
-      // Resets a counter.
-      reset: ServiceFunction<T, object>;
-      // Sets the counter value.
-      setValue: ServiceFunction<
-        T,
-        {
-          // The new counter value the entity should be set to.
-          value: number;
-        }
-      >;
-    };
-    webostv: {
-      // Sends a button press command.
-      button: ServiceFunction<
-        T,
-        {
-          // Name(s) of the webostv entities where to run the API method.
-          entity_id: string;
-          // Name of the button to press.  Known possible values are LEFT, RIGHT, DOWN, UP, HOME, MENU, BACK, ENTER, DASH, INFO, ASTERISK, CC, EXIT, MUTE, RED, GREEN, BLUE, YELLOW, VOLUMEUP, VOLUMEDOWN, CHANNELUP, CHANNELDOWN, PLAY, PAUSE, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. @example LEFT
-          button: string;
-        }
-      >;
-      // Sends a command.
-      command: ServiceFunction<
-        T,
-        {
-          // Name(s) of the webostv entities where to run the API method.
-          entity_id: string;
-          // Endpoint of the command. @example system.launcher/open
-          command: string;
-          // An optional payload to provide to the endpoint in the format of key value pair(s). @example target: https://www.google.com
-          payload?: object;
-        }
-      >;
-      // Sends the TV the command to change sound output.
-      selectSoundOutput: ServiceFunction<
-        T,
-        {
-          // Name(s) of the webostv entities to change sound output on.
-          entity_id: string;
-          // Name of the sound output to switch to. @example external_speaker
-          sound_output: string;
-        }
-      >;
-    };
-    cast: {
-      // Shows a dashboard view on a Chromecast device.
-      showLovelaceView: ServiceFunction<
-        T,
-        {
-          // Media player entity to show the dashboard view on.
-          entity_id: string;
-          // The URL path of the dashboard to show. @example lovelace-cast
-          dashboard_path: string;
-          // The path of the dashboard view to show. @example downstairs
-          view_path?: string;
+          // Snooze Duration in seconds @example 10
+          snooze_time: number;
+          // Will chime be snoozed?
+          snooze_chime: boolean;
+          // Will motion notifications be snoozed?
+          snooze_motion: boolean;
+          // Will home base be snoozed?
+          snooze_homebase: boolean;
         }
       >;
     };
@@ -1385,263 +1546,9 @@ declare module "@hakit/core" {
         }
       >;
     };
-    mqtt: {
-      // Publishes a message to an MQTT topic.
-      publish: ServiceFunction<
-        T,
-        {
-          // Topic to publish to. @example /homeassistant/hello
-          topic: string;
-          // The payload to publish. @example This is great
-          payload?: string;
-          // Template to render as a payload value. If a payload is provided, the template is ignored. @example {{ states('sensor.temperature') }}
-          payload_template?: object;
-          // Quality of Service to use. 0: At most once. 1: At least once. 2: Exactly once.
-          qos?: "0" | "1" | "2";
-          // If the message should have the retain flag set. If set, the broker stores the most recent message on a topic.
-          retain?: boolean;
-        }
-      >;
-      // Writes all messages on a specific topic into the `mqtt_dump.txt` file in your configuration folder.
-      dump: ServiceFunction<
-        T,
-        {
-          // Topic to listen to. @example OpenZWave/#
-          topic?: string;
-          // How long we should listen for messages in seconds.
-          duration?: number;
-        }
-      >;
-      // Reloads MQTT entities from the YAML-configuration.
-      reload: ServiceFunction<T, object>;
-    };
-    hue: {
-      // Activates a Hue scene with more control over the options.
-      activateScene: ServiceFunction<
-        T,
-        {
-          // Transition duration it takes to bring devices to the state defined in the scene.
-          transition?: number;
-          // Enable dynamic mode of the scene.
-          dynamic?: boolean;
-          // Speed of dynamic palette for this scene.
-          speed?: number;
-          // Set brightness for the scene.
-          brightness?: number;
-        }
-      >;
-      // Activates a hue scene stored in the hue hub.
-      hueActivateScene: ServiceFunction<
-        T,
-        {
-          // Name of hue group/room from the hue app. @example Living Room
-          group_name?: string;
-          // Name of hue scene from the hue app. @example Energize
-          scene_name?: string;
-          // Enable dynamic mode of the scene (V2 bridges and supported scenes only).
-          dynamic?: boolean;
-        }
-      >;
-    };
-    switch: {
-      // Turns a switch off.
-      turnOff: ServiceFunction<T, object>;
-      // Turns a switch on.
-      turnOn: ServiceFunction<T, object>;
-      // Toggles a switch on/off.
-      toggle: ServiceFunction<T, object>;
-    };
-    remote: {
-      // Turns the device off.
-      turnOff: ServiceFunction<T, object>;
-      // Sends the power on command.
-      turnOn: ServiceFunction<
-        T,
-        {
-          // Activity ID or activity name to be started. @example BedroomTV
-          activity?: string;
-        }
-      >;
-      // Toggles a device on/off.
-      toggle: ServiceFunction<T, object>;
-      // Sends a command or a list of commands to a device.
-      sendCommand: ServiceFunction<
-        T,
-        {
-          // Device ID to send command to. @example 32756745
-          device?: string;
-          // A single command or a list of commands to send. @example Play
-          command: object;
-          // The number of times you want to repeat the commands.
-          num_repeats?: number;
-          // The time you want to wait in between repeated commands.
-          delay_secs?: number;
-          // The time you want to have it held before the release is send.
-          hold_secs?: number;
-        }
-      >;
-      // Learns a command or a list of commands from a device.
-      learnCommand: ServiceFunction<
-        T,
-        {
-          // Device ID to learn command from. @example television
-          device?: string;
-          // A single command or a list of commands to learn. @example Turn on
-          command?: object;
-          // The type of command to be learned.
-          command_type?: "ir" | "rf";
-          // If code must be stored as an alternative. This is useful for discrete codes. Discrete codes are used for toggles that only perform one function. For example, a code to only turn a device on. If it is on already, sending the code won't change the state.
-          alternative?: boolean;
-          // Timeout for the command to be learned.
-          timeout?: number;
-        }
-      >;
-      // Deletes a command or a list of commands from the database.
-      deleteCommand: ServiceFunction<
-        T,
-        {
-          // Device from which commands will be deleted. @example television
-          device?: string;
-          // The single command or the list of commands to be deleted. @example Mute
-          command: object;
-        }
-      >;
-    };
     button: {
       // Press the button entity.
       press: ServiceFunction<T, object>;
-    };
-    number: {
-      // Sets the value of a number.
-      setValue: ServiceFunction<
-        T,
-        {
-          // The target value to set. @example 42
-          value?: string;
-        }
-      >;
-    };
-    select: {
-      // Selects the first option.
-      selectFirst: ServiceFunction<T, object>;
-      // Selects the last option.
-      selectLast: ServiceFunction<T, object>;
-      // Selects the next option.
-      selectNext: ServiceFunction<
-        T,
-        {
-          // If the option should cycle from the last to the first.
-          cycle?: boolean;
-        }
-      >;
-      // Selects an option.
-      selectOption: ServiceFunction<
-        T,
-        {
-          // Option to be selected. @example 'Item A'
-          option: string;
-        }
-      >;
-      // Selects the previous option.
-      selectPrevious: ServiceFunction<
-        T,
-        {
-          // If the option should cycle from the first to the last.
-          cycle?: boolean;
-        }
-      >;
-    };
-    time: {
-      // Sets the time.
-      setValue: ServiceFunction<
-        T,
-        {
-          // The time to set. @example 22:15
-          time: object;
-        }
-      >;
-    };
-    vacuum: {
-      // Starts or resumes the cleaning task.
-      start: ServiceFunction<T, object>;
-      // Pauses the cleaning task.
-      pause: ServiceFunction<T, object>;
-      // Tells the vacuum cleaner to return to its dock.
-      returnToBase: ServiceFunction<T, object>;
-      // Tells the vacuum cleaner to do a spot clean-up.
-      cleanSpot: ServiceFunction<T, object>;
-      // Locates the vacuum cleaner robot.
-      locate: ServiceFunction<T, object>;
-      // Stops the current cleaning task.
-      stop: ServiceFunction<T, object>;
-      // Sets the fan speed of the vacuum cleaner.
-      setFanSpeed: ServiceFunction<
-        T,
-        {
-          // Fan speed. The value depends on the integration. Some integrations have speed steps, like 'medium'. Some use a percentage, between 0 and 100. @example low
-          fan_speed: string;
-        }
-      >;
-      // Sends a command to the vacuum cleaner.
-      sendCommand: ServiceFunction<
-        T,
-        {
-          // Command to execute. The commands are integration-specific. @example set_dnd_timer
-          command: string;
-          // Parameters for the command. The parameters are integration-specific. @example { 'key': 'value' }
-          params?: object;
-        }
-      >;
-    };
-    roborock: {
-      // Get the map and room information of your device.
-      getMaps: ServiceFunction<T, object>;
-    };
-    weather: {
-      // Get weather forecasts.
-      getForecasts: ServiceFunction<
-        T,
-        {
-          // Forecast type: daily, hourly or twice daily.
-          type: "daily" | "hourly" | "twice_daily";
-        }
-      >;
-    };
-    calendar: {
-      // Adds a new calendar event.
-      createEvent: ServiceFunction<
-        T,
-        {
-          // Defines the short summary or subject for the event. @example Department Party
-          summary: string;
-          // A more complete description of the event than the one provided by the summary. @example Meeting to provide technical review for 'Phoenix' design.
-          description?: string;
-          // The date and time the event should start. @example 2022-03-22 20:00:00
-          start_date_time?: object;
-          // The date and time the event should end. @example 2022-03-22 22:00:00
-          end_date_time?: object;
-          // The date the all-day event should start. @example 2022-03-22
-          start_date?: object;
-          // The date the all-day event should end (exclusive). @example 2022-03-23
-          end_date?: object;
-          // Days or weeks that you want to create the event in. @example {'days': 2} or {'weeks': 2}
-          in?: object;
-          // The location of the event. @example Conference Room - F123, Bldg. 002
-          location?: string;
-        }
-      >;
-      // Get events on a calendar within a time range.
-      getEvents: ServiceFunction<
-        T,
-        {
-          // Returns active events after this time (exclusive). When not set, defaults to now. @example 2022-03-22 20:00:00
-          start_date_time?: object;
-          // Returns active events before this time (exclusive). Cannot be used with 'duration'. @example 2022-03-22 22:00:00
-          end_date_time?: object;
-          // Returns active events from start_date_time until the specified duration.
-          duration?: object;
-        }
-      >;
     };
     climate: {
       // Turns climate device on.
@@ -1727,6 +1634,118 @@ declare module "@hakit/core" {
         }
       >;
     };
+    number: {
+      // Sets the value of a number.
+      setValue: ServiceFunction<
+        T,
+        {
+          // The target value to set. @example 42
+          value?: string;
+        }
+      >;
+    };
+    select: {
+      // Selects the first option.
+      selectFirst: ServiceFunction<T, object>;
+      // Selects the last option.
+      selectLast: ServiceFunction<T, object>;
+      // Selects the next option.
+      selectNext: ServiceFunction<
+        T,
+        {
+          // If the option should cycle from the last to the first.
+          cycle?: boolean;
+        }
+      >;
+      // Selects an option.
+      selectOption: ServiceFunction<
+        T,
+        {
+          // Option to be selected. @example 'Item A'
+          option: string;
+        }
+      >;
+      // Selects the previous option.
+      selectPrevious: ServiceFunction<
+        T,
+        {
+          // If the option should cycle from the first to the last.
+          cycle?: boolean;
+        }
+      >;
+    };
+    switch: {
+      // Turns a switch off.
+      turnOff: ServiceFunction<T, object>;
+      // Turns a switch on.
+      turnOn: ServiceFunction<T, object>;
+      // Toggles a switch on/off.
+      toggle: ServiceFunction<T, object>;
+    };
+    text: {
+      // Sets the value.
+      setValue: ServiceFunction<
+        T,
+        {
+          // Enter your text. @example Hello world!
+          value: string;
+        }
+      >;
+    };
+    valve: {
+      // Opens a valve.
+      openValve: ServiceFunction<T, object>;
+      // Closes a valve.
+      closeValve: ServiceFunction<T, object>;
+      // Moves a valve to a specific position.
+      setValvePosition: ServiceFunction<
+        T,
+        {
+          // Target position.
+          position: number;
+        }
+      >;
+      // Stops the valve movement.
+      stopValve: ServiceFunction<T, object>;
+      // Toggles a valve open/closed.
+      toggle: ServiceFunction<T, object>;
+    };
+    calendar: {
+      // Adds a new calendar event.
+      createEvent: ServiceFunction<
+        T,
+        {
+          // Defines the short summary or subject for the event. @example Department Party
+          summary: string;
+          // A more complete description of the event than the one provided by the summary. @example Meeting to provide technical review for 'Phoenix' design.
+          description?: string;
+          // The date and time the event should start. @example 2022-03-22 20:00:00
+          start_date_time?: object;
+          // The date and time the event should end. @example 2022-03-22 22:00:00
+          end_date_time?: object;
+          // The date the all-day event should start. @example 2022-03-22
+          start_date?: object;
+          // The date the all-day event should end (exclusive). @example 2022-03-23
+          end_date?: object;
+          // Days or weeks that you want to create the event in. @example {'days': 2} or {'weeks': 2}
+          in?: object;
+          // The location of the event. @example Conference Room - F123, Bldg. 002
+          location?: string;
+        }
+      >;
+      // Get events on a calendar within a time range.
+      getEvents: ServiceFunction<
+        T,
+        {
+          // Returns active events after this time (exclusive). When not set, defaults to now. @example 2022-03-22 20:00:00
+          start_date_time?: object;
+          // Returns active events before this time (exclusive). Cannot be used with 'duration'. @example 2022-03-22 22:00:00
+          end_date_time?: object;
+          // Returns active events from start_date_time until the specified duration.
+          duration?: object;
+        }
+      >;
+    };
     waterHeater: {
       // Turns water heater on.
       turnOn: ServiceFunction<T, object>;
@@ -1759,27 +1778,157 @@ declare module "@hakit/core" {
         }
       >;
     };
-    valve: {
-      // Opens a valve.
-      openValve: ServiceFunction<T, object>;
-      // Closes a valve.
-      closeValve: ServiceFunction<T, object>;
-      // Moves a valve to a specific position.
-      setValvePosition: ServiceFunction<
+    weather: {
+      // Get weather forecasts.
+      getForecasts: ServiceFunction<
         T,
         {
-          // Target position.
-          position: number;
+          // Forecast type: daily, hourly or twice daily.
+          type: "daily" | "hourly" | "twice_daily";
         }
       >;
-      // Stops the valve movement.
-      stopValve: ServiceFunction<T, object>;
-      // Toggles a valve open/closed.
-      toggle: ServiceFunction<T, object>;
     };
-    uiLovelaceMinimalist: {
-      // Reload dashboard configuration for UI Lovelace Minimalist.
+    mqtt: {
+      // Publishes a message to an MQTT topic.
+      publish: ServiceFunction<
+        T,
+        {
+          // Topic to publish to. @example /homeassistant/hello
+          topic: string;
+          // The payload to publish. @example The temperature is {{ states('sensor.temperature') }}
+          payload: object;
+          // When `payload` is a Python bytes literal, evaluate the bytes literal and publish the raw data.
+          evaluate_payload?: boolean;
+          // Quality of Service to use. 0: At most once. 1: At least once. 2: Exactly once.
+          qos?: "0" | "1" | "2";
+          // If the message should have the retain flag set. If set, the broker stores the most recent message on a topic.
+          retain?: boolean;
+        }
+      >;
+      // Writes all messages on a specific topic into the `mqtt_dump.txt` file in your configuration folder.
+      dump: ServiceFunction<
+        T,
+        {
+          // Topic to listen to. @example OpenZWave/#
+          topic?: string;
+          // How long we should listen for messages in seconds.
+          duration?: number;
+        }
+      >;
+      // Reloads MQTT entities from the YAML-configuration.
       reload: ServiceFunction<T, object>;
+    };
+    image: {
+      // Takes a snapshot from an image.
+      snapshot: ServiceFunction<
+        T,
+        {
+          // Template of a filename. Variable available is `entity_id`. @example /tmp/image_snapshot.jpg
+          filename: string;
+        }
+      >;
+    };
+    time: {
+      // Sets the time.
+      setValue: ServiceFunction<
+        T,
+        {
+          // The time to set. @example 22:15
+          time: object;
+        }
+      >;
+    };
+    vacuum: {
+      // Starts or resumes the cleaning task.
+      start: ServiceFunction<T, object>;
+      // Pauses the cleaning task.
+      pause: ServiceFunction<T, object>;
+      // Tells the vacuum cleaner to return to its dock.
+      returnToBase: ServiceFunction<T, object>;
+      // Tells the vacuum cleaner to do a spot clean-up.
+      cleanSpot: ServiceFunction<T, object>;
+      // Locates the vacuum cleaner robot.
+      locate: ServiceFunction<T, object>;
+      // Stops the current cleaning task.
+      stop: ServiceFunction<T, object>;
+      // Sets the fan speed of the vacuum cleaner.
+      setFanSpeed: ServiceFunction<
+        T,
+        {
+          // Fan speed. The value depends on the integration. Some integrations have speed steps, like 'medium'. Some use a percentage, between 0 and 100. @example low
+          fan_speed: string;
+        }
+      >;
+      // Sends a command to the vacuum cleaner.
+      sendCommand: ServiceFunction<
+        T,
+        {
+          // Command to execute. The commands are integration-specific. @example set_dnd_timer
+          command: string;
+          // Parameters for the command. The parameters are integration-specific. @example { 'key': 'value' }
+          params?: object;
+        }
+      >;
+    };
+    roborock: {
+      // Get the map and room information of your device.
+      getMaps: ServiceFunction<T, object>;
+    };
+    remote: {
+      // Turns the device off.
+      turnOff: ServiceFunction<T, object>;
+      // Sends the power on command.
+      turnOn: ServiceFunction<
+        T,
+        {
+          // Activity ID or activity name to be started. @example BedroomTV
+          activity?: string;
+        }
+      >;
+      // Toggles a device on/off.
+      toggle: ServiceFunction<T, object>;
+      // Sends a command or a list of commands to a device.
+      sendCommand: ServiceFunction<
+        T,
+        {
+          // Device ID to send command to. @example 32756745
+          device?: string;
+          // A single command or a list of commands to send. @example Play
+          command: object;
+          // The number of times you want to repeat the commands.
+          num_repeats?: number;
+          // The time you want to wait in between repeated commands.
+          delay_secs?: number;
+          // The time you want to have it held before the release is send.
+          hold_secs?: number;
+        }
+      >;
+      // Learns a command or a list of commands from a device.
+      learnCommand: ServiceFunction<
+        T,
+        {
+          // Device ID to learn command from. @example television
+          device?: string;
+          // A single command or a list of commands to learn. @example Turn on
+          command?: object;
+          // The type of command to be learned.
+          command_type?: "ir" | "rf";
+          // If code must be stored as an alternative. This is useful for discrete codes. Discrete codes are used for toggles that only perform one function. For example, a code to only turn a device on. If it is on already, sending the code won't change the state.
+          alternative?: boolean;
+          // Timeout for the command to be learned.
+          timeout?: number;
+        }
+      >;
+      // Deletes a command or a list of commands from the database.
+      deleteCommand: ServiceFunction<
+        T,
+        {
+          // Device from which commands will be deleted. @example television
+          device?: string;
+          // The single command or the list of commands to be deleted. @example Mute
+          command: object;
+        }
+      >;
     };
     sonos: {
       // Takes a snapshot of the media player.
@@ -1844,233 +1993,34 @@ declare module "@hakit/core" {
           queue_position?: number;
         }
       >;
+      // Returns the contents of the queue.
+      getQueue: ServiceFunction<T, object>;
     };
-    fullyKiosk: {
-      // Loads a URL on Fully Kiosk Browser.
-      loadUrl: ServiceFunction<
+    hue: {
+      // Activates a Hue scene with more control over the options.
+      activateScene: ServiceFunction<
         T,
         {
-          // URL to load. @example https://home-assistant.io
-          url: string;
+          // Transition duration it takes to bring devices to the state defined in the scene.
+          transition?: number;
+          // Enable dynamic mode of the scene.
+          dynamic?: boolean;
+          // Speed of dynamic palette for this scene.
+          speed?: number;
+          // Set brightness for the scene.
+          brightness?: number;
         }
       >;
-      // Starts an application on the device running Fully Kiosk Browser.
-      startApplication: ServiceFunction<
+      // Activates a Hue scene stored in the Hue hub.
+      hueActivateScene: ServiceFunction<
         T,
         {
-          // Package name of the application to start. @example de.ozerov.fully
-          application: string;
-        }
-      >;
-      // Sets a configuration parameter on Fully Kiosk Browser.
-      setConfig: ServiceFunction<
-        T,
-        {
-          // Configuration parameter to set. @example motionSensitivity
-          key: string;
-          // Value for the configuration parameter. @example 90
-          value: string;
-        }
-      >;
-    };
-    google: {
-      // Adds a new calendar event.
-      addEvent: ServiceFunction<
-        T,
-        {
-          // The id of the calendar you want. @example Your email
-          calendar_id: string;
-          // Acts as the title of the event. @example Bowling
-          summary: string;
-          // The description of the event. Optional. @example Birthday bowling
-          description?: string;
-          // The date and time the event should start. @example 2019-03-22 20:00:00
-          start_date_time?: string;
-          // The date and time the event should end. @example 2019-03-22 22:00:00
-          end_date_time?: string;
-          // The date the whole day event should start. @example 2019-03-10
-          start_date?: string;
-          // The date the whole day event should end. @example 2019-03-11
-          end_date?: string;
-          // Days or weeks that you want to create the event in. @example 'days': 2 or 'weeks': 2
-          in?: object;
-        }
-      >;
-      // Add a new calendar event.
-      createEvent: ServiceFunction<
-        T,
-        {
-          // Acts as the title of the event. @example Bowling
-          summary: string;
-          // The description of the event. Optional. @example Birthday bowling
-          description?: string;
-          // The date and time the event should start. @example 2022-03-22 20:00:00
-          start_date_time?: string;
-          // The date and time the event should end. @example 2022-03-22 22:00:00
-          end_date_time?: string;
-          // The date the whole day event should start. @example 2022-03-10
-          start_date?: string;
-          // The date the whole day event should end. @example 2022-03-11
-          end_date?: string;
-          // Days or weeks that you want to create the event in. @example 'days': 2 or 'weeks': 2
-          in?: object;
-          // The location of the event. Optional. @example Conference Room - F123, Bldg. 002
-          location?: string;
-        }
-      >;
-    };
-    googleAssistantSdk: {
-      // Sends a command as a text query to Google Assistant.
-      sendTextCommand: ServiceFunction<
-        T,
-        {
-          // Command(s) to send to Google Assistant. @example turn off kitchen TV
-          command?: string;
-          // Name(s) of media player entities to play response on. @example media_player.living_room_speaker
-          media_player?: string;
-        }
-      >;
-    };
-    automation: {
-      // Triggers the actions of an automation.
-      trigger: ServiceFunction<
-        T,
-        {
-          // Defines whether or not the conditions will be skipped.
-          skip_condition?: boolean;
-        }
-      >;
-      // Toggles (enable / disable) an automation.
-      toggle: ServiceFunction<T, object>;
-      // Enables an automation.
-      turnOn: ServiceFunction<T, object>;
-      // Disables an automation.
-      turnOff: ServiceFunction<
-        T,
-        {
-          // Stops currently running actions.
-          stop_actions?: boolean;
-        }
-      >;
-      // Reloads the automation configuration.
-      reload: ServiceFunction<T, object>;
-    };
-    eufySecurity: {
-      // Pull latest data from cloud and update internal state
-      forceSync: ServiceFunction<T, object>;
-      // Send a JSON message to Web Socket
-      sendMessage: ServiceFunction<
-        T,
-        {
-          // Raw message in JSON format
-          message: string;
-        }
-      >;
-      // Set Log Level of Add-on, this is needed to debug issues happening in eufy-security-ws add-on. Before calling a problematic command, set the log level (preferable to debug), execute your command and revert it back to info.
-      setLogLevel: ServiceFunction<
-        T,
-        {
-          // Log Level Option
-          log_level:
-            | "silly"
-            | "trace"
-            | "debug"
-            | "info"
-            | "warn"
-            | "error"
-            | "fatal";
-        }
-      >;
-      // Trigger Alarm for a Duration
-      triggerBaseAlarmWithDuration: ServiceFunction<
-        T,
-        {
-          // Duration in seconds @example 10
-          duration: number;
-        }
-      >;
-      // Reset Alarm for Alarm Panel
-      resetAlarm: ServiceFunction<T, object>;
-      // Arm Customer 1 for Alarm Panel
-      alarmArmCustom1: ServiceFunction<T, object>;
-      // Arm Customer 2 for Alarm Panel
-      alarmArmCustom2: ServiceFunction<T, object>;
-      // Arm Customer 3 for Alarm Panel
-      alarmArmCustom3: ServiceFunction<T, object>;
-      // Switch to geofence mode
-      geofence: ServiceFunction<T, object>;
-      // Switch to schedule mode
-      schedule: ServiceFunction<T, object>;
-      // Only supported if no doorbell device is registered at the station where the chime is to be performed
-      chime: ServiceFunction<
-        T,
-        {
-          // Ringtone ID? @example 419
-          ringtone: number;
-        }
-      >;
-      // Reboot station
-      reboot: ServiceFunction<T, object>;
-      // Turn Alarm off for Alarm Panel
-      alarmOff: ServiceFunction<T, object>;
-      // Generate Image for Camera
-      generateImage: ServiceFunction<T, object>;
-      // Send start live stream command to camera
-      startP2PLivestream: ServiceFunction<T, object>;
-      // Send stop live stream command to camera
-      stopP2PLivestream: ServiceFunction<T, object>;
-      // Send start live stream command to camera
-      startRtspLivestream: ServiceFunction<T, object>;
-      // Send stop live stream command to camera
-      stopRtspLivestream: ServiceFunction<T, object>;
-      // Call PTZ command for supported PTZ cameras
-      ptz: ServiceFunction<
-        T,
-        {
-          // Direction Option
-          direction: "ROTATE360" | "DOWN" | "UP" | "RIGHT" | "LEFT";
-        }
-      >;
-      // Look up for supported PTZ cameras
-      ptzUp: ServiceFunction<T, object>;
-      // Look down for supported PTZ cameras
-      ptzDown: ServiceFunction<T, object>;
-      // Look left for supported PTZ cameras
-      ptzLeft: ServiceFunction<T, object>;
-      // Look right for supported PTZ cameras
-      ptzRight: ServiceFunction<T, object>;
-      // Rotate 360 degrees for supported PTZ cameras
-      ptz360: ServiceFunction<T, object>;
-      // Calibrate supported cameras
-      calibrate: ServiceFunction<T, object>;
-      // Trigger Alarm for a Duration
-      triggerCameraAlarmWithDuration: ServiceFunction<
-        T,
-        {
-          // Duration in seconds @example 10
-          duration: number;
-        }
-      >;
-      // Send quick response, this works ONLY when camera is streaming via P2P (not RTSP)
-      quickResponse: ServiceFunction<
-        T,
-        {
-          // Voice ID stored in attributes @example 419
-          voice_id: number;
-        }
-      >;
-      // Snooze Alarm for a Duration
-      snooze: ServiceFunction<
-        T,
-        {
-          // Snooze Duration in seconds @example 10
-          snooze_time: number;
-          // Will chime be snoozed?
-          snooze_chime: boolean;
-          // Will motion notifications be snoozed?
-          snooze_motion: boolean;
-          // Will home base be snoozed?
-          snooze_homebase: boolean;
+          // Name of Hue group/room from the Hue app. @example Living Room
+          group_name?: string;
+          // Name of Hue scene from the Hue app. @example Energize
+          scene_name?: string;
+          // Enable dynamic mode of the scene (V2 bridges and supported scenes only).
+          dynamic?: boolean;
         }
       >;
     };
@@ -2157,6 +2107,116 @@ declare module "@hakit/core" {
           code?: string;
         }
       >;
+    };
+    google: {
+      // Adds a new calendar event.
+      addEvent: ServiceFunction<
+        T,
+        {
+          // The id of the calendar you want. @example Your email
+          calendar_id: string;
+          // Acts as the title of the event. @example Bowling
+          summary: string;
+          // The description of the event. Optional. @example Birthday bowling
+          description?: string;
+          // The date and time the event should start. @example 2019-03-22 20:00:00
+          start_date_time?: string;
+          // The date and time the event should end. @example 2019-03-22 22:00:00
+          end_date_time?: string;
+          // The date the whole day event should start. @example 2019-03-10
+          start_date?: string;
+          // The date the whole day event should end. @example 2019-03-11
+          end_date?: string;
+          // Days or weeks that you want to create the event in. @example 'days': 2 or 'weeks': 2
+          in?: object;
+        }
+      >;
+      // Add a new calendar event.
+      createEvent: ServiceFunction<
+        T,
+        {
+          // Acts as the title of the event. @example Bowling
+          summary: string;
+          // The description of the event. Optional. @example Birthday bowling
+          description?: string;
+          // The date and time the event should start. @example 2022-03-22 20:00:00
+          start_date_time?: string;
+          // The date and time the event should end. @example 2022-03-22 22:00:00
+          end_date_time?: string;
+          // The date the whole day event should start. @example 2022-03-10
+          start_date?: string;
+          // The date the whole day event should end. @example 2022-03-11
+          end_date?: string;
+          // Days or weeks that you want to create the event in. @example 'days': 2 or 'weeks': 2
+          in?: object;
+          // The location of the event. Optional. @example Conference Room - F123, Bldg. 002
+          location?: string;
+        }
+      >;
+    };
+    googleAssistantSdk: {
+      // Sends a command as a text query to Google Assistant.
+      sendTextCommand: ServiceFunction<
+        T,
+        {
+          // Command(s) to send to Google Assistant. @example turn off kitchen TV
+          command?: string;
+          // Name(s) of media player entities to play response on. @example media_player.living_room_speaker
+          media_player?: string;
+        }
+      >;
+    };
+    fullyKiosk: {
+      // Loads a URL on Fully Kiosk Browser.
+      loadUrl: ServiceFunction<
+        T,
+        {
+          // URL to load. @example https://home-assistant.io
+          url: string;
+        }
+      >;
+      // Starts an application on the device running Fully Kiosk Browser.
+      startApplication: ServiceFunction<
+        T,
+        {
+          // Package name of the application to start. @example de.ozerov.fully
+          application: string;
+        }
+      >;
+      // Sets a configuration parameter on Fully Kiosk Browser.
+      setConfig: ServiceFunction<
+        T,
+        {
+          // Configuration parameter to set. @example motionSensitivity
+          key: string;
+          // Value for the configuration parameter. @example 90
+          value: string;
+        }
+      >;
+    };
+    automation: {
+      // Triggers the actions of an automation.
+      trigger: ServiceFunction<
+        T,
+        {
+          // Defines whether or not the conditions will be skipped.
+          skip_condition?: boolean;
+        }
+      >;
+      // Toggles (enable / disable) an automation.
+      toggle: ServiceFunction<T, object>;
+      // Enables an automation.
+      turnOn: ServiceFunction<T, object>;
+      // Disables an automation.
+      turnOff: ServiceFunction<
+        T,
+        {
+          // Stops currently running actions.
+          stop_actions?: boolean;
+        }
+      >;
+      // Reloads the automation configuration.
+      reload: ServiceFunction<T, object>;
     };
     zha: {
       // Allows nodes to join the Zigbee network.
@@ -2367,13 +2427,13 @@ declare module "@hakit/core" {
       | "light.kitchen_group"
       | "light.living_room_spots"
       | "light.attic_group"
-      | "input_select.wled_live_override"
-      | "input_boolean.minimalist_welcome_toggle"
       | "zone.work_claire"
       | "zone.ordina"
       | "zone.parents_rens"
       | "zone.parents_claire"
       | "zone.vgz"
+      | "input_select.wled_live_override"
+      | "input_boolean.minimalist_welcome_toggle"
       | "zone.home"
       | "sensor.count_lights_on"
       | "sensor.living_room_temperature"
@@ -2389,9 +2449,10 @@ declare module "@hakit/core" {
       | "sensor.date_time_iso"
       | "sensor.time_date"
       | "sensor.time_utc"
-      | "fan.mechanical_ventilation"
       | "conversation.home_assistant"
+      | "fan.mechanical_ventilation"
       | "cover.garage_door_cover"
+      | "tag.217c05de_0873_415d_988f_9716201958eb"
       | "script.1638709314016"
       | "script.cast_camera_to_driveway_monitor"
       | "script.turn_off_all_lights"
@@ -2401,7 +2462,7 @@ declare module "@hakit/core" {
       | "script.toggle_ventilation"
       | "script.timed_bedroom_fan"
       | "script.show_ha_settings_on_tablet"
-      | "tag.217c05de_0873_415d_988f_9716201958eb"
+      | "sensor.plex_recently_added"
       | "sun.sun"
       | "sensor.sun_next_dawn"
       | "sensor.sun_next_dusk"
@@ -2409,7 +2470,6 @@ declare module "@hakit/core" {
       | "sensor.sun_next_noon"
       | "sensor.sun_next_rising"
       | "sensor.sun_next_setting"
-      | "sensor.plex_recently_added"
       | "binary_sensor.iphone_focus"
       | "device_tracker.iphone"
       | "sensor.iphone_sim_1"
@@ -2428,6 +2488,10 @@ declare module "@hakit/core" {
       | "sensor.iphone_floors_descended"
       | "sensor.iphone_average_active_pace"
       | "sensor.iphone_floors_ascended"
+      | "sensor.renss_iphone_app_version"
+      | "sensor.renss_iphone_watch_battery"
+      | "sensor.renss_iphone_location_permission"
+      | "sensor.renss_iphone_watch_battery_state"
       | "device_tracker.galaxy_watch5_yr0h"
       | "sensor.galaxy_watch5_yr0h_battery_level"
       | "sensor.galaxy_watch5_yr0h_battery_state"
@@ -2444,7 +2508,159 @@ declare module "@hakit/core" {
       | "device_tracker.oneplus_7t_pro"
       | "device_tracker.claire_s_telefoon"
       | "device_tracker.rens_iphone"
+      | "binary_sensor.rpi_power_status"
+      | "button.shelly_plus_1_reboot"
+      | "event.shellyplus1_a8032ab8a210_input_0"
+      | "switch.garage_door"
+      | "update.shelly_plus_1_firmware_update"
+      | "binary_sensor.zonnescherm_overheating"
+      | "button.zonnescherm_reboot"
+      | "cover.zonnescherm"
+      | "sensor.zonnescherm_power"
+      | "sensor.zonnescherm_energy"
+      | "binary_sensor.radarr_health"
+      | "calendar.radarr"
+      | "sensor.radarr_disk_space_movies"
+      | "switch.card_mod_pre_release"
+      | "switch.mini_graph_card_pre_release"
+      | "update.kiosk_mode_update_2"
+      | "update.swiss_army_knife_custom_card_update"
+      | "update.layout_card_update"
+      | "update.webrtc_camera_update"
+      | "update.neerslag_card_update"
+      | "update.bambu_lab_update"
+      | "update.mushroom_update"
+      | "update.digital_clock_update"
+      | "update.hacs_update"
+      | "update.kiosk_mode_update"
+      | "update.swipe_card_update"
+      | "update.ui_lovelace_minimalist_update"
+      | "update.animated_weather_card_update"
+      | "update.hyperhdr_update"
+      | "update.fontawesome_update"
+      | "update.button_card_update"
+      | "update.mushroom_themes_update"
+      | "update.auto_entities_update"
+      | "update.my_cards_bundle_update"
+      | "update.simple_weather_card_update"
+      | "update.lovelace_clock_card_update"
+      | "update.browser_mod_update"
+      | "update.zonneplan_update"
+      | "update.atomic_calendar_revive_update"
+      | "update.card_mod_update"
+      | "update.hass_hue_icons_update"
+      | "update.mini_media_player_update"
+      | "update.mini_graph_card_update"
+      | "update.eufy_security_update"
+      | "update.light_entity_card_update"
+      | "update.plex_recently_added_sensor_update"
+      | "button.synchronize_devices"
+      | "sensor.cpu_temperature"
+      | "binary_sensor.ib0819992320_connection_state"
+      | "binary_sensor.ru1795430400_battery"
+      | "binary_sensor.ru1795430400_connection_state"
+      | "binary_sensor.tado_power"
+      | "binary_sensor.tado_connectivity"
+      | "binary_sensor.tado_overlay"
+      | "binary_sensor.tado_window"
+      | "binary_sensor.tado_early_start"
+      | "binary_sensor.warm_water_power"
+      | "binary_sensor.warm_water_connectivity"
+      | "binary_sensor.warm_water_overlay"
+      | "device_tracker.claire_s_telefoon_2"
+      | "device_tracker.rens_iphone_2"
+      | "sensor.thuis_outdoor_temperature"
+      | "sensor.thuis_solar_percentage"
+      | "sensor.thuis_weather_condition"
+      | "sensor.thuis_tado_mode"
+      | "sensor.thuis_geofencing_mode"
+      | "sensor.thuis_automatic_geofencing"
+      | "sensor.tado_temperature"
+      | "sensor.tado_humidity"
+      | "sensor.tado_tado_mode"
+      | "sensor.tado_heating"
+      | "sensor.warm_water_tado_mode"
+      | "binary_sensor.morning"
+      | "binary_sensor.evening"
+      | "binary_sensor.night"
+      | "binary_sensor.afternoon"
+      | "sensor.dcp_l2530dw_status"
+      | "sensor.dcp_l2530dw_page_counter"
+      | "sensor.dcp_l2530dw_duplex_unit_page_counter"
+      | "sensor.dcp_l2530dw_drum_remaining_lifetime"
+      | "sensor.dcp_l2530dw_drum_remaining_pages"
+      | "sensor.dcp_l2530dw_drum_page_counter"
+      | "sensor.dcp_l2530dw_black_toner_remaining"
+      | "weather.huis"
+      | "climate.tado"
       | "sensor.sonarr_upcoming"
+      | "media_player.lg_c8"
+      | "water_heater.warm_water"
+      | "sensor.energy_production_today"
+      | "sensor.energy_production_today_remaining"
+      | "sensor.energy_production_tomorrow"
+      | "sensor.power_highest_peak_time_today"
+      | "sensor.power_highest_peak_time_tomorrow"
+      | "sensor.power_production_now"
+      | "sensor.energy_current_hour"
+      | "sensor.energy_next_hour"
+      | "media_player.nest_wifi_kantoor"
+      | "media_player.nest_hub"
+      | "binary_sensor.roborock_s8_mop_attached"
+      | "binary_sensor.roborock_s8_water_box_attached"
+      | "binary_sensor.roborock_s8_water_shortage"
+      | "binary_sensor.roborock_s8_cleaning"
+      | "select.roborock_s8_mop_intensity"
+      | "select.roborock_s8_mop_mode"
+      | "select.roborock_s8_selected_map"
+      | "sensor.roborock_s8_main_brush_time_left"
+      | "sensor.roborock_s8_side_brush_time_left"
+      | "sensor.roborock_s8_filter_time_left"
+      | "sensor.roborock_s8_sensor_time_left"
+      | "sensor.roborock_s8_cleaning_time"
+      | "sensor.roborock_s8_total_cleaning_time"
+      | "sensor.roborock_s8_status"
+      | "sensor.roborock_s8_cleaning_area"
+      | "sensor.roborock_s8_total_cleaning_area"
+      | "sensor.roborock_s8_vacuum_error"
+      | "sensor.roborock_s8_battery"
+      | "sensor.roborock_s8_last_clean_begin"
+      | "sensor.roborock_s8_last_clean_end"
+      | "sensor.roborock_s8_cleaning_progress"
+      | "vacuum.roborock_s8"
+      | "media_player.odido_tv"
+      | "media_player.google_home_mini"
+      | "number.roborock_s8_volume"
+      | "media_player.tv"
+      | "switch.roborock_s8_child_lock"
+      | "switch.roborock_s8_do_not_disturb"
+      | "sensor.neerslag_buienalarm_regen_data"
+      | "time.roborock_s8_do_not_disturb_begin"
+      | "time.roborock_s8_do_not_disturb_end"
+      | "sensor.neerslag_buienradar_regen_data"
+      | "media_player.odido_tv_2"
+      | "remote.odido_tv"
+      | "media_player.chromecast"
+      | "remote.chromecast"
+      | "camera.buienradar"
+      | "button.wled_restart_2"
+      | "light.wled_2"
+      | "number.wled_speed_2"
+      | "number.wled_intensity_2"
+      | "select.wled_live_override_2"
+      | "select.wled_playlist_2"
+      | "select.wled_preset_2"
+      | "select.wled_color_palette_2"
+      | "sensor.wled_estimated_current_2"
+      | "sensor.wled_led_count_2"
+      | "sensor.wled_max_current_2"
+      | "sensor.wled_ip"
+      | "switch.wled_nightlight_2"
+      | "switch.wled_sync_send_2"
+      | "switch.wled_sync_receive_2"
+      | "switch.wled_reverse_2"
+      | "update.wled_firmware_2"
+      | "weather.buienradar"
       | "binary_sensor.hue_motion_sensor_hal_motion"
       | "binary_sensor.tv_entertainment_configuration"
       | "binary_sensor.entertainmentruimte_1_entertainment_configuration"
@@ -2490,7 +2706,7 @@ declare module "@hakit/core" {
       | "light.hue_sana"
       | "light.buitenverlichting_tuin"
       | "light.hue_filament_bulb_2"
-      | "light.hue_ambiance_spot_7"
+      | "light.hue_milliskin_spot_3"
       | "light.kantoor"
       | "light.garagedeur"
       | "light.hue_play_1"
@@ -2633,275 +2849,14 @@ declare module "@hakit/core" {
       | "switch.automation_hal_avond"
       | "switch.automation_coming_home"
       | "switch.automation_kantoor_dimmer"
-      | "switch.automation_niet_thuis"
       | "switch.automation_licht_aan"
       | "switch.automation_state_after_streaming"
       | "switch.automation_kleedkamer_dimmer"
       | "switch.automation_mimic_presence"
-      | "switch.automation_avond_kleedkamer"
       | "switch.automation_slaapkamer_dimmer"
       | "switch.automation_hue_motion_sensor_hal"
       | "switch.automation_leaving_home"
       | "switch.automation_tuin_aan"
-      | "media_player.odido_tv_2"
-      | "remote.odido_tv"
-      | "media_player.chromecast"
-      | "remote.chromecast"
-      | "binary_sensor.roborock_s8_mop_attached"
-      | "binary_sensor.roborock_s8_water_box_attached"
-      | "binary_sensor.roborock_s8_water_shortage"
-      | "binary_sensor.roborock_s8_cleaning"
-      | "select.roborock_s8_mop_intensity"
-      | "select.roborock_s8_mop_mode"
-      | "sensor.roborock_s8_main_brush_time_left"
-      | "sensor.roborock_s8_side_brush_time_left"
-      | "sensor.roborock_s8_filter_time_left"
-      | "sensor.roborock_s8_sensor_time_left"
-      | "sensor.roborock_s8_cleaning_time"
-      | "sensor.roborock_s8_total_cleaning_time"
-      | "sensor.roborock_s8_status"
-      | "sensor.roborock_s8_cleaning_area"
-      | "sensor.roborock_s8_total_cleaning_area"
-      | "sensor.roborock_s8_vacuum_error"
-      | "sensor.roborock_s8_battery"
-      | "sensor.roborock_s8_last_clean_begin"
-      | "sensor.roborock_s8_last_clean_end"
-      | "sensor.roborock_s8_cleaning_progress"
-      | "vacuum.roborock_s8"
-      | "number.roborock_s8_volume"
-      | "switch.roborock_s8_child_lock"
-      | "switch.roborock_s8_do_not_disturb"
-      | "time.roborock_s8_do_not_disturb_begin"
-      | "time.roborock_s8_do_not_disturb_end"
-      | "binary_sensor.morning"
-      | "binary_sensor.evening"
-      | "binary_sensor.night"
-      | "binary_sensor.afternoon"
-      | "sensor.cpu_temperature"
-      | "sensor.neerslag_buienradar_regen_data"
-      | "sensor.neerslag_buienalarm_regen_data"
-      | "sensor.hacs"
-      | "weather.huis"
-      | "button.synchronize_devices"
-      | "camera.buienradar"
-      | "sensor.dcp_l2530dw_status"
-      | "sensor.dcp_l2530dw_page_counter"
-      | "sensor.dcp_l2530dw_duplex_unit_page_counter"
-      | "sensor.dcp_l2530dw_drum_remaining_lifetime"
-      | "sensor.dcp_l2530dw_drum_remaining_pages"
-      | "sensor.dcp_l2530dw_drum_page_counter"
-      | "sensor.dcp_l2530dw_black_toner_remaining"
-      | "binary_sensor.radarr_health"
-      | "calendar.radarr"
-      | "sensor.radarr_disk_space_movies"
-      | "binary_sensor.ib0819992320_connection_state"
-      | "binary_sensor.ru1795430400_battery"
-      | "binary_sensor.ru1795430400_connection_state"
-      | "binary_sensor.tado_power"
-      | "binary_sensor.tado_connectivity"
-      | "binary_sensor.tado_overlay"
-      | "binary_sensor.tado_window"
-      | "binary_sensor.tado_early_start"
-      | "binary_sensor.warm_water_power"
-      | "binary_sensor.warm_water_connectivity"
-      | "binary_sensor.warm_water_overlay"
-      | "device_tracker.claire_s_telefoon_2"
-      | "device_tracker.rens_iphone_2"
-      | "sensor.thuis_outdoor_temperature"
-      | "sensor.thuis_solar_percentage"
-      | "sensor.thuis_weather_condition"
-      | "sensor.thuis_tado_mode"
-      | "sensor.thuis_geofencing_mode"
-      | "sensor.thuis_automatic_geofencing"
-      | "sensor.tado_temperature"
-      | "sensor.tado_humidity"
-      | "sensor.tado_tado_mode"
-      | "sensor.tado_heating"
-      | "sensor.warm_water_tado_mode"
-      | "climate.tado"
-      | "button.wled_restart_2"
-      | "light.wled_2"
-      | "number.wled_speed_2"
-      | "number.wled_intensity_2"
-      | "select.wled_live_override_2"
-      | "select.wled_playlist_2"
-      | "select.wled_preset_2"
-      | "select.wled_color_palette_2"
-      | "sensor.wled_estimated_current_2"
-      | "sensor.wled_led_count_2"
-      | "sensor.wled_max_current_2"
-      | "sensor.wled_ip"
-      | "switch.wled_nightlight_2"
-      | "switch.wled_sync_send_2"
-      | "switch.wled_sync_receive_2"
-      | "switch.wled_reverse_2"
-      | "update.wled_firmware_2"
-      | "water_heater.warm_water"
-      | "binary_sensor.rpi_power_status"
-      | "weather.buienradar"
-      | "button.shelly_plus_1_reboot"
-      | "event.shellyplus1_a8032ab8a210_input_0"
-      | "switch.garage_door"
-      | "update.shelly_plus_1_firmware_update"
-      | "binary_sensor.zonnescherm_overheating"
-      | "button.zonnescherm_reboot"
-      | "cover.zonnescherm"
-      | "sensor.zonnescherm_power"
-      | "sensor.zonnescherm_energy"
-      | "sensor.energy_production_today"
-      | "sensor.energy_production_today_remaining"
-      | "sensor.energy_production_tomorrow"
-      | "sensor.power_highest_peak_time_today"
-      | "sensor.power_highest_peak_time_tomorrow"
-      | "sensor.power_production_now"
-      | "sensor.energy_current_hour"
-      | "sensor.energy_next_hour"
-      | "media_player.lg_c8"
-      | "light.woonkamer"
-      | "light.kantoor_2"
-      | "light.keuken"
-      | "light.benedenverdieping"
-      | "light.kleedkamer_2"
-      | "light.slaapkamer"
-      | "light.hal"
-      | "light.spotjes_keuken"
-      | "light.bovenverdieping"
-      | "light.spotjes"
-      | "light.zolder"
-      | "media_player.nest_wifi_kantoor"
-      | "media_player.google_home_mini"
-      | "media_player.tv"
-      | "media_player.nest_hub"
-      | "media_player.odido_tv"
-      | "sensor.zonneplan_current_usage"
-      | "sensor.zonneplan_current_usage_measured_at"
-      | "sensor.zonneplan_sustainability_score"
-      | "sensor.zonneplan_current_electricity_tariff"
-      | "sensor.zonneplan_current_gas_tariff"
-      | "sensor.zonneplan_next_gas_tariff"
-      | "sensor.zonneplan_status_tip"
-      | "sensor.zonneplan_forcast_tariff_hour_1"
-      | "sensor.zonneplan_forcast_tariff_hour_2"
-      | "sensor.zonneplan_forcast_tariff_hour_3"
-      | "sensor.zonneplan_forcast_tariff_hour_4"
-      | "sensor.zonneplan_forcast_tariff_hour_5"
-      | "sensor.zonneplan_forcast_tariff_hour_6"
-      | "sensor.zonneplan_forcast_tariff_hour_7"
-      | "sensor.zonneplan_forcast_tariff_hour_8"
-      | "sensor.zonneplan_forcast_tariff_group_hour_1"
-      | "sensor.zonneplan_forcast_tariff_group_hour_2"
-      | "sensor.zonneplan_forcast_tariff_group_hour_3"
-      | "sensor.zonneplan_forcast_tariff_group_hour_4"
-      | "sensor.zonneplan_forcast_tariff_group_hour_5"
-      | "sensor.zonneplan_forcast_tariff_group_hour_6"
-      | "sensor.zonneplan_forcast_tariff_group_hour_7"
-      | "sensor.zonneplan_forcast_tariff_group_hour_8"
-      | "sensor.zonneplan_yield_today"
-      | "sensor.zonneplan_yield_total"
-      | "sensor.zonneplan_last_measured_value"
-      | "sensor.zonneplan_last_measured"
-      | "binary_sensor.xiaomi_pad_5_kiosk_mode"
-      | "binary_sensor.xiaomi_pad_5_plugged_in"
-      | "binary_sensor.xiaomi_pad_5_device_admin"
-      | "button.xiaomi_pad_5_restart_browser"
-      | "button.xiaomi_pad_5_restart_device"
-      | "button.xiaomi_pad_5_bring_to_foreground"
-      | "button.xiaomi_pad_5_send_to_background"
-      | "button.xiaomi_pad_5_load_start_url"
-      | "camera.xiaomi_pad_5"
-      | "image.xiaomi_pad_5_screenshot"
-      | "media_player.xiaomi_pad_5"
-      | "notify.xiaomi_pad_5_overlay_message"
-      | "notify.xiaomi_pad_5_text_to_speech"
-      | "number.xiaomi_pad_5_screensaver_timer"
-      | "number.xiaomi_pad_5_screensaver_brightness"
-      | "number.xiaomi_pad_5_screen_off_timer"
-      | "number.xiaomi_pad_5_screen_brightness"
-      | "sensor.xiaomi_pad_5_battery"
-      | "sensor.xiaomi_pad_5_current_page"
-      | "sensor.xiaomi_pad_5_screen_orientation"
-      | "sensor.xiaomi_pad_5_foreground_app"
-      | "sensor.xiaomi_pad_5_internal_storage_free_space"
-      | "sensor.xiaomi_pad_5_internal_storage_total_space"
-      | "sensor.xiaomi_pad_5_free_memory"
-      | "sensor.xiaomi_pad_5_total_memory"
-      | "switch.xiaomi_pad_5_screensaver"
-      | "switch.xiaomi_pad_5_maintenance_mode"
-      | "switch.xiaomi_pad_5_kiosk_lock"
-      | "switch.xiaomi_pad_5_motion_detection"
-      | "switch.xiaomi_pad_5_screen"
-      | "sensor.woonkamer_audio_input_format"
-      | "binary_sensor.woonkamer_microphone"
-      | "media_player.woonkamer"
-      | "switch.sonos_woonkamer_crossfade"
-      | "switch.woonkamer_loudness"
-      | "switch.woonkamer_surround_music_full_volume"
-      | "switch.sonos_woonkamer_night_sound"
-      | "switch.sonos_woonkamer_speech_enhancement"
-      | "switch.sonos_woonkamer_subwoofer_enabled"
-      | "switch.sonos_woonkamer_surround_enabled"
-      | "number.woonkamer_audio_delay"
-      | "number.woonkamer_bass"
-      | "number.living_room_balance"
-      | "number.woonkamer_treble"
-      | "number.woonkamer_sub_gain"
-      | "number.woonkamer_surround_level"
-      | "number.woonkamer_music_surround_level"
-      | "calendar.rensknoors_gmail_com"
-      | "calendar.clairebongers_gmail_com"
-      | "calendar.feestdagen_in_nederland"
-      | "calendar.persoonlijk_rens"
-      | "calendar.gezin"
-      | "calendar.verjaardagen"
-      | "sensor.power_monitoring_plug_last_restart_time"
-      | "sensor.power_monitoring_plug_wifi_connect_count"
-      | "sensor.power_monitoring_plug_mqtt_connect_count"
-      | "sensor.power_monitoring_plug_restart_reason"
-      | "sensor.power_monitoring_plug_ssid"
-      | "switch.power_monitoring_plug"
-      | "image.roborock_s8_onderverdieping"
-      | "image.roborock_s8_bovenverdieping"
-      | "image.roborock_s8"
-      | "image.roborock_s8_zolder"
-      | "sensor.power_monitoring_plug_energy_totalstarttime"
-      | "sensor.power_monitoring_plug_energy_total"
-      | "sensor.power_monitoring_plug_energy_yesterday"
-      | "sensor.power_monitoring_plug_energy_today"
-      | "sensor.power_monitoring_plug_energy_power"
-      | "sensor.power_monitoring_plug_energy_apparentpower"
-      | "sensor.power_monitoring_plug_energy_reactivepower"
-      | "sensor.power_monitoring_plug_energy_factor"
-      | "sensor.power_monitoring_plug_energy_voltage"
-      | "sensor.power_monitoring_plug_energy_current"
-      | "automation.leaving_home"
-      | "automation.coming_home"
-      | "automation.start_movie_mode"
-      | "automation.turn_off_movie_mode"
-      | "automation.turn_off_music_in_kitchen"
-      | "automation.driveway_monitor_camera"
-      | "automation.washing_machine"
-      | "automation.key_reminder"
-      | "automation.ha_update_notification"
-      | "automation.subwoofer_nightmode"
-      | "automation.window_open_climate_off_after_a_defined_time"
-      | "automation.low_battery_level_detection_notification_for_all_battery_sensors"
-      | "automation.lg_webos_tv_on"
-      | "automation.ventilatie_aan_tijdens_douchen"
-      | "automation.turn_off_hyperion_when_dimming_living_room_lights"
-      | "automation.morning_routine"
-      | "automation.new_automation"
-      | "automation.turn_on_garden_lights_when_door_opens"
-      | "automation.turn_off_garage_door_switch_in_the_night"
-      | "automation.humidity_notification"
-      | "automation.close_sunshade"
-      | "automation.home_turn_on_garage_door_plug_when_manually_toggling_the_garage_door"
-      | "automation.home_wallpanel_charging"
-      | "automation.nfc_tag_bedroom_is_scanned"
-      | "automation.notify_about_failing_backups"
-      | "automation.widget_open_garage_on_widget_click"
-      | "automation.toggle_christmas_tree_lights_on_via_niko_switch"
-      | "automation.toggle_front_window_cover"
-      | "automation.auto_stop_sleeping_noises"
       | "binary_sensor.voordeur_motion_detected"
       | "binary_sensor.voordeur_person_detected"
       | "binary_sensor.voordeur_snooze"
@@ -2998,6 +2953,201 @@ declare module "@hakit/core" {
       | "button.homebase_reboot"
       | "image.voordeur_event_image"
       | "image.garage_event_image"
+      | "sensor.woonkamer_audio_input_format"
+      | "binary_sensor.woonkamer_microphone"
+      | "media_player.woonkamer"
+      | "number.woonkamer_audio_delay"
+      | "number.woonkamer_bass"
+      | "number.living_room_balance"
+      | "number.woonkamer_treble"
+      | "number.woonkamer_sub_gain"
+      | "number.woonkamer_surround_level"
+      | "number.woonkamer_music_surround_level"
+      | "switch.sonos_woonkamer_crossfade"
+      | "switch.woonkamer_loudness"
+      | "switch.woonkamer_surround_music_full_volume"
+      | "switch.sonos_woonkamer_night_sound"
+      | "switch.sonos_woonkamer_speech_enhancement"
+      | "switch.sonos_woonkamer_subwoofer_enabled"
+      | "switch.sonos_woonkamer_surround_enabled"
+      | "sensor.zonneplan_current_usage"
+      | "sensor.zonneplan_current_usage_measured_at"
+      | "sensor.zonneplan_sustainability_score"
+      | "sensor.zonneplan_current_tariff_group"
+      | "sensor.zonneplan_current_electricity_tariff"
+      | "sensor.zonneplan_current_gas_tariff"
+      | "sensor.zonneplan_next_gas_tariff"
+      | "sensor.zonneplan_status_message"
+      | "sensor.zonneplan_status_tip"
+      | "sensor.zonneplan_forcast_tariff_hour_1"
+      | "sensor.zonneplan_forcast_tariff_hour_2"
+      | "sensor.zonneplan_forcast_tariff_hour_3"
+      | "sensor.zonneplan_forcast_tariff_hour_4"
+      | "sensor.zonneplan_forcast_tariff_hour_5"
+      | "sensor.zonneplan_forcast_tariff_hour_6"
+      | "sensor.zonneplan_forcast_tariff_hour_7"
+      | "sensor.zonneplan_forcast_tariff_hour_8"
+      | "sensor.zonneplan_forcast_tariff_group_hour_1"
+      | "sensor.zonneplan_forcast_tariff_group_hour_2"
+      | "sensor.zonneplan_forcast_tariff_group_hour_3"
+      | "sensor.zonneplan_forcast_tariff_group_hour_4"
+      | "sensor.zonneplan_forcast_tariff_group_hour_5"
+      | "sensor.zonneplan_forcast_tariff_group_hour_6"
+      | "sensor.zonneplan_forcast_tariff_group_hour_7"
+      | "sensor.zonneplan_forcast_tariff_group_hour_8"
+      | "sensor.zonneplan_yield_today"
+      | "sensor.zonneplan_yield_total"
+      | "sensor.zonneplan_last_measured_value"
+      | "sensor.zonneplan_last_measured"
+      | "sensor.zonneplan_electricity_consumption_today"
+      | "sensor.zonneplan_electricity_returned_today"
+      | "sensor.zonneplan_electricity_delivery_costs_today"
+      | "sensor.zonneplan_electricity_production_costs_today"
+      | "sensor.zonneplan_gas_consumption_today"
+      | "sensor.zonneplan_gas_delivery_costs_today"
+      | "sensor.connect_energiemeter_electricity_consumption"
+      | "sensor.connect_energiemeter_electricity_production"
+      | "sensor.connect_energiemeter_electricity_average"
+      | "sensor.connect_energiemeter_electricity_last_measured"
+      | "sensor.connect_energiemeter_electricity_last_measured_production"
+      | "sensor.connect_energiemeter_gas_last_measured"
+      | "binary_sensor.zonneplan_one_omvormer_power_limit_active"
+      | "binary_sensor.bambu_lab_p1s_recording_timelapse"
+      | "binary_sensor.bambu_lab_p1s_hms_errors"
+      | "binary_sensor.bambu_lab_p1s_print_error"
+      | "binary_sensor.bambu_lab_p1s_online"
+      | "binary_sensor.bambu_lab_p1s_firmware_update"
+      | "button.bambu_lab_p1s_pause_printing"
+      | "button.bambu_lab_p1s_resume_printing"
+      | "button.bambu_lab_p1s_stop_printing"
+      | "button.bambu_lab_p1s_force_refresh_data"
+      | "camera.bambu_lab_p1s_camera"
+      | "fan.bambu_lab_p1s_cooling_fan"
+      | "fan.bambu_lab_p1s_aux_fan"
+      | "fan.bambu_lab_p1s_chamber_fan"
+      | "light.bambu_lab_p1s_chamber_light"
+      | "select.bambu_lab_p1s_printing_speed"
+      | "sensor.bambu_lab_external_spool_external_spool"
+      | "sensor.bambu_lab_p1s_mqtt_connection_mode"
+      | "sensor.bambu_lab_p1s_wi_fi_signal"
+      | "sensor.bambu_lab_p1s_bed_temperature"
+      | "sensor.bambu_lab_p1s_target_bed_temperature"
+      | "sensor.bambu_lab_p1s_nozzle_target_temperature"
+      | "sensor.bambu_lab_p1s_nozzle_temperature"
+      | "sensor.bambu_lab_p1s_aux_fan_speed"
+      | "sensor.bambu_lab_p1s_chamber_fan_speed"
+      | "sensor.bambu_lab_p1s_cooling_fan_speed"
+      | "sensor.bambu_lab_p1s_heatbreak_fan_speed"
+      | "sensor.bambu_lab_p1s_speed_profile"
+      | "sensor.bambu_lab_p1s_current_stage"
+      | "sensor.bambu_lab_p1s_print_progress"
+      | "sensor.bambu_lab_p1s_print_status"
+      | "sensor.bambu_lab_p1s_start_time"
+      | "sensor.bambu_lab_p1s_remaining_time"
+      | "sensor.bambu_lab_p1s_end_time"
+      | "sensor.bambu_lab_p1s_total_usage"
+      | "sensor.bambu_lab_p1s_current_layer"
+      | "sensor.bambu_lab_p1s_total_layer_count"
+      | "sensor.bambu_lab_p1s_active_tray_index"
+      | "sensor.bambu_lab_p1s_gcode_filename"
+      | "sensor.bambu_lab_p1s_task_name"
+      | "sensor.bambu_lab_p1s_print_type"
+      | "sensor.bambu_lab_p1s_active_tray"
+      | "sensor.bambu_lab_p1s_nozzle_size"
+      | "sensor.bambu_lab_p1s_nozzle_type"
+      | "switch.bambu_lab_p1s_manual_refresh_mode"
+      | "binary_sensor.xiaomi_pad_5_kiosk_mode"
+      | "binary_sensor.xiaomi_pad_5_plugged_in"
+      | "binary_sensor.xiaomi_pad_5_device_admin"
+      | "button.xiaomi_pad_5_restart_browser"
+      | "button.xiaomi_pad_5_restart_device"
+      | "button.xiaomi_pad_5_bring_to_foreground"
+      | "button.xiaomi_pad_5_send_to_background"
+      | "button.xiaomi_pad_5_load_start_url"
+      | "camera.xiaomi_pad_5"
+      | "image.xiaomi_pad_5_screenshot"
+      | "media_player.xiaomi_pad_5"
+      | "notify.xiaomi_pad_5_overlay_message"
+      | "notify.xiaomi_pad_5_text_to_speech"
+      | "number.xiaomi_pad_5_screensaver_timer"
+      | "number.xiaomi_pad_5_screensaver_brightness"
+      | "number.xiaomi_pad_5_screen_off_timer"
+      | "number.xiaomi_pad_5_screen_brightness"
+      | "sensor.xiaomi_pad_5_battery"
+      | "sensor.xiaomi_pad_5_current_page"
+      | "sensor.xiaomi_pad_5_screen_orientation"
+      | "sensor.xiaomi_pad_5_foreground_app"
+      | "sensor.xiaomi_pad_5_internal_storage_free_space"
+      | "sensor.xiaomi_pad_5_internal_storage_total_space"
+      | "sensor.xiaomi_pad_5_free_memory"
+      | "sensor.xiaomi_pad_5_total_memory"
+      | "switch.xiaomi_pad_5_screensaver"
+      | "switch.xiaomi_pad_5_maintenance_mode"
+      | "switch.xiaomi_pad_5_kiosk_lock"
+      | "switch.xiaomi_pad_5_motion_detection"
+      | "switch.xiaomi_pad_5_screen"
+      | "calendar.rensknoors_gmail_com"
+      | "calendar.clairebongers_gmail_com"
+      | "calendar.feestdagen_in_nederland"
+      | "calendar.persoonlijk_rens"
+      | "calendar.gezin"
+      | "calendar.verjaardagen"
+      | "sensor.power_monitoring_plug_last_restart_time"
+      | "sensor.power_monitoring_plug_wifi_connect_count"
+      | "sensor.power_monitoring_plug_mqtt_connect_count"
+      | "sensor.power_monitoring_plug_restart_reason"
+      | "sensor.power_monitoring_plug_ssid"
+      | "switch.power_monitoring_plug"
+      | "sensor.power_monitoring_plug_energy_totalstarttime"
+      | "sensor.power_monitoring_plug_energy_total"
+      | "sensor.power_monitoring_plug_energy_yesterday"
+      | "sensor.power_monitoring_plug_energy_today"
+      | "sensor.power_monitoring_plug_energy_power"
+      | "sensor.power_monitoring_plug_energy_apparentpower"
+      | "sensor.power_monitoring_plug_energy_reactivepower"
+      | "sensor.power_monitoring_plug_energy_factor"
+      | "sensor.power_monitoring_plug_energy_voltage"
+      | "sensor.power_monitoring_plug_energy_current"
+      | "light.woonkamer"
+      | "light.kantoor_2"
+      | "light.keuken"
+      | "light.benedenverdieping"
+      | "light.kleedkamer_2"
+      | "light.slaapkamer"
+      | "light.hal"
+      | "light.spotjes_keuken"
+      | "light.bovenverdieping"
+      | "light.spotjes"
+      | "light.zolder"
+      | "automation.leaving_home"
+      | "automation.coming_home"
+      | "automation.start_movie_mode"
+      | "automation.turn_off_movie_mode"
+      | "automation.turn_off_music_in_kitchen"
+      | "automation.driveway_monitor_camera"
+      | "automation.washing_machine"
+      | "automation.key_reminder"
+      | "automation.ha_update_notification"
+      | "automation.subwoofer_nightmode"
+      | "automation.window_open_climate_off_after_a_defined_time"
+      | "automation.low_battery_level_detection_notification_for_all_battery_sensors"
+      | "automation.lg_webos_tv_on"
+      | "automation.ventilatie_aan_tijdens_douchen"
+      | "automation.turn_off_hyperion_when_dimming_living_room_lights"
+      | "automation.morning_routine"
+      | "automation.new_automation"
+      | "automation.turn_on_garden_lights_when_door_opens"
+      | "automation.turn_off_garage_door_switch_in_the_night"
+      | "automation.humidity_notification"
+      | "automation.close_sunshade"
+      | "automation.home_turn_on_garage_door_plug_when_manually_toggling_the_garage_door"
+      | "automation.home_wallpanel_charging"
+      | "automation.nfc_tag_bedroom_is_scanned"
+      | "automation.notify_about_failing_backups"
+      | "automation.widget_open_garage_on_widget_click"
+      | "automation.toggle_christmas_tree_lights_on_via_niko_switch"
+      | "automation.toggle_front_window_cover"
+      | "automation.auto_stop_sleeping_noises"
       | "binary_sensor.toilet_occupancy"
       | "binary_sensor.toilet_motion"
       | "binary_sensor.door_garden_livingroom_on_off"
@@ -3015,17 +3165,17 @@ declare module "@hakit/core" {
       | "button.lumi_lumi_sensor_motion_aq2_59e17007_identify"
       | "button.door_garden_livingroom_identify"
       | "button.lumi_lumi_sensor_magnet_aq2_identify"
-      | "button.smartplug_christmas_tree_identify"
+      | "button.smartplug_3d_printer_identify"
       | "button.smartplug_washing_machine_identify"
       | "button.texasinstruments_ti_router_identify_2"
       | "button.zigbee_router_office_identify"
       | "button.door_sensor_garage_door_identify"
-      | "cover.front_window_cover_cover"
+      | "cover.front_window_cover"
       | "light.ventilation_on_off"
       | "number.ventilation_level_start_up_current_level"
       | "select.ventilation_on_off_startuponoff"
-      | "select.smartplug_christmas_tree_power_on_state"
-      | "select.smartplug_christmas_tree_backlight_mode"
+      | "select.smartplug_3d_printer_power_on_state"
+      | "select.smartplug_3d_printer_backlight_mode"
       | "select.smartplug_washing_machine_power_on_state"
       | "select.smartplug_washing_machine_backlight_mode"
       | "sensor.sonoff_temperature_garage_power"
@@ -3047,31 +3197,34 @@ declare module "@hakit/core" {
       | "sensor.door_garden_livingroom_temperature"
       | "sensor.lumi_lumi_sensor_magnet_aq2_power"
       | "sensor.lumi_lumi_sensor_magnet_aq2_device_temperature"
-      | "sensor.smartplug_christmas_tree_rms_current"
-      | "sensor.smartplug_christmas_tree_rms_voltage"
-      | "sensor.smartplug_christmas_tree_active_power"
-      | "sensor.smartplug_christmas_tree_summation_delivered"
+      | "sensor.smartplug_3d_printer_rms_current"
+      | "sensor.smartplug_3d_printer_rms_voltage"
+      | "sensor.smartplug_3d_printer_active_power"
+      | "sensor.smartplug_3d_printer_summation_delivered"
       | "sensor.smartplug_washing_machine_rms_current"
       | "sensor.smartplug_washing_machine_rms_voltage"
-      | "sensor.smartplug_washing_machine_power_factor"
       | "sensor.smartplug_washing_machine_active_power"
       | "sensor.smartplug_washing_machine_summation_delivered"
       | "sensor.door_sensor_garage_door_battery"
       | "switch.garage_door_plug"
       | "switch.smartplug_wallpanel"
       | "switch.smartplug_hal_bovenverdieping"
-      | "switch.smartplug_christmas_tree_switch"
-      | "switch.smartplug_christmas_tree_child_lock"
+      | "switch.smartplug_3d_printer_switch"
+      | "switch.smartplug_3d_printer_child_lock"
       | "switch.smartplug_washing_machine_switch"
       | "switch.smartplug_washing_machine_child_lock"
       | "update.garage_door_firmware"
       | "update.smartplug_wallpanel_firmware"
       | "update.smartplug_hal_bovenverdieping_firmware"
       | "update.toilet_motion_firmware"
-      | "update.smartplug_christmas_tree_firmware"
+      | "update.smartplug_3d_printer_firmware"
       | "update.smartplug_washing_machine_firmware"
       | "update.zigbee_router_office_firmware"
       | "update.front_window_cover_firmware"
+      | "image.roborock_s8_onderverdieping"
+      | "image.roborock_s8_bovenverdieping"
+      | "image.roborock_s8_badkamer"
+      | "image.roborock_s8_zolder"
       | "binary_sensor.updater"
       | "media_player.android_tv"
       | "fan.test_fan"
@@ -3106,16 +3259,21 @@ declare module "@hakit/core" {
       | "binary_sensor.wallpanel_browser_charging"
       | "sensor.voordeur_video_codec"
       | "sensor.garage_video_codec"
-      | "sensor.smartplug_christmas_tree_power_factor"
+      | "sensor.smartplug_washing_machine_power_factor"
+      | "image.roborock_s8"
       | "switch.automation_avond"
       | "sensor.front_window_cover_window_covering_type"
       | "media_player.wallpanel"
-      | "media_player.4k_tv_box"
-      | "binary_sensor.backups_stale"
-      | "sensor.backup_state"
-      | "sensor.zonneplan_current_tariff_group"
-      | "sensor.zonneplan_status_message"
       | "sensor.zonneplan_one_omvormer_current_scenario"
-      | "binary_sensor.zonneplan_one_omvormer_power_limit_active";
+      | "media_player.4k_tv_box"
+      | "sensor.smartplug_3d_printer_power_factor"
+      | "image.bambu_lab_p1s_camera"
+      | "sensor.bambu_lab_ams_humidity_index"
+      | "sensor.bambu_lab_ams_tray_1"
+      | "sensor.bambu_lab_ams_tray_2"
+      | "sensor.bambu_lab_ams_tray_3"
+      | "sensor.bambu_lab_ams_tray_4"
+      | "binary_sensor.backups_stale"
+      | "sensor.backup_state";
   }
 }
