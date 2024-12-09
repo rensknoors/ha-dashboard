@@ -69,7 +69,7 @@ const Home = () => {
         <div className="wrap grid grid-cols-2 gap-6">
           <LightCard entity="light.kitchen_group" />
           <LightCard entity="light.living_room_group" />
-          <LightCard entity="light.slaapkamer" />
+          <LightCard entity="light.christmas_tree" />
           <LightCard entity="light.garden_group" />
         </div>
       </div>
