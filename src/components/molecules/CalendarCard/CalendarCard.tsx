@@ -30,7 +30,7 @@ const CalendarCard = () => {
         },
       });
       if (response.status === 'error') {
-        throw new Error(response.data);
+        return [];
       }
       return response.data;
     };
@@ -42,11 +42,8 @@ const CalendarCard = () => {
     const birthdayCalendar = await fetchFromEntity(
       `/calendars/calendar.feestdagen_in_nederland${periodString}`
     );
-    const holidayCalendar = await fetchFromEntity(
-      `/calendars/calendar.verjaardagen${periodString}`
-    );
 
-    return [...familyCalendar, ...birthdayCalendar, ...holidayCalendar];
+    return [...familyCalendar, ...birthdayCalendar];
   }, [callApi, endOfDay, startOfDay]);
 
   const formatToTimeString = (date: string | Date) => {
