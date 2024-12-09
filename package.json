@@ -14,7 +14,7 @@
     "sync-types": "node --loader ts-node/esm sync-types.ts",
     "preview": "vite preview",
     "prebuild": "pnpm run sync-types",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.51.11",
