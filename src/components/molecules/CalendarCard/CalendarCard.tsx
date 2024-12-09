@@ -71,7 +71,7 @@ const CalendarCard = () => {
   if (isPending) return <div>Loading...</div>;
 
   // Only show error if there are no events to show
-  if (isError && !events.length) {
+  if (isError && !events) {
     console.error(error);
     return (
       <span>
@@ -82,20 +82,20 @@ const CalendarCard = () => {
 
   return (
     <>
-      {events?.length === 0 && (
+      {events.length === 0 && (
         <div className="flex items-center justify-center gap-3 text-slate-400">
           <BiCalendarX className="h-6 w-6 text-white" />
           Geen events vandaag
         </div>
       )}
-      {events?.length > 0 && (
+      {events.length > 0 && (
         <div className="flex w-full flex-col gap-4">
           <div className="flex items-center gap-4">
             <BiCalendar className="h-5 w-5" />
             <span className="text-xl text-white">Kalender</span>
           </div>
           <div className="flex flex-col gap-2">
-            {events?.map((event) => (
+            {events.map((event) => (
               <div
                 key={event.uid}
                 className="grid grid-cols-[min-content_auto]"
