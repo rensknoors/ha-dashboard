@@ -39,11 +39,14 @@ const CalendarCard = () => {
     const familyCalendar = await fetchFromEntity(
       `/calendars/calendar.gezin${periodString}`
     );
-    const birthdayCalendar = await fetchFromEntity(
+    const holidaysCalendar = await fetchFromEntity(
       `/calendars/calendar.feestdagen_in_nederland${periodString}`
     );
+    const birthdayCalendar = await fetchFromEntity(
+      `/calendars/calendar.birthdays${periodString}`
+    );
 
-    return [...familyCalendar, ...birthdayCalendar];
+    return [...familyCalendar, ...holidaysCalendar, ...birthdayCalendar];
   }, [callApi, endOfDay, startOfDay]);
 
   const formatToTimeString = (date: string | Date) => {
