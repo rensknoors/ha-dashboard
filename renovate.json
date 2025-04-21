@@ -23,24 +23,24 @@
     },
     {
       "groupName": "development tools",
-      "matchPackagePatterns": [
-        "^@testing-library/",
-        "^vitest",
-        "^jsdom",
-        "^eslint",
-        "^prettier",
-        "^@typescript-eslint",
-        "^typescript"
-      ],
-      "matchUpdateTypes": ["major"]
+      "matchUpdateTypes": ["major"],
+      "matchPackageNames": [
+        "/^@testing-library//",
+        "/^vitest/",
+        "/^jsdom/",
+        "/^eslint/",
+        "/^prettier/",
+        "/^@typescript-eslint/",
+        "/^typescript/"
+      ]
     },
     {
       "groupName": "tanstack packages",
-      "matchPackagePatterns": ["^@tanstack/"]
+      "matchPackageNames": ["/^@tanstack//"]
     },
     {
       "groupName": "home assistant packages",
-      "matchPackagePatterns": ["^@hakit/"]
+      "matchPackageNames": ["/^@hakit//"]
     }
   ],
   "schedule": ["every weekend"],
