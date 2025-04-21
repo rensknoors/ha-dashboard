@@ -1,6 +1,61 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
-  ]
+    "config:best-practices",
+    ":dependencyDashboard",
+    ":semanticCommits"
+  ],
+  "packageRules": [
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "groupName": "react packages",
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ],
+      "matchUpdateTypes": ["major"]
+    },
+    {
+      "groupName": "development tools",
+      "matchPackagePatterns": [
+        "^@testing-library/",
+        "^vitest",
+        "^jsdom",
+        "^eslint",
+        "^prettier",
+        "^@typescript-eslint",
+        "^typescript"
+      ],
+      "matchUpdateTypes": ["major"]
+    },
+    {
+      "groupName": "tanstack packages",
+      "matchPackagePatterns": ["^@tanstack/"]
+    },
+    {
+      "groupName": "home assistant packages",
+      "matchPackagePatterns": ["^@hakit/"]
+    }
+  ],
+  "schedule": ["every weekend"],
+  "prHourlyLimit": 4,
+  "prConcurrentLimit": 16,
+  "rangeStrategy": "pin",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["every weekend"]
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "labels": ["dependencies"],
+  "semanticCommits": "enabled",
+  "semanticCommitType": "chore",
+  "semanticCommitScope": "deps"
 }
