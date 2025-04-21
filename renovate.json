@@ -45,10 +45,9 @@
   ],
   "prHourlyLimit": 4,
   "prConcurrentLimit": 16,
-  "rangeStrategy": "pin",
+  "rangeStrategy": "replace",
   "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": ["every weekend"]
+    "enabled": true
   },
   "vulnerabilityAlerts": {
     "enabled": true
