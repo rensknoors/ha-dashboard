@@ -58,10 +58,10 @@ importers:
         version: 2.6.0
     devDependencies:
       '@hakit/components':
-        specifier: ^3.2.0
+        specifier: 3.2.0
         version: 3.2.0(088ef47ef84281bf50fc16593fcf6493)
       '@hakit/core':
-        specifier: ^3.2.0
+        specifier: 3.2.0
         version: 3.2.0(@emotion/react@11.13.0(@types/react@18.3.20)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.0(@types/react@18.3.20)(react@18.3.1))(@types/react@18.3.20)(react@18.3.1))(@iconify/react@5.0.1(react@18.3.1))(deep-object-diff@1.1.9)(framer-motion@11.3.8(@emotion/is-prop-valid@1.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(home-assistant-js-websocket@9.4.0)(javascript-time-ago@2.5.10)(lodash@4.17.21)(prettier@3.5.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(use-debounce@10.0.1(react@18.3.1))(ws@8.18.1)(yargs@17.7.2)(zustand@4.5.4(@types/react@18.3.20)(react@18.3.1))
       '@tanstack/eslint-plugin-query':
         specifier: ^5.73.3
