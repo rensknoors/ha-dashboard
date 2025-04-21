@@ -43,9 +43,7 @@
       "matchPackageNames": ["/^@hakit//"]
     }
   ],
-  "prHourlyLimit": 4,
   "prConcurrentLimit": 16,
-  "rangeStrategy": "replace",
   "lockFileMaintenance": {
     "enabled": true
   },
