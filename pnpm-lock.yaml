@@ -118,8 +118,8 @@ importers:
         specifier: 4.1.4
         version: 4.1.4(@typescript-eslint/eslint-plugin@8.31.0(@typescript-eslint/parser@8.31.0(eslint@9.25.1(jiti@1.21.7))(typescript@5.8.3))(eslint@9.25.1(jiti@1.21.7))(typescript@5.8.3))(eslint@9.25.1(jiti@1.21.7))
       global-jsdom:
-        specifier: 24.0.0
-        version: 24.0.0(jsdom@26.1.0)
+        specifier: 26.0.0
+        version: 26.0.0(jsdom@26.1.0)
       globals:
         specifier: 16.0.0
         version: 16.0.0
@@ -2102,11 +2102,11 @@ packages:
     resolution: {integrity: sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg==}
     hasBin: true
 
-  global-jsdom@24.0.0:
-    resolution: {integrity: sha512-CARBUWkqZ3O9VOc2PIVE5kQpdQeJh9eF9kQ7zSeNtmqx5vAFDKMr9XnDt1epVMMrz1s9uK/yFCa4HLwpa6TcPA==}
+  global-jsdom@26.0.0:
+    resolution: {integrity: sha512-BqXpTNZFjP40N+s4k8Bk9HS8GFVPJB/+TKtwcShM84wLv6C5dH9o1dydI3pL6potanhfDiIAVDbaaGj/uSdRSA==}
     engines: {node: '>=18'}
     peerDependencies:
-      jsdom: '>=24 <25'
+      jsdom: '>=26 <27'
 
   globals@11.12.0:
     resolution: {integrity: sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==}
@@ -5759,7 +5759,7 @@ snapshots:
       package-json-from-dist: 1.0.1
       path-scurry: 1.11.1
 
-  global-jsdom@24.0.0(jsdom@26.1.0):
+  global-jsdom@26.0.0(jsdom@26.1.0):
     dependencies:
       jsdom: 26.1.0
 
