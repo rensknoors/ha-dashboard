@@ -43,7 +43,7 @@
       "matchPackageNames": ["/^@hakit//"]
     }
   ],
-  "prConcurrentLimit": 16,
+  "schedule": ["every weekend"],
   "lockFileMaintenance": {
     "enabled": true
   },
