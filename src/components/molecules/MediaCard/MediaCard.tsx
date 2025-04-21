@@ -24,6 +24,8 @@ const getSourceThumbnail = (source: string) => {
       return '/logos/netflix.svg';
     case 'Videoland':
       return '/logos/videoland.svg';
+    case 'NLZIET':
+      return '/logos/nlziet.png';
     default:
       return '/cast.svg';
   }
@@ -68,7 +70,7 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
     media.attributes.device_class === 'tv' ||
     media.attributes.friendly_name === 'Tv'
       ? getSourceThumbnail(media.attributes.source ?? media.attributes.app_name)
-      : media.attributes.entity_picture ?? '/cast.svg';
+      : (media.attributes.entity_picture ?? '/cast.svg');
 
   return (
     <Card
