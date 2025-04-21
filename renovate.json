@@ -43,7 +43,6 @@
       "matchPackageNames": ["/^@hakit//"]
     }
   ],
-  "schedule": ["every weekend"],
   "prHourlyLimit": 4,
   "prConcurrentLimit": 16,
   "rangeStrategy": "pin",
