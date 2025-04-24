@@ -11,7 +11,6 @@ Example:
 ```
 # .env.local
 VITE_HASS_URL="https://homeassistant.local:8123"
-VITE_WEATHER_API_KEY="demo"
 VITE_LOCATION="Amsterdam" # Can be latlong or a location name
 VITE_HA_LONG_LIVED_TOKEN="abc" # Optional, can be generated in HA at the bottom of your profile screen
 ```
@@ -19,7 +18,6 @@ VITE_HA_LONG_LIVED_TOKEN="abc" # Optional, can be generated in HA at the bottom 
 ```
 # .env.production.local
 VITE_HASS_URL="https://url-to-your-home-assistant-instance.com"
-VITE_WEATHER_API_KEY="demo"
 VITE_LOCATION="Amsterdam" # Can be latlong or a location name
 VITE_HA_LONG_LIVED_TOKEN="abc" # Optional, can be generated in HA at the bottom of your profile screen
 ```

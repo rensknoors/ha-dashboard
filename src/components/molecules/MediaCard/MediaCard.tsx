@@ -47,7 +47,7 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
         style={{
           backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${thumbnail})`,
         }}
-      ></div>
+      />
 
       {/* Thumbnail */}
       <div className="z-10 flex-shrink-0">
