@@ -11,13 +11,15 @@ Example:
 ```
 # .env.local
 VITE_HASS_URL="https://homeassistant.local:8123"
-VITE_LOCATION="Amsterdam" # Can be latlong or a location name
+VITE_LATLONG="52.52,13.41"
+VITE_TIMEZONE="Europe/Amsterdam"
 VITE_HA_LONG_LIVED_TOKEN="abc" # Optional, can be generated in HA at the bottom of your profile screen
 ```
 
 ```
 # .env.production.local
 VITE_HASS_URL="https://url-to-your-home-assistant-instance.com"
-VITE_LOCATION="Amsterdam" # Can be latlong or a location name
+VITE_LATLONG="52.52,13.41"
+VITE_TIMEZONE="Europe/Amsterdam"
 VITE_HA_LONG_LIVED_TOKEN="abc" # Optional, can be generated in HA at the bottom of your profile screen
 ```

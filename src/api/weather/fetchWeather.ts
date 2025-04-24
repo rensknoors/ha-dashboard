@@ -1,7 +1,7 @@
 import { weatherSchema } from './schema';
 
 export const fetchWeather = async (latlong?: string) => {
-  const loc = latlong ?? import.meta.env.VITE_LOCATION ?? '52.52,13.41';
+  const loc = latlong ?? import.meta.env.VITE_LATLONG;
 
   const [latitude, longitude] = loc.split(',').map((coord) => coord.trim());
 
@@ -12,7 +12,7 @@ export const fetchWeather = async (latlong?: string) => {
     'current',
     'temperature_2m,weather_code,precipitation'
   );
-  url.searchParams.append('timezone', 'Europe/Amsterdam');
+  url.searchParams.append('timezone', import.meta.env.VITE_TIMEZONE);
 
   const response = await fetch(url);
 
