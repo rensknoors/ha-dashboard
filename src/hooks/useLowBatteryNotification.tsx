@@ -26,8 +26,6 @@ const useLowBatteryNotification = () => {
       });
     }
   }, [devices]);
-
-  return null;
 };
 
 export { useLowBatteryNotification };

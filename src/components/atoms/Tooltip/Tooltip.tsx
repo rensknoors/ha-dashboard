@@ -1,5 +1,5 @@
-import { getTariffColor } from '@/utils';
 import { formatCurrency } from '@/utils/formatCurrency';
+import { getTariffColor } from '@/utils/getTariffColor';
 
 export const Tooltip = ({
   active,

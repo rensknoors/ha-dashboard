@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import { BiSolidFlame, BiSolidZap } from 'react-icons/bi';
 
 import { Card } from '@/components/atoms/Card/Card';
-import { formatDecimal } from '@/utils';
 import { formatCurrency } from '@/utils/formatCurrency';
+import { formatDecimal } from '@/utils/formatDecimal';
 
 import { EnergyChart } from './components/EnergyChart';
 import { getTimeLabels } from './getTimeLabels';

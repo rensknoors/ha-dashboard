@@ -11,7 +11,8 @@ import {
 } from 'recharts';
 
 import { Tooltip } from '@/components/atoms';
-import { formatCurrency, getTariffColor } from '@/utils';
+import { formatCurrency } from '@/utils/formatCurrency';
+import { getTariffColor } from '@/utils/getTariffColor';
 
 import { CustomLabel } from './CustomLabel';
 

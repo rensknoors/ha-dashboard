@@ -1,60 +1,18 @@
 import { EntityName, useEntity, useHass } from '@hakit/core';
 import clsx from 'clsx';
-import { BiMusic, BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
+import { BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
+import { getThumbnailForSource } from '@/utils/getThumbnailForSource';
 
-export type MediaCardProps = {
+import { Placeholder } from './Placeholder';
+
+export type MediaCardProps = CardProps & {
   entity: EntityName | undefined;
-} & CardProps;
-
-const getSourceThumbnail = (source: string) => {
-  switch (source) {
-    case 'PS5/Switch':
-      return '/logos/playstation.svg';
-    case 'Youtube':
-      return '/logos/youtube.svg';
-    case 'Plex':
-      return '/logos/plex.svg';
-    case 'Spotify':
-      return '/logos/spotify.svg';
-    case 'Sonos':
-      return '/logos/sonos.svg';
-    case 'Netflix':
-      return '/logos/netflix.svg';
-    case 'Videoland':
-      return '/logos/videoland.svg';
-    case 'Odido':
-      return '/logos/odido.svg';
-    case 'NLZIET':
-      return '/logos/nlziet.png';
-    default:
-      return '/cast.svg';
-  }
-};
-
-const Placeholder = () => {
-  const title = 'Het is stil...';
-  const description = 'Er wordt niets afgespeeld';
-
-  return (
-    <Card className="flex min-h-[180px] place-items-center gap-6 border !border-gray-700/40 !bg-gray-700/20">
-      <div className="flex-shrink-0">
-        <BiMusic className="h-14 w-14 rounded-xl text-gray-700" />
-      </div>
-
-      <div className="flex flex-grow flex-col">
-        <span className="text-lg font-semibold">{title}</span>
-        <span className="line-clamp-1 text-ellipsis text-base text-gray-500">
-          {description}
-        </span>
-      </div>
-    </Card>
-  );
 };
 
 const MediaCard = ({ entity, className }: MediaCardProps) => {
-  const media = useEntity(entity ?? 'sensor.time', {
+  const media = useEntity(entity ?? 'unknown', {
     returnNullIfNotFound: true,
   });
   const { callService } = useHass();
@@ -71,7 +29,9 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
   const thumbnail =
     media.attributes.device_class === 'tv' ||
     media.attributes.friendly_name === 'Tv'
-      ? getSourceThumbnail(media.attributes.source ?? media.attributes.app_name)
+      ? getThumbnailForSource(
+          media.attributes.source ?? media.attributes.app_name
+        )
       : (media.attributes.entity_picture ?? '/cast.svg');
 
   return (
