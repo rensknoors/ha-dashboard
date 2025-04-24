@@ -10,7 +10,6 @@ import { getTimeLabels } from './getTimeLabels';
 import { useEnergyTariffs } from './useEnergyTariffs';
 
 const Energy = () => {
-  const formatter = new Intl.NumberFormat('nl-NL');
   const {
     hourlyTariffs,
     tariffGroup,
@@ -56,7 +55,7 @@ const Energy = () => {
         <Card className="flex w-full flex-col justify-center gap-1 bg-neutral-900 text-center">
           <span className="text-md mb-2">Verbruikt</span>
           <span className="text-4xl font-semibold">
-            {formatter.format(parseFloat(electricityConsumption))}
+            {formatDecimal(electricityConsumption)}
           </span>
           <span className="text-md text-sm opacity-40">kWh</span>
         </Card>
@@ -92,14 +91,14 @@ const Energy = () => {
         <Card className="flex w-full flex-col justify-center bg-neutral-900 text-center">
           <span className="text-md mb-2">Verbruikt</span>
           <span className="text-4xl font-semibold">
-            {formatter.format(parseFloat(gasConsumption))}
+            {formatDecimal(gasConsumption)}
           </span>
           <span className="text-md text-sm opacity-40">m3</span>
         </Card>
         <Card className="flex w-full flex-col justify-center bg-neutral-900 text-center">
           <span className="text-md mb-2">Kosten</span>
           <span className="text-4xl font-semibold">
-            {formatCurrency(parseFloat(gasDeliveryCosts))}
+            {formatCurrency(gasDeliveryCosts)}
           </span>
         </Card>
       </div>
