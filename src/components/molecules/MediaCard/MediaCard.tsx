@@ -5,7 +5,7 @@ import { BiMusic, BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
 import { Card, CardProps } from '@/components/atoms/Card/Card';
 
 export type MediaCardProps = {
-  entity: EntityName | 'fallback';
+  entity: EntityName | undefined;
 } & CardProps;
 
 const getSourceThumbnail = (source: string) => {
@@ -24,6 +24,8 @@ const getSourceThumbnail = (source: string) => {
       return '/logos/netflix.svg';
     case 'Videoland':
       return '/logos/videoland.svg';
+    case 'Odido':
+      return '/logos/odido.svg';
     case 'NLZIET':
       return '/logos/nlziet.png';
     default:
@@ -36,7 +38,7 @@ const Placeholder = () => {
   const description = 'Er wordt niets afgespeeld';
 
   return (
-    <Card className=" flex min-h-[180px] place-items-center gap-6 border border-gray-700 border-opacity-40 bg-gray-700 bg-opacity-20">
+    <Card className="flex min-h-[180px] place-items-center gap-6 border !border-gray-700/40 !bg-gray-700/20">
       <div className="flex-shrink-0">
         <BiMusic className="h-14 w-14 rounded-xl text-gray-700" />
       </div>
@@ -52,12 +54,12 @@ const Placeholder = () => {
 };
 
 const MediaCard = ({ entity, className }: MediaCardProps) => {
-  const media = useEntity(entity as EntityName, {
+  const media = useEntity(entity ?? 'sensor.time', {
     returnNullIfNotFound: true,
   });
   const { callService } = useHass();
 
-  if (!media) return <Placeholder />;
+  if (!entity || !media) return <Placeholder />;
 
   const PlayPauseIcon = media.state === 'playing' ? BiPause : BiPlay;
 
