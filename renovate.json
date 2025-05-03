@@ -8,7 +8,8 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
+      "automerge": true,
+      "labels": ["automerge"]
     },
     {
       "groupName": "react packages",
@@ -41,6 +42,7 @@
   "schedule": ["every weekend"],
   "prConcurrentLimit": 10,
   "pruneBranchAfterAutomerge": true,
+  "ignoreTests": true,
   "lockFileMaintenance": {
     "enabled": true
   },
