@@ -9,7 +9,7 @@
     {
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
-      "labels": ["automerge"]
+      "labels": ["dependencies", "automerge"]
     },
     {
       "groupName": "react packages",
