@@ -40,7 +40,8 @@
     }
   ],
   "schedule": ["every weekend"],
-  "prConcurrentLimit": 10,
+  "prConcurrentLimit": 5,
+  "automergeType": "branch",
   "pruneBranchAfterAutomerge": true,
   "ignoreTests": true,
   "lockFileMaintenance": {
