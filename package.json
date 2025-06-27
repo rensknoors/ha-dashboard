@@ -13,7 +13,7 @@
     "type-check": "tsc --noEmit",
     "sync-types": "node --loader ts-node/esm sync-types.ts",
     "preview": "vite preview",
-    "prebuild": "bun run sync-types",
+    "prebuild": "pnpm run sync-types",
     "prepare": "husky"
   },
   "dependencies": {
