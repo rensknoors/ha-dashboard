@@ -14,7 +14,7 @@ export const fetchWeather = async (latlong?: string) => {
   );
   url.searchParams.append(
     'hourly',
-    'temperature_2m,weather_code,precipitation_probability'
+    'temperature_2m,weather_code,precipitation_probability,precipitation'
   );
   url.searchParams.append(
     'daily',

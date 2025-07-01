@@ -1,11 +1,7 @@
+import clsx from 'clsx';
 import Lottie from 'lottie-react';
-import {
-  BiErrorCircle,
-  BiSolidCloudRain,
-  BiSolidThermometer,
-  BiWind,
-} from 'react-icons/bi';
-import { TbDroplets } from 'react-icons/tb';
+import { BiCompass, BiErrorCircle, BiWind } from 'react-icons/bi';
+import { WiHumidity, WiRain } from 'react-icons/wi';
 
 import { useWeather } from '@/api/weather/useWeather';
 import clearDay from '@/assets/weather-lottie-animations/clear-day.json';
@@ -19,6 +15,11 @@ import rain from '@/assets/weather-lottie-animations/rain.json';
 import snow from '@/assets/weather-lottie-animations/snow.json';
 import thunderStormsRain from '@/assets/weather-lottie-animations/thunderstorms-rain.json';
 import { Card } from '@/components/atoms/Card/Card';
+import { getDayName } from '@/utils/getDayName';
+
+import { getWeatherGradient } from './utils/getWeatherGradient';
+import { getWeatherIcon } from './utils/getWeatherIcon';
+import { getWindDirection } from './utils/getWindDirection';
 
 const weatherCodeMap = {
   0: { day: clearDay, night: clearNight }, // Clear sky
@@ -50,81 +51,6 @@ const weatherCodeMap = {
   96: { day: thunderStormsRain, night: thunderStormsRain }, // Thunderstorm with slight hail
   99: { day: thunderStormsRain, night: thunderStormsRain }, // Thunderstorm with heavy hail
 } as const;
-
-const getWeatherIcon = (weatherCode: number, size = 'w-8 h-8') => {
-  // Using smaller static weather icons for forecast
-  if (weatherCode === 0)
-    return (
-      <div
-        className={`${size} flex items-center justify-center rounded-full bg-yellow-400 text-xs font-bold text-white`}
-      >
-        ☀
-      </div>
-    );
-  if ([1, 2].includes(weatherCode))
-    return (
-      <div
-        className={`${size} flex items-center justify-center rounded-full bg-blue-400 text-xs font-bold text-white`}
-      >
-        ⛅
-      </div>
-    );
-  if (weatherCode === 3)
-    return (
-      <div
-        className={`${size} flex items-center justify-center rounded-full bg-gray-500 text-xs font-bold text-white`}
-      >
-        ☁
-      </div>
-    );
-  if ([45, 48].includes(weatherCode))
-    return (
-      <div
-        className={`${size} flex items-center justify-center rounded-full bg-gray-400 text-xs font-bold text-white`}
-      >
-        🌫
-      </div>
-    );
-  if (
-    [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(weatherCode)
-  )
-    return (
-      <div
-        className={`${size} flex items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white`}
-      >
-        🌧
-      </div>
-    );
-  if ([71, 73, 75, 77, 85, 86].includes(weatherCode))
-    return (
-      <div
-        className={`${size} flex items-center justify-center rounded-full bg-blue-200 text-xs font-bold text-gray-700`}
-      >
-        ❄
-      </div>
-    );
-  if ([95, 96, 99].includes(weatherCode))
-    return (
-      <div
-        className={`${size} flex items-center justify-center rounded-full bg-purple-600 text-xs font-bold text-white`}
-      >
-        ⛈
-      </div>
-    );
-  return (
-    <div
-      className={`${size} flex items-center justify-center rounded-full bg-gray-400 text-xs font-bold text-white`}
-    >
-      ?
-    </div>
-  );
-};
-
-const getDayName = (dateString: string): string => {
-  const date = new Date(dateString);
-  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  return days[date.getDay()];
-};
 
 const Weather = () => {
   const { data, isPending, isError, error, refetch } = useWeather();
@@ -172,16 +98,26 @@ const Weather = () => {
         ]
       : null;
 
+  const gradientClasses =
+    weatherCode !== undefined
+      ? getWeatherGradient(weatherCode, isDay)
+      : 'from-blue-900 to-blue-400';
+
   return (
     <div className="flex h-full w-full gap-6">
       {/* Main content area */}
       <div className="flex h-full flex-1 flex-col gap-6">
-        {/* Temperature overview - keeping as requested */}
-        <Card className="flex items-center justify-between bg-gradient-to-br from-blue-900 to-blue-700 p-8">
+        {/* Temperature overview */}
+        <Card
+          className={clsx(
+            'flex flex-1 items-center justify-between bg-gradient-to-br p-8',
+            gradientClasses
+          )}
+        >
           <div className="flex items-center gap-6">
             {animation && (
               <Lottie
-                className="h-32 w-32"
+                className="h-48 w-48"
                 animationData={animation}
                 loop={true}
               />
@@ -203,33 +139,7 @@ const Weather = () => {
           </div>
         </Card>
 
-        {/* Precipitation - full width */}
-        <Card className="flex flex-col justify-center bg-neutral-900 p-6">
-          <div className="mb-3 flex items-center gap-3">
-            <BiSolidCloudRain className="h-8 w-8 text-blue-500" />
-            <span className="text-lg font-medium">Precipitation</span>
-          </div>
-          <div className="grid grid-cols-3 gap-8">
-            <div className="flex justify-between">
-              <span className="text-gray-400">Total:</span>
-              <span className="text-xl font-semibold">
-                {current.precipitation} mm
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-400">Rain:</span>
-              <span className="text-xl font-semibold">{current.rain} mm</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-400">Snow:</span>
-              <span className="text-xl font-semibold">
-                {current.snowfall} mm
-              </span>
-            </div>
-          </div>
-        </Card>
-
-        {/* Weekly forecast - full width and twice as high */}
+        {/* Weekly forecast */}
         <Card className="flex-1 bg-neutral-900 p-6">
           <div className="grid h-full grid-cols-7 gap-4">
             {daily.time.slice(0, 7).map((date, index) => (
@@ -260,29 +170,33 @@ const Weather = () => {
         </Card>
       </div>
 
-      {/* Narrower side panel */}
-      <div className="grid h-full w-60 grid-cols-1 grid-rows-3 gap-6">
-        <Card className="flex flex-col items-center justify-center bg-neutral-800 p-6">
-          <span className="mb-1 text-sm text-gray-400">Temperature</span>
-          <BiSolidThermometer className="mb-2 h-12 w-12 text-orange-500" />
-          <span className="text-2xl font-bold">
-            {Math.round(current.temperature_2m)}°C
-          </span>
-        </Card>
-
-        <Card className="flex flex-col items-center justify-center bg-neutral-800 p-6">
-          <span className="mb-1 text-sm text-gray-400">Humidity</span>
-          <TbDroplets className="mb-2 h-12 w-12 text-blue-500" />
+      {/* Sidebar */}
+      <div className="grid h-full w-60 grid-cols-1 grid-rows-4 gap-6">
+        <Card className="flex flex-col items-center justify-center bg-neutral-900 p-6">
+          <WiHumidity className="mb-2 h-12 w-12 text-gray-500" />
           <span className="text-2xl font-bold">
             {current.relative_humidity_2m}%
           </span>
         </Card>
 
-        <Card className="flex flex-col items-center justify-center bg-neutral-800 p-6">
-          <span className="mb-1 text-sm text-gray-400">Wind</span>
+        <Card className="flex flex-col items-center justify-center bg-neutral-900 p-6">
+          <WiRain className="mb-2 h-12 w-12 text-gray-500" />
+          <span className="text-2xl font-bold">
+            {Math.round(current.precipitation)} mm
+          </span>
+        </Card>
+
+        <Card className="flex flex-col items-center justify-center bg-neutral-900 p-6">
           <BiWind className="mb-2 h-12 w-12 text-gray-500" />
           <span className="text-2xl font-bold">
             {Math.round(current.wind_speed_10m)} km/h
+          </span>
+        </Card>
+
+        <Card className="flex flex-col items-center justify-center bg-neutral-900 p-6">
+          <BiCompass className="mb-2 h-12 w-12 text-gray-500" />
+          <span className="text-2xl font-bold">
+            {getWindDirection(current.wind_direction_10m)}
           </span>
         </Card>
       </div>
