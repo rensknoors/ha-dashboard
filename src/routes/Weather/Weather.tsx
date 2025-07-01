@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Lottie from 'lottie-react';
-import { BiCompass, BiErrorCircle, BiWind } from 'react-icons/bi';
+import { BiErrorCircle, BiWind } from 'react-icons/bi';
 import { WiHumidity, WiRain } from 'react-icons/wi';
 
 import { useWeather } from '@/api/weather/useWeather';
@@ -20,6 +20,7 @@ import { getDayName } from '@/utils/getDayName';
 import { getWeatherGradient } from './utils/getWeatherGradient';
 import { getWeatherIcon } from './utils/getWeatherIcon';
 import { getWindDirection } from './utils/getWindDirection';
+import { getWindDirectionIcon } from './utils/getWindDirectionIcon';
 
 const weatherCodeMap = {
   0: { day: clearDay, night: clearNight }, // Clear sky
@@ -194,7 +195,8 @@ const Weather = () => {
         </Card>
 
         <Card className="flex flex-col items-center justify-center bg-neutral-900 p-6">
-          <BiCompass className="mb-2 h-12 w-12 text-gray-500" />
+          {getWindDirectionIcon(current.wind_direction_10m)}
+          {/* <BiCompass className="mb-2 h-12 w-12 text-gray-500" /> */}
           <span className="text-2xl font-bold">
             {getWindDirection(current.wind_direction_10m)}
           </span>

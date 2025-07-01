@@ -1,4 +1,4 @@
-export const getWindDirection = (direction: number): string => {
+export const getWindDirection = (direction: number) => {
   const directions = [
     'N',
     'NNE',
@@ -17,6 +17,7 @@ export const getWindDirection = (direction: number): string => {
     'NW',
     'NNW',
   ];
+
   const index = Math.round(direction / 22.5) % 16;
   return directions[index];
 };
