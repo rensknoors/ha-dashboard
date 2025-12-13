@@ -6,7 +6,7 @@ import {
   useIconByEntity,
 } from '@hakit/core';
 import { clsx } from 'clsx';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
@@ -20,7 +20,7 @@ export type IconBaseProps = React.SVGAttributes<SVGElement> & {
 
 export type LightCardProps = {
   entity: EntityName;
-  Icon?: (props: IconBaseProps) => JSX.Element;
+  Icon?: (props: IconBaseProps) => ReactElement;
   label?: string;
 } & CardProps;
 
