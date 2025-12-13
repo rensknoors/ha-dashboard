@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-@import 'styles/modal';
+@import 'tailwindcss';
+@config '../tailwind.config.js';
+@import './styles/modal.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --font-family-sans: Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
 :root {
   color-scheme: dark;

@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 .modal-container {
   @apply min-w-[600px] !-translate-x-1/2 !bg-slate-800;
