@@ -52,7 +52,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @example 8955375327824e14ba89e4b29cc3ec9a @constraints  config_entry:
-          entry_id?: any;
+          entry_id?: unknown;
         }
       >;
       // undefined
@@ -172,7 +172,7 @@ declare module "@hakit/core" {
           //  @example 2025-01-02 00:00:00 @constraints  datetime:
           end_time?: string;
           //  @example sensor.energy_consumption,sensor.temperature @constraints  statistic: multiple: true
-          statistic_ids: any;
+          statistic_ids: unknown;
           //  @example hour
           period: "5minute" | "hour" | "day" | "week" | "month";
           //  @example mean,sum
@@ -609,7 +609,7 @@ declare module "@hakit/core" {
           //  @example [255, 100, 100] @constraints  color_rgb:
           rgb_color?: [number, number, number];
           //  @constraints  color_temp: unit: kelvin, min: 2000, max: 6500
-          color_temp_kelvin?: any;
+          color_temp_kelvin?: number;
           //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
           brightness_pct?: number;
           //  @constraints  number: min: -100, max: 100, unit_of_measurement: %, step: 1, mode: slider
@@ -775,7 +775,7 @@ declare module "@hakit/core" {
           //  @example [0.52, 0.43] @constraints  object: multiple: false
           xy_color?: [number, number];
           //  @constraints  color_temp: unit: mired, min: 153, max: 500
-          color_temp?: number | object;
+          color_temp?: number;
           //  @constraints  number: min: 0, max: 255, step: 1, mode: slider
           brightness?: number;
           //  @constraints  number: min: -225, max: 255, step: 1, mode: slider
@@ -809,7 +809,7 @@ declare module "@hakit/core" {
           //  @example [255, 100, 100] @constraints  color_rgb:
           rgb_color?: [number, number, number];
           //  @constraints  color_temp: unit: kelvin, min: 2000, max: 6500
-          color_temp_kelvin?: any;
+          color_temp_kelvin?: number;
           //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
           brightness_pct?: number;
           //
@@ -973,7 +973,7 @@ declare module "@hakit/core" {
           //  @example [0.52, 0.43] @constraints  object: multiple: false
           xy_color?: [number, number];
           //  @constraints  color_temp: unit: mired, min: 153, max: 500
-          color_temp?: number | object;
+          color_temp?: number;
           //  @constraints  number: min: 0, max: 255, step: 1, mode: slider
           brightness?: number;
           //
@@ -1062,7 +1062,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @example 'Item A' @constraints  state: hide_states: unavailable,unknown, multiple: false
-          option: any;
+          option: unknown;
         }
       >;
       // undefined
@@ -1286,7 +1286,7 @@ declare module "@hakit/core" {
           //  @example /homeassistant/hello
           topic: string;
           //  @example The temperature is {{ states('sensor.temperature') }} @constraints  template:
-          payload?: any;
+          payload?: unknown;
           //  @constraints  boolean:
           evaluate_payload?: boolean;
           //
@@ -1335,7 +1335,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @constraints  config_entry: integration: openai_conversation
-          config_entry: any;
+          config_entry: unknown;
           //  @example Hello, how can I help you?
           prompt: string;
           //  @example - /path/to/file1.txt - /path/to/file2.txt
@@ -1348,7 +1348,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @constraints  config_entry: integration: openai_conversation
-          config_entry: any;
+          config_entry: unknown;
           //
           prompt: string;
           //  @example 1024x1024
@@ -1367,7 +1367,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @constraints  config_entry: integration: tado
-          config_entry: any;
+          config_entry: unknown;
           //  @constraints  number: mode: box, min: 0, step: 1
           reading: number;
         }
@@ -1443,7 +1443,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @constraints  config_entry: integration: music_assistant
-          config_entry_id: any;
+          config_entry_id: unknown;
           //  @example We Are The Champions
           name: string;
           //  @example playlist
@@ -1471,7 +1471,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @constraints  config_entry: integration: music_assistant
-          config_entry_id: any;
+          config_entry_id: unknown;
           //  @example playlist
           media_type:
             | "artist"
@@ -1711,7 +1711,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @constraints  state: hide_states: unavailable,unknown, multiple: false
-          hvac_mode?: any;
+          hvac_mode?: unknown;
         }
       >;
       // undefined
@@ -1813,7 +1813,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @example 'Item A' @constraints  state: hide_states: unavailable,unknown, multiple: false
-          option: any;
+          option: unknown;
         }
       >;
       // undefined
@@ -2100,7 +2100,7 @@ declare module "@hakit/core" {
         T,
         {
           //  @example {'media_content_id': 'https://home-assistant.io/images/cast/splash.png', 'media_content_type': 'music'} @constraints  media: multiple: false
-          media: any;
+          media: unknown;
           //
           enqueue?: "play" | "next" | "add" | "replace";
           //  @example true @constraints  boolean:
@@ -2486,8 +2486,6 @@ declare module "@hakit/core" {
       //
       1638709314016: ServiceFunction<object, T, object>;
       //
-      castCameraToDrivewayMonitor: ServiceFunction<object, T, object>;
-      //
       turnOffAllLights: ServiceFunction<object, T, object>;
       //
       ventilationOnFullSpeed: ServiceFunction<object, T, object>;
@@ -2513,6 +2511,8 @@ declare module "@hakit/core" {
       turnOff: ServiceFunction<object, T, object>;
       // undefined
       toggle: ServiceFunction<object, T, object>;
+      //
+      castCameraToDrivewayMonitor: ServiceFunction<object, T, object>;
     };
     aiTask: {
       // undefined
@@ -2529,7 +2529,7 @@ declare module "@hakit/core" {
           //  @example { 'name': { 'selector': { 'text': }, 'description': 'Name of the user', 'required': 'True' } } }, 'age': { 'selector': { 'number': }, 'description': 'Age of the user' } } @constraints  object: multiple: false
           structure?: object;
           //  @constraints  media: accept: *, multiple: true
-          attachments?: any;
+          attachments?: unknown;
         }
       >;
       // undefined
@@ -2544,7 +2544,7 @@ declare module "@hakit/core" {
           //
           entity_id: string;
           //  @constraints  media: accept: *, multiple: true
-          attachments?: any;
+          attachments?: unknown;
         }
       >;
     };
@@ -2759,11 +2759,11 @@ declare module "@hakit/core" {
           //  @example Time to wake up!
           message?: string;
           //  @constraints  media: accept: audio/*, multiple: false
-          media_id?: any;
+          media_id?: unknown;
           //  @constraints  boolean:
           preannounce?: boolean;
           //  @constraints  media: accept: audio/*, multiple: false
-          preannounce_media_id?: any;
+          preannounce_media_id?: unknown;
         }
       >;
       // undefined
@@ -2774,13 +2774,13 @@ declare module "@hakit/core" {
           //  @example You left the lights on in the living room. Turn them off?
           start_message?: string;
           //  @constraints  media: accept: audio/*, multiple: false
-          start_media_id?: any;
+          start_media_id?: unknown;
           //
           extra_system_prompt?: string;
           //  @constraints  boolean:
           preannounce?: boolean;
           //  @constraints  media: accept: audio/*, multiple: false
-          preannounce_media_id?: any;
+          preannounce_media_id?: unknown;
         }
       >;
       // undefined
@@ -2793,11 +2793,11 @@ declare module "@hakit/core" {
           //  @example What kind of music would you like to play?
           question?: string;
           //  @constraints  media: accept: audio/*, multiple: false
-          question_media_id?: any;
+          question_media_id?: unknown;
           //  @constraints  boolean:
           preannounce?: boolean;
           //  @constraints  media: accept: audio/*, multiple: false
-          preannounce_media_id?: any;
+          preannounce_media_id?: unknown;
           //  @constraints  object: label_field: sentences, description_field: id, multiple: true, translation_key: answers, fields: [object Object]
           answers?: object;
         }
