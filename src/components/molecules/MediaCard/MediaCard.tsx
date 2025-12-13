@@ -15,7 +15,7 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
   const media = useEntity(entity ?? 'unknown', {
     returnNullIfNotFound: true,
   });
-  const { callService } = useHass();
+  const callService = useHass((state) => state.helpers.callService);
 
   if (!entity || !media) return <Placeholder />;
 
@@ -50,15 +50,15 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
       />
 
       {/* Thumbnail */}
-      <div className="z-10 flex-shrink-0">
+      <div className="z-10 shrink-0">
         <img src={thumbnail} className="h-w-20 w-20 rounded-xl bg-black" />
       </div>
 
       {/* Media info */}
-      <div className="z-10 flex flex-grow flex-col">
+      <div className="z-10 flex grow flex-col">
         <span className="text-lg font-semibold">{title}</span>
         {media.attributes.media_title && (
-          <span className="line-clamp-1 text-ellipsis text-base">
+          <span className="line-clamp-1 text-base text-ellipsis">
             {media.attributes.media_title}
           </span>
         )}
@@ -67,7 +67,7 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
       {/* Controls */}
       {media.state === 'on' ? (
         <BiPowerOff
-          className="z-10 box-content h-8 w-8 flex-shrink-0 cursor-pointer p-8"
+          className="z-10 box-content h-8 w-8 shrink-0 cursor-pointer p-8"
           onClick={() => {
             callService({
               domain: 'media_player',
@@ -80,7 +80,7 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
         />
       ) : (
         <PlayPauseIcon
-          className="z-10 h-14 w-14 flex-shrink-0 cursor-pointer"
+          className="z-10 h-14 w-14 shrink-0 cursor-pointer"
           onClick={() => {
             callService({
               domain: 'media_player',

@@ -16,7 +16,7 @@ const isBirthday = (summary: string) => {
 };
 
 const CalendarCard = () => {
-  const { callApi } = useHass();
+  const callApi = useHass((state) => state.helpers.callApi);
 
   const startOfDay = new Date(new Date().setHours(0, 0, 0, 0)).toISOString();
   const endOfDay = new Date(new Date().setHours(23, 59, 59, 999)).toISOString();

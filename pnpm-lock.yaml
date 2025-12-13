@@ -53,6 +53,9 @@ importers:
       zod:
         specifier: ^3.24.3
         version: 3.25.76
+      zustand:
+        specifier: ^5.0.5
+        version: 5.0.9(@types/react@19.2.7)(react@19.2.1)(use-sync-external-store@1.6.0(react@19.2.1))
     devDependencies:
       '@eslint/compat':
         specifier: 1.4.1
@@ -64,11 +67,11 @@ importers:
         specifier: 9.39.1
         version: 9.39.1
       '@hakit/components':
-        specifier: 5.1.6
-        version: 5.1.6(983a83280674b3cf7ab5dc406bf61e0b)
+        specifier: 6.0.0
+        version: 6.0.0(3ea33c2d3ad8f2d1889f016542298ed4)
       '@hakit/core':
-        specifier: 5.1.6
-        version: 5.1.6(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@types/react@19.2.7)(react@19.2.1))(@iconify/react@6.0.0(react@19.2.1))(home-assistant-js-websocket@9.5.0)(lodash@4.17.21)(prettier@3.7.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(use-debounce@10.0.4(react@19.2.1))(ws@8.18.2)(yargs@17.7.2)(zustand@4.5.6(@types/react@19.2.7)(react@19.2.1))
+        specifier: 6.0.0
+        version: 6.0.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@types/react@19.2.7)(react@19.2.1))(@iconify/react@6.0.0(react@19.2.1))(home-assistant-js-websocket@9.5.0)(lodash@4.17.21)(prettier@3.7.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(use-debounce@10.0.4(react@19.2.1))(ws@8.18.2)(yargs@17.7.2)(zustand@5.0.9(@types/react@19.2.7)(react@19.2.1)(use-sync-external-store@1.6.0(react@19.2.1)))
       '@tailwindcss/vite':
         specifier: 4.1.17
         version: 4.1.17(vite@6.4.1(@types/node@22.19.2)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.7.1))
@@ -727,15 +730,15 @@ packages:
     peerDependencies:
       '@fullcalendar/core': ~6.1.19
 
-  '@hakit/components@5.1.6':
-    resolution: {integrity: sha512-zZsxef+0jef/j6sSF4DLL5X3QNPUgLCMiPXIkMWsqBpLF9Zvj9/6rzOLrtnPv4StOaJOCPvpV5Jh66/X++byhQ==}
+  '@hakit/components@6.0.0':
+    resolution: {integrity: sha512-3OEVQbRnCYf5J8xXMP1crr5RcctbV6SOlktJn+bapgORawLUg891Vs4bURzHs8vKOmpHDkqYThdlve5eOGaYTw==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     peerDependencies:
       '@emotion/is-prop-valid': '>=1.3.x'
       '@emotion/react': '>=11.x.x'
       '@emotion/styled': '>=11.x'
       '@fullcalendar/react': '>=6.x.x'
-      '@hakit/core': ^5.1.6
+      '@hakit/core': ^6.0.0
       '@use-gesture/react': '>=10.x'
       autolinker: '>=4.x'
       fullcalendar: '>=6.x.x'
@@ -753,8 +756,8 @@ packages:
       use-long-press: '>=3.x.x'
       zustand: '>=5.x.x'
 
-  '@hakit/core@5.1.6':
-    resolution: {integrity: sha512-cXmpFa2qenN2Q3JhBC1Mwo2qN8FfyOsS6sb7Bg29iT4DFbesZ5jN93pRcvwPA+ccdYkgsj2MuxKTqIh5QYbeDQ==}
+  '@hakit/core@6.0.0':
+    resolution: {integrity: sha512-jwiMeywgzicrG2Urs3kkIHr7FI0SNPr7Ifjm63hLO9NPCSLpEuF1NepsE1D3LoL7Cv70cHXBVV70OZlYydPQ6Q==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     hasBin: true
     peerDependencies:
@@ -3626,19 +3629,22 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
-  zustand@4.5.6:
-    resolution: {integrity: sha512-ibr/n1hBzLLj5Y+yUcU7dYw8p6WnIVzdJbnX+1YpaScvZVF2ziugqHs+LAmHw4lWO9c/zRj+K1ncgWDQuthEdQ==}
-    engines: {node: '>=12.7.0'}
+  zustand@5.0.9:
+    resolution: {integrity: sha512-ALBtUj0AfjJt3uNRQoL1tL2tMvj6Gp/6e39dnfT6uzpelGru8v1tPOGBzayOWbPJvujM8JojDk3E1LxeFisBNg==}
+    engines: {node: '>=12.20.0'}
     peerDependencies:
-      '@types/react': '>=16.8'
+      '@types/react': '>=18.0.0'
       immer: '>=9.0.6'
-      react: '>=16.8'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
     peerDependenciesMeta:
       '@types/react':
         optional: true
       immer:
         optional: true
       react:
+        optional: true
+      use-sync-external-store:
         optional: true
 
 snapshots:
@@ -4109,13 +4115,13 @@ snapshots:
       '@fullcalendar/core': 6.1.19
       '@fullcalendar/daygrid': 6.1.19(@fullcalendar/core@6.1.19)
 
-  '@hakit/components@5.1.6(983a83280674b3cf7ab5dc406bf61e0b)':
+  '@hakit/components@6.0.0(3ea33c2d3ad8f2d1889f016542298ed4)':
     dependencies:
       '@emotion/is-prop-valid': 1.3.1
       '@emotion/react': 11.14.0(@types/react@19.2.7)(react@19.2.1)
       '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@types/react@19.2.7)(react@19.2.1)
       '@fullcalendar/react': 6.1.17(@fullcalendar/core@6.1.19)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
-      '@hakit/core': 5.1.6(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@types/react@19.2.7)(react@19.2.1))(@iconify/react@6.0.0(react@19.2.1))(home-assistant-js-websocket@9.5.0)(lodash@4.17.21)(prettier@3.7.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(use-debounce@10.0.4(react@19.2.1))(ws@8.18.2)(yargs@17.7.2)(zustand@4.5.6(@types/react@19.2.7)(react@19.2.1))
+      '@hakit/core': 6.0.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@types/react@19.2.7)(react@19.2.1))(@iconify/react@6.0.0(react@19.2.1))(home-assistant-js-websocket@9.5.0)(lodash@4.17.21)(prettier@3.7.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(use-debounce@10.0.4(react@19.2.1))(ws@8.18.2)(yargs@17.7.2)(zustand@5.0.9(@types/react@19.2.7)(react@19.2.1)(use-sync-external-store@1.6.0(react@19.2.1)))
       '@use-gesture/react': 10.3.1(react@19.2.1)
       autolinker: 4.1.5
       fullcalendar: 6.1.17
@@ -4131,9 +4137,9 @@ snapshots:
       react-use: 17.6.0(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
       use-debounce: 10.0.4(react@19.2.1)
       use-long-press: 3.3.0(react@19.2.1)
-      zustand: 4.5.6(@types/react@19.2.7)(react@19.2.1)
+      zustand: 5.0.9(@types/react@19.2.7)(react@19.2.1)(use-sync-external-store@1.6.0(react@19.2.1))
 
-  '@hakit/core@5.1.6(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@types/react@19.2.7)(react@19.2.1))(@iconify/react@6.0.0(react@19.2.1))(home-assistant-js-websocket@9.5.0)(lodash@4.17.21)(prettier@3.7.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(use-debounce@10.0.4(react@19.2.1))(ws@8.18.2)(yargs@17.7.2)(zustand@4.5.6(@types/react@19.2.7)(react@19.2.1))':
+  '@hakit/core@6.0.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@types/react@19.2.7)(react@19.2.1))(@iconify/react@6.0.0(react@19.2.1))(home-assistant-js-websocket@9.5.0)(lodash@4.17.21)(prettier@3.7.4)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)(use-debounce@10.0.4(react@19.2.1))(ws@8.18.2)(yargs@17.7.2)(zustand@5.0.9(@types/react@19.2.7)(react@19.2.1)(use-sync-external-store@1.6.0(react@19.2.1)))':
     dependencies:
       '@emotion/react': 11.14.0(@types/react@19.2.7)(react@19.2.1)
       '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@19.2.7)(react@19.2.1))(@types/react@19.2.7)(react@19.2.1)
@@ -4146,7 +4152,7 @@ snapshots:
       use-debounce: 10.0.4(react@19.2.1)
       ws: 8.18.2
       yargs: 17.7.2
-      zustand: 4.5.6(@types/react@19.2.7)(react@19.2.1)
+      zustand: 5.0.9(@types/react@19.2.7)(react@19.2.1)(use-sync-external-store@1.6.0(react@19.2.1))
 
   '@humanfs/core@0.19.1': {}
 
@@ -6951,6 +6957,7 @@ snapshots:
   use-sync-external-store@1.6.0(react@19.2.1):
     dependencies:
       react: 19.2.1
+    optional: true
 
   v8-compile-cache-lib@3.0.1: {}
 
@@ -7186,9 +7193,8 @@ snapshots:
 
   zod@3.25.76: {}
 
-  zustand@4.5.6(@types/react@19.2.7)(react@19.2.1):
-    dependencies:
-      use-sync-external-store: 1.6.0(react@19.2.1)
+  zustand@5.0.9(@types/react@19.2.7)(react@19.2.1)(use-sync-external-store@1.6.0(react@19.2.1)):
     optionalDependencies:
       '@types/react': 19.2.7
       react: 19.2.1
+      use-sync-external-store: 1.6.0(react@19.2.1)
