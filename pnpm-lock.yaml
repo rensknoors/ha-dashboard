@@ -68,10 +68,10 @@ importers:
         version: 9.39.2
       '@hakit/components':
         specifier: 6.0.0
-        version: 6.0.0(047d10337fc92030b6c3152cca61b93c)
+        version: 6.0.0(1cb0f9818bdc0cdffcc0c15572fd227e)
       '@hakit/core':
         specifier: 6.0.0
-        version: 6.0.0(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@types/react@19.2.8)(react@19.2.3))(@iconify/react@6.0.2(react@19.2.3))(home-assistant-js-websocket@9.6.0)(lodash@4.17.21)(prettier@3.7.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-debounce@10.0.6(react@19.2.3))(ws@8.18.3)(yargs@18.0.0)(zustand@5.0.10(@types/react@19.2.8)(react@19.2.3))
+        version: 6.0.0(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@types/react@19.2.8)(react@19.2.3))(@iconify/react@6.0.2(react@19.2.3))(home-assistant-js-websocket@9.6.0)(lodash@4.17.21)(prettier@3.8.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-debounce@10.0.6(react@19.2.3))(ws@8.18.3)(yargs@18.0.0)(zustand@5.0.10(@types/react@19.2.8)(react@19.2.3))
       '@tailwindcss/vite':
         specifier: 4.1.18
         version: 4.1.18(vite@7.3.1(@types/node@24.10.8)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
@@ -83,7 +83,7 @@ importers:
         version: 16.3.1(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@trivago/prettier-plugin-sort-imports':
         specifier: 6.0.2
-        version: 6.0.2(prettier@3.7.4)
+        version: 6.0.2(prettier@3.8.0)
       '@types/node':
         specifier: 24.10.8
         version: 24.10.8
@@ -133,11 +133,11 @@ importers:
         specifier: 26.1.0
         version: 26.1.0
       prettier:
-        specifier: 3.7.4
-        version: 3.7.4
+        specifier: 3.8.0
+        version: 3.8.0
       prettier-plugin-tailwindcss:
         specifier: 0.7.2
-        version: 0.7.2(@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.7.4))(prettier@3.7.4)
+        version: 0.7.2(@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.8.0))(prettier@3.8.0)
       tailwindcss:
         specifier: 4.1.18
         version: 4.1.18
@@ -2724,8 +2724,8 @@ packages:
       prettier-plugin-svelte:
         optional: true
 
-  prettier@3.7.4:
-    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
+  prettier@3.8.0:
+    resolution: {integrity: sha512-yEPsovQfpxYfgWNhCfECjG5AQaO+K3dp6XERmOepyPDVqcJm+bjyCVO3pmU+nAPe0N5dDvekfGezt/EIiRe1TA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -3936,13 +3936,13 @@ snapshots:
       '@fullcalendar/core': 6.1.20
       '@fullcalendar/daygrid': 6.1.20(@fullcalendar/core@6.1.20)
 
-  '@hakit/components@6.0.0(047d10337fc92030b6c3152cca61b93c)':
+  '@hakit/components@6.0.0(1cb0f9818bdc0cdffcc0c15572fd227e)':
     dependencies:
       '@emotion/is-prop-valid': 1.4.0
       '@emotion/react': 11.14.0(@types/react@19.2.8)(react@19.2.3)
       '@emotion/styled': 11.14.1(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@types/react@19.2.8)(react@19.2.3)
       '@fullcalendar/react': 6.1.19(@fullcalendar/core@6.1.20)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@hakit/core': 6.0.0(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@types/react@19.2.8)(react@19.2.3))(@iconify/react@6.0.2(react@19.2.3))(home-assistant-js-websocket@9.6.0)(lodash@4.17.21)(prettier@3.7.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-debounce@10.0.6(react@19.2.3))(ws@8.18.3)(yargs@18.0.0)(zustand@5.0.10(@types/react@19.2.8)(react@19.2.3))
+      '@hakit/core': 6.0.0(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@types/react@19.2.8)(react@19.2.3))(@iconify/react@6.0.2(react@19.2.3))(home-assistant-js-websocket@9.6.0)(lodash@4.17.21)(prettier@3.8.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-debounce@10.0.6(react@19.2.3))(ws@8.18.3)(yargs@18.0.0)(zustand@5.0.10(@types/react@19.2.8)(react@19.2.3))
       '@use-gesture/react': 10.3.1(react@19.2.3)
       autolinker: 4.1.5
       fullcalendar: 6.1.19
@@ -3960,14 +3960,14 @@ snapshots:
       use-long-press: 3.3.0(react@19.2.3)
       zustand: 5.0.10(@types/react@19.2.8)(react@19.2.3)
 
-  '@hakit/core@6.0.0(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@types/react@19.2.8)(react@19.2.3))(@iconify/react@6.0.2(react@19.2.3))(home-assistant-js-websocket@9.6.0)(lodash@4.17.21)(prettier@3.7.4)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-debounce@10.0.6(react@19.2.3))(ws@8.18.3)(yargs@18.0.0)(zustand@5.0.10(@types/react@19.2.8)(react@19.2.3))':
+  '@hakit/core@6.0.0(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@emotion/styled@11.14.1(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@types/react@19.2.8)(react@19.2.3))(@iconify/react@6.0.2(react@19.2.3))(home-assistant-js-websocket@9.6.0)(lodash@4.17.21)(prettier@3.8.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(use-debounce@10.0.6(react@19.2.3))(ws@8.18.3)(yargs@18.0.0)(zustand@5.0.10(@types/react@19.2.8)(react@19.2.3))':
     dependencies:
       '@emotion/react': 11.14.0(@types/react@19.2.8)(react@19.2.3)
       '@emotion/styled': 11.14.1(@emotion/react@11.14.0(@types/react@19.2.8)(react@19.2.3))(@types/react@19.2.8)(react@19.2.3)
       '@iconify/react': 6.0.2(react@19.2.3)
       home-assistant-js-websocket: 9.6.0
       lodash: 4.17.21
-      prettier: 3.7.4
+      prettier: 3.8.0
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
       use-debounce: 10.0.6(react@19.2.3)
@@ -4329,7 +4329,7 @@ snapshots:
     dependencies:
       '@testing-library/dom': 10.4.1
 
-  '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.7.4)':
+  '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.8.0)':
     dependencies:
       '@babel/generator': 7.28.5
       '@babel/parser': 7.28.5
@@ -4339,7 +4339,7 @@ snapshots:
       lodash-es: 4.17.21
       minimatch: 9.0.5
       parse-imports-exports: 0.2.4
-      prettier: 3.7.4
+      prettier: 3.8.0
     transitivePeerDependencies:
       - supports-color
 
@@ -6090,13 +6090,13 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.7.2(@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.7.4))(prettier@3.7.4):
+  prettier-plugin-tailwindcss@0.7.2(@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.8.0))(prettier@3.8.0):
     dependencies:
-      prettier: 3.7.4
+      prettier: 3.8.0
     optionalDependencies:
-      '@trivago/prettier-plugin-sort-imports': 6.0.2(prettier@3.7.4)
+      '@trivago/prettier-plugin-sort-imports': 6.0.2(prettier@3.8.0)
 
-  prettier@3.7.4: {}
+  prettier@3.8.0: {}
 
   pretty-format@27.5.1:
     dependencies:
