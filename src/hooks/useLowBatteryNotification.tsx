@@ -19,6 +19,7 @@ const useLowBatteryNotification = () => {
         toast.warning(
           `Low battery: ${device.attributes.friendly_name}: ${device.state}${device.attributes.unit_of_measurement}`,
           {
+            toastId: device.entity_id,
             autoClose: false,
             icon: () => <BiSolidBatteryLow color="red" size={24} />,
           }
