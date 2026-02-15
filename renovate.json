@@ -28,9 +28,8 @@
         "/^@testing-library//",
         "/^vitest/",
         "/^jsdom/",
-        "/^eslint/",
+        "/^oxlint/",
         "/^prettier/",
-        "/^@typescript-eslint/",
         "/^typescript/"
       ]
     },
