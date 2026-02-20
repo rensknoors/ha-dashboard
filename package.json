@@ -4,16 +4,16 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "start": "vite",
-    "build": "tsc && vite build",
-    "test": "vitest run",
-    "coverage": "vitest run --coverage",
+    "start": "bunx --bun vite",
+    "build": "tsc && bunx --bun vite build",
+    "test": "bunx --bun vitest run",
+    "coverage": "bunx --bun vitest run --coverage",
     "format": "prettier . --write",
     "lint": "oxlint --type-aware --report-unused-disable-directives --max-warnings 0",
     "type-check": "tsc --noEmit",
-    "sync-types": "node --loader ts-node/esm sync-types.ts",
-    "preview": "vite preview",
-    "prebuild": "pnpm run sync-types",
+    "sync-types": "bun sync-types.ts",
+    "preview": "bunx --bun vite preview",
+    "prebuild": "bun run sync-types",
     "prepare": "husky"
   },
   "dependencies": {

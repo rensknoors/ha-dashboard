@@ -3,7 +3,7 @@ YELLOW='\033[1;33m'
 MAGENTA='\033[1;35m'
 NC='\033[0m' # No Color
 
-if pnpm run lint && pnpm run type-check; then
+if bun run lint && bun run type-check; then
   printf "${GREEN}✅ Hooray! Code triumphs! Ready to take off! 🚀${NC}\n"
 else
   printf "${MAGENTA}⛔️ Pre-commit checks found some quirks. Time to sprinkle some coding magic! 🧙✨${NC}\n"

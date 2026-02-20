@@ -3,7 +3,7 @@ YELLOW='\033[1;33m'
 MAGENTA='\033[1;35m'
 NC='\033[0m' # No Color
 
-if pnpm test -- --run; then
+if bun run test; then
   printf "${GREEN}✅ Awesome! Your tests passed with flying colors! Smooth sailing ahead! 🌈🏆${NC}\n"
 else
   printf "${MAGENTA}⛔️ Oops! Your tests encountered a few hurdles. Time to don the debugging cape! 🦸‍♀️🔍${NC}\n"
