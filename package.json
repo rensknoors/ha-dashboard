@@ -37,7 +37,7 @@
   "devDependencies": {
     "@hakit/components": "6.0.1",
     "@hakit/core": "6.0.1",
-    "@tailwindcss/vite": "4.1.18",
+    "@tailwindcss/vite": "4.2.0",
     "@testing-library/react": "16.3.2",
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
     "@types/node": "24.10.13",
@@ -54,7 +54,7 @@
     "oxlint-tsgolint": "^0.14.0",
     "prettier": "3.8.1",
     "prettier-plugin-tailwindcss": "0.7.2",
-    "tailwindcss": "4.1.18",
+    "tailwindcss": "4.2.0",
     "ts-node": "10.9.2",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
