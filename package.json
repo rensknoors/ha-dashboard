@@ -35,8 +35,8 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
-    "@hakit/components": "6.0.1",
-    "@hakit/core": "6.0.1",
+    "@hakit/components": "6.0.2",
+    "@hakit/core": "6.0.2",
     "@tailwindcss/vite": "4.2.1",
     "@testing-library/react": "16.3.2",
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
