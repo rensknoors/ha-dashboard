@@ -29,6 +29,7 @@
         "/^vitest/",
         "/^jsdom/",
         "/^oxlint/",
+        "/^oxlint-tsgolint/",
         "/^prettier/",
         "/^typescript/"
       ]
@@ -42,7 +43,7 @@
   "prConcurrentLimit": 5,
   "automergeType": "branch",
   "pruneBranchAfterAutomerge": true,
-  "ignoreTests": true,
+  "ignoreTests": false,
   "lockFileMaintenance": {
     "enabled": true
   },
