@@ -7,26 +7,14 @@
   "env": {
     "builtin": true
   },
-  "ignorePatterns": [
-    "**/dist",
-    "**/supported-types.d.ts"
-  ],
+  "ignorePatterns": ["**/dist", "**/supported-types.d.ts"],
   "overrides": [
     {
-      "files": [
-        "**/*.{js,mjs,cjs,jsx}",
-        "**/*.{ts,tsx}"
-      ],
+      "files": ["**/*.{js,mjs,cjs,jsx}", "**/*.{ts,tsx}"],
       "rules": {
         "react/react-in-jsx-scope": "off",
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
-        "react/only-export-components": [
-          "warn",
-          {
-            "allowConstantExport": true
-          }
-        ]
+        "react-hooks/exhaustive-deps": "warn"
       },
       "globals": {
         "AudioWorkletGlobalScope": "readonly",
@@ -37,9 +25,7 @@
         "sampleRate": "readonly",
         "WorkletGlobalScope": "readonly"
       },
-      "plugins": [
-        "react"
-      ],
+      "plugins": ["react"],
       "env": {
         "browser": true,
         "es2020": true,

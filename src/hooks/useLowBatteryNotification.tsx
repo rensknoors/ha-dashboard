@@ -1,31 +1,35 @@
 import { useLowDevices } from '@hakit/core';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { BiSolidBatteryLow } from 'react-icons/bi';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
+const BatteryIcon = () => <BiSolidBatteryLow color="red" size={24} />;
 
 const useLowBatteryNotification = () => {
   const devices = useLowDevices();
+  const prevLowIdsRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
-    const lowBatteryDevices = devices.filter(
-      (device) =>
-        parseInt(device.state, 10) <= 20 &&
-        device.attributes.device_class === 'battery'
-    );
+    const currentIds = new Set(devices.map((device) => device.entity_id));
 
-    if (lowBatteryDevices.length) {
-      lowBatteryDevices.forEach((device) => {
-        toast.warning(
-          `Low battery: ${device.attributes.friendly_name}: ${device.state}${device.attributes.unit_of_measurement}`,
-          {
-            toastId: device.entity_id,
-            autoClose: false,
-            icon: () => <BiSolidBatteryLow color="red" size={24} />,
-          }
-        );
-      });
-    }
+    prevLowIdsRef.current.forEach((id) => {
+      if (!currentIds.has(id)) {
+        toast.dismiss(id);
+      }
+    });
+
+    devices.forEach((device) => {
+      toast.warning(
+        `Low battery: ${device.attributes.friendly_name}: ${device.state}${device.attributes.unit_of_measurement}`,
+        {
+          toastId: device.entity_id,
+          autoClose: false,
+          icon: BatteryIcon,
+        }
+      );
+    });
+
+    prevLowIdsRef.current = currentIds;
   }, [devices]);
 };
 

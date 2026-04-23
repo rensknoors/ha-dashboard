@@ -1,11 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+@import 'react-toastify/dist/ReactToastify.css';
+
 @import 'tailwindcss';
 @config '../tailwind.config.js';
 @import './styles/modal.css';
 
 @theme {
-  --font-family-sans: Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-sans:
+    Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
 }
 
 :root {
