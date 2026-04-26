@@ -33,7 +33,7 @@
         "@types/react-dom": "19.2.3",
         "@vitejs/plugin-react-swc": "4.3.0",
         "@vitest/coverage-v8": "4.1.5",
-        "global-jsdom": "28.0.0",
+        "global-jsdom": "29.0.0",
         "globals": "17.5.0",
         "happy-dom": "20.9.0",
         "husky": "9.1.7",
@@ -706,7 +706,7 @@
 
     "get-tsconfig": ["get-tsconfig@4.14.0", "", { "dependencies": { "resolve-pkg-maps": "^1.0.0" } }, "sha512-yTb+8DXzDREzgvYmh6s9vHsSVCHeC0G3PI5bEXNBHtmshPnO+S5O7qgLEOn0I5QvMy6kpZN8K1NKGyilLb93wA=="],
 
-    "global-jsdom": ["global-jsdom@28.0.0", "", { "peerDependencies": { "jsdom": ">=28 <29" } }, "sha512-G0uJuTt17fnWWoIOxgXTANKwMzlrQehWH5qyD+mJ+C4vT1PaAhtU2UBwDD+mRZaHoMObhwXdt3kbXLgZaPHLpQ=="],
+    "global-jsdom": ["global-jsdom@29.0.0", "", { "peerDependencies": { "jsdom": ">=29 <30" } }, "sha512-S9Wl+EHDfkO8DYleqMYzf14hKfwIysEN/FvoVRdPif3uUGUlmiHs/gj1PVKXhmJ20DwUVACtdxxhNYYvvn9K7A=="],
 
     "globals": ["globals@17.5.0", "", {}, "sha512-qoV+HK2yFl/366t2/Cb3+xxPUo5BuMynomoDmiaZBIdbs+0pYbjfZU+twLhGKp4uCZ/+NbtpVepH5bGCxRyy2g=="],
 
