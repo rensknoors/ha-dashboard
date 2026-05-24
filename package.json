@@ -57,7 +57,7 @@
     "tailwindcss": "4.2.4",
     "ts-node": "10.9.2",
     "tsx": "4.22.3",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "url": "0.11.4",
     "vite": "8.0.13",
     "vite-plugin-svgr": "5.2.0",
