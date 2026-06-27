@@ -34,7 +34,7 @@
         "@vitejs/plugin-react-swc": "4.3.1",
         "@vitest/coverage-v8": "4.1.9",
         "global-jsdom": "29.0.0",
-        "globals": "17.6.0",
+        "globals": "17.7.0",
         "happy-dom": "20.10.6",
         "husky": "9.1.7",
         "jsdom": "29.1.1",
@@ -702,7 +702,7 @@
 
     "global-jsdom": ["global-jsdom@29.0.0", "", { "peerDependencies": { "jsdom": ">=29 <30" } }, "sha512-S9Wl+EHDfkO8DYleqMYzf14hKfwIysEN/FvoVRdPif3uUGUlmiHs/gj1PVKXhmJ20DwUVACtdxxhNYYvvn9K7A=="],
 
-    "globals": ["globals@17.6.0", "", {}, "sha512-sepffkT8stwnIYbsMBpoCHJuJM5l98FUF2AnE07hfvE0m/qp3R586hw4jF4uadbhvg1ooIdzuu7CsfD2jzCaNA=="],
+    "globals": ["globals@17.7.0", "", {}, "sha512-Czmyns5dUsq4seFBR/Kdydhmo8y9kC79hiSkPn0YcGtNnYWnrgt0vjrSjx9tspoDGWm2CMarffRuLjM4xUz8xg=="],
 
     "gopd": ["gopd@1.2.0", "", {}, "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg=="],
 
