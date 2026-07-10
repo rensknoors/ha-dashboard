@@ -1,9 +1,9 @@
 /// <reference types="vitest" />
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
-import { URL, fileURLToPath } from 'url';
-import svgr from 'vite-plugin-svgr';
+import { URL, fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +13,7 @@ export default defineConfig({
     tailwindcss(),
     svgr({
       svgrOptions: { typescript: true },
-      esbuildOptions: { loader: 'tsx' },
+      oxcOptions: { lang: 'tsx' },
     }),
   ],
   test: {
@@ -23,6 +23,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@/': `${fileURLToPath(new URL('./src/', import.meta.url))}/`,
+      'lottie-react': fileURLToPath(
+        new URL('./node_modules/lottie-react/build/index.es.js', import.meta.url)
+      ),
     },
   },
 });
