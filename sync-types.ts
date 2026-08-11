@@ -1,7 +1,7 @@
 import { typeSync } from '@hakit/core/sync';
 import { loadEnv } from 'vite';
 
-const env = loadEnv(process.env.NODE_ENV, process.cwd());
+const env = loadEnv(process.env.NODE_ENV ?? 'development', process.cwd());
 
 async function runner() {
   await typeSync({
