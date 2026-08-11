@@ -1,12 +1,21 @@
 import { Label } from '@/components/atoms';
 
-export const CustomLabel = ({
-  value,
-  viewBox,
-}: {
-  value: number;
-  viewBox: { x: number; y: number };
-}) => {
+interface CustomLabelProps {
+  value?: unknown;
+  viewBox?: { x?: number; y?: number } | Record<string, unknown>;
+}
+
+export const CustomLabel = ({ value, viewBox }: CustomLabelProps) => {
+  if (
+    typeof value !== 'number' ||
+    !viewBox ||
+    !('x' in viewBox) ||
+    typeof viewBox.x !== 'number' ||
+    typeof viewBox.y !== 'number'
+  ) {
+    return null;
+  }
+
   const width = 30;
   // Converts the tariff to cents
   const cents = Math.round(value * 100)
