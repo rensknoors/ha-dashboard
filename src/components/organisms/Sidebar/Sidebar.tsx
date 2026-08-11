@@ -16,7 +16,7 @@ const useSideBarButtons = (): TileButtonProps[] => {
     return (
       <Badge
         className={clsx(
-          'absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4',
+          'absolute right-0 bottom-0 translate-x-1/4 translate-y-1/4',
           tarriffGroupEntity.state === 'low' && 'bg-green-600',
           tarriffGroupEntity.state === 'normal' && 'bg-white',
           tarriffGroupEntity.state === 'high' && 'bg-red-500'
