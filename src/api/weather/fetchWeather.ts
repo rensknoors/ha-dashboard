@@ -3,7 +3,9 @@ import { weatherSchema } from './schema';
 export const fetchWeather = async (latlong?: string) => {
   const loc = latlong ?? import.meta.env.VITE_LATLONG;
 
-  const [latitude, longitude] = loc.split(',').map((coord: string) => coord.trim());
+  const [latitude, longitude] = loc
+    .split(',')
+    .map((coord: string) => coord.trim());
 
   const url = new URL('https://api.open-meteo.com/v1/forecast');
   url.searchParams.append('latitude', latitude);
