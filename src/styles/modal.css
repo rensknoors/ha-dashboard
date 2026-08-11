@@ -9,7 +9,7 @@
 }
 
 .modal-close-button {
-  @apply !bg-slate-700/70 !transition-background hover:!bg-slate-700;
+  @apply !transition-background !bg-slate-700/70 hover:!bg-slate-700;
 }
 
 .tooltip-inner {

@@ -14,7 +14,7 @@ export const Placeholder = () => {
 
       <div className="flex flex-grow flex-col">
         <span className="text-lg font-semibold">{title}</span>
-        <span className="line-clamp-1 text-ellipsis text-base text-gray-500">
+        <span className="line-clamp-1 text-base text-ellipsis text-gray-500">
           {description}
         </span>
       </div>

@@ -22,7 +22,7 @@ const CalendarCard = () => {
   const endOfDay = new Date(new Date().setHours(23, 59, 59, 999)).toISOString();
 
   const fetchEvents = useCallback(async () => {
-    const fetchFromEntity = async (endpoint) => {
+    const fetchFromEntity = async (endpoint: string) => {
       const response = await callApi<CalendarEvent[]>(endpoint, {
         headers: {
           'Content-Type': 'application/json',
