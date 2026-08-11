@@ -2,8 +2,8 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react-swc';
 import { URL, fileURLToPath } from 'node:url';
-import { defineConfig } from 'vitest/config';
 import svgr from 'vite-plugin-svgr';
+import { defineConfig } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,8 +23,14 @@ export default defineConfig({
   resolve: {
     alias: {
       '@/': `${fileURLToPath(new URL('./src/', import.meta.url))}/`,
+      '@fullcalendar/daygrid': 'fullcalendar/daygrid',
+      '@fullcalendar/interaction': 'fullcalendar/interaction',
+      '@fullcalendar/list': 'fullcalendar/list',
       'lottie-react': fileURLToPath(
-        new URL('./node_modules/lottie-react/build/index.es.js', import.meta.url)
+        new URL(
+          './node_modules/lottie-react/build/index.es.js',
+          import.meta.url
+        )
       ),
     },
   },
