@@ -17,10 +17,11 @@ export const CustomLabel = ({ value, viewBox }: CustomLabelProps) => {
   }
 
   const width = 30;
-  // Converts the tariff to cents
+  // Converts the tariff to cents; strips leading zeros but keeps a lone "0"
+  // (dynamic Dutch pricing can land on exactly 0 c/kWh)
   const cents = Math.round(value * 100)
     .toString()
-    .replace(/^0+/, ''); // Remove leading zeros
+    .replace(/^0+(?=\d)/, '');
 
   return (
     <foreignObject

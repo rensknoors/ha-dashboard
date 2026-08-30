@@ -68,16 +68,7 @@ export const EnergyChart = ({ tariffData }: EnergyChartProps) => {
         tickLine={false}
         tickFormatter={formatCurrency}
       />
-      <ReTooltip
-        cursor={{ fill: '#262626', radius: 10 }}
-        contentStyle={{
-          background: '#404040',
-          border: 'none',
-          borderRadius: 10,
-        }}
-        labelStyle={{ color: '#fff' }}
-        content={Tooltip}
-      />
+      <ReTooltip cursor={{ fill: '#262626', radius: 10 }} content={Tooltip} />
       <EnergyCharts.Bar
         dataKey="tariff"
         barSize={20}

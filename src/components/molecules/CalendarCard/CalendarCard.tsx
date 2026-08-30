@@ -2,7 +2,7 @@ import { useHass } from '@hakit/core';
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { useCallback } from 'react';
-import { BiCalendar, BiCalendarX } from 'react-icons/bi';
+import { BiCalendar, BiCalendarX, BiErrorCircle } from 'react-icons/bi';
 
 import { CalendarEvent } from './types';
 
@@ -74,9 +74,10 @@ const CalendarCard = () => {
   if (isError && !events) {
     console.error(error);
     return (
-      <span>
-        {error.name}: {error.message}
-      </span>
+      <div className="flex items-center justify-center gap-3 text-slate-400">
+        <BiErrorCircle className="h-6 w-6 text-red-500" />
+        Kalender kon niet geladen worden
+      </div>
     );
   }
 

@@ -17,7 +17,7 @@ export const Tooltip = ({ active, payload, label }: EnergyTooltipProps) => {
   return (
     <div className="rounded-lg bg-neutral-950 px-4 py-3">
       <p className="font-bold">{`${String(label).padStart(2, '0')}:00`}</p>
-      <p className={`font-bold text-[${getTariffColor(tariff)}]`}>
+      <p className="font-bold" style={{ color: getTariffColor(tariff) }}>
         {formatCurrency(tariff)}
       </p>
     </div>

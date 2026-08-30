@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -47,7 +48,10 @@ const Card = ({
   return (
     <div
       className={twMerge(
-        'overflow-hidden rounded-3xl bg-slate-800 px-4 py-4',
+        clsx(
+          'overflow-hidden rounded-3xl bg-slate-800 px-4 py-4',
+          onClick && 'card-interactive'
+        ),
         className
       )}
       style={style}
