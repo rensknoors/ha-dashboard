@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-30T00:00:00.000Z",
+  "title": "Design System: Renshome Dashboard",
+  "extensions": {
+    "colorMeta": {
+      "black": { "role": "neutral", "displayName": "Black", "canonical": "#000000" },
+      "white-90": { "role": "neutral", "displayName": "White 90%", "canonical": "rgba(255, 255, 255, 0.9)" },
+      "slate-800": { "role": "primary", "displayName": "Slate 800 (default card)", "canonical": "#1e293b" },
+      "slate-700": { "role": "neutral", "displayName": "Slate 700 (modal/tooltip chrome)", "canonical": "#334155" },
+      "slate-400": { "role": "neutral", "displayName": "Slate 400 (muted text)", "canonical": "#94a3b8" },
+      "neutral-900": { "role": "primary", "displayName": "Neutral 900 (recessed card)", "canonical": "#171717" },
+      "neutral-800": { "role": "neutral", "displayName": "Neutral 800 (tariff icon tile)", "canonical": "#262626" },
+      "gray-700": { "role": "neutral", "displayName": "Gray 700 (placeholder border)", "canonical": "#374151" },
+      "gray-500": { "role": "neutral", "displayName": "Gray 500 (placeholder text)", "canonical": "#6b7280" },
+      "blue-300": { "role": "secondary", "displayName": "Blue 300 (Home tile)", "canonical": "#93c5fd" },
+      "blue-400": { "role": "neutral", "displayName": "Blue 400 (link/retry accent)", "canonical": "#60a5fa" },
+      "green-300": { "role": "secondary", "displayName": "Green 300 (Energy tile)", "canonical": "#86efac" },
+      "green-600": { "role": "tertiary", "displayName": "Green 600 (low-tariff badge)", "canonical": "#16a34a" },
+      "amber-200": { "role": "secondary", "displayName": "Amber 200 (Weather tile)", "canonical": "#fde68a" },
+      "orange-300": { "role": "tertiary", "displayName": "Orange 300 (light on, fallback)", "canonical": "#fdba74" },
+      "red-500": { "role": "tertiary", "displayName": "Red 500 (error / high-tariff badge)", "canonical": "#ef4444" },
+      "tariff-low": { "role": "tertiary", "displayName": "Tariff Low green", "canonical": "#4BA66A" },
+      "tariff-normal": { "role": "tertiary", "displayName": "Tariff Normal muted teal", "canonical": "#3C5551" },
+      "tariff-high": { "role": "tertiary", "displayName": "Tariff High burnt orange", "canonical": "#DC6731" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The clock only. Largest, most glanceable element in the system." },
+      "headline": { "displayName": "Headline", "purpose": "Big readout numbers: tariffs, consumption, graph values, weather hero temp (uses weight 300 as its one exception)." },
+      "title": { "displayName": "Title", "purpose": "Current date and section-level readouts." },
+      "body": { "displayName": "Body", "purpose": "Media titles, calendar entries, card copy." },
+      "label": { "displayName": "Label", "purpose": "Captions, units, the Label pill, calendar timestamps." }
+    },
+    "motion": [
+      { "name": "tap-feedback", "value": "transform 0.2s, background-color 0.2s", "purpose": "Fast confirm for a direct tap: sidebar tile active-state scale, hover/focus transitions." },
+      { "name": "ambient-state-fade", "value": "1000ms ease", "purpose": "Slow, deliberate fade for state that changes on its own or lags a toggle: LightCard background color and brightness-thumb position." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Card (default)",
+      "kind": "card",
+      "refersTo": "card-default",
+      "description": "Base surface for nearly all content; built-in tap vs. 1000ms long-press handling.",
+      "html": "<div class=\"ds-card\">Card content</div>",
+      "css": ".ds-card { background: #1e293b; color: rgba(255,255,255,0.9); border-radius: 24px; padding: 16px; overflow: hidden; }"
+    },
+    {
+      "name": "Card (Neutral variant)",
+      "kind": "card",
+      "refersTo": "card-neutral",
+      "description": "One tone darker/flatter than the default card; used for secondary stat tiles that should recede behind primary content.",
+      "html": "<div class=\"ds-card-neutral\">Stat tile</div>",
+      "css": ".ds-card-neutral { background: #171717; color: rgba(255,255,255,0.9); border-radius: 24px; padding: 16px; text-align: center; }"
+    },
+    {
+      "name": "TileButton (sidebar nav)",
+      "kind": "nav",
+      "refersTo": "tile-button",
+      "description": "64×64px section-accent nav pill. Active state drops the vignette and scales to 105%.",
+      "html": "<a href=\"#\" class=\"ds-tile-button ds-tile-button--active\" aria-current=\"page\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3z\"/></svg></a>",
+      "css": ".ds-tile-button { position: relative; display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin: 8px; border-radius: 24px; background: #93c5fd; background-image: radial-gradient(circle, rgba(0,0,0,0.1), rgba(0,0,0,0.4)); color: #000; text-decoration: none; transition: transform 0.2s ease, background-image 0.2s ease; } .ds-tile-button:hover { transform: scale(1.03); } .ds-tile-button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; } .ds-tile-button--active { background-image: none; transform: scale(1.05); }"
+    },
+    {
+      "name": "Label (pill tag)",
+      "kind": "chip",
+      "refersTo": "label-pill",
+      "description": "Small black pill for section captions and inline chart value callouts.",
+      "html": "<div class=\"ds-label\">Kalender</div>",
+      "css": ".ds-label { display: inline-flex; align-items: center; background: #000; color: rgba(255,255,255,0.9); font-size: 14px; border-radius: 9999px; padding: 8px 16px; }"
+    },
+    {
+      "name": "Badge (status dot)",
+      "kind": "chip",
+      "refersTo": "badge-dot",
+      "description": "Plain colored dot conveying state (tariff band) by color alone; absolutely positioned on its host.",
+      "html": "<span class=\"ds-badge ds-badge--low\"></span>",
+      "css": ".ds-badge { position: absolute; display: inline-block; min-width: 24px; min-height: 24px; border-radius: 9999px; } .ds-badge--low { background: #16a34a; } .ds-badge--normal { background: #fff; } .ds-badge--high { background: #ef4444; }"
+    },
+    {
+      "name": "LightCard (toggle tile)",
+      "kind": "custom",
+      "description": "Signature component: a full card that is also a light toggle. Tap toggles on/off; 1000ms hold opens the detail modal. Background and brightness-thumb position both animate over 1000ms.",
+      "html": "<button class=\"ds-light-card ds-light-card--on\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M9 21h6v-1H9v1zm3-19a7 7 0 00-4 12.74V17h8v-2.26A7 7 0 0012 2z\"/></svg><span class=\"ds-light-card__label\">Woonkamer</span><div class=\"ds-light-card__track\"><div class=\"ds-light-card__thumb\" style=\"left:70%\"></div></div></button>",
+      "css": ".ds-light-card { display: flex; flex-direction: column; gap: 8px; min-height: 125px; width: 100%; padding: 16px; border: none; border-radius: 24px; cursor: pointer; font: inherit; text-align: left; transition: background-color 1000ms ease; } .ds-light-card--on { background: #fdba74; color: #000; } .ds-light-card--off { background: #1e293b; color: #fff; } .ds-light-card__label { flex: 1; } .ds-light-card__track { position: relative; height: 16px; width: 100%; border-radius: 8px; padding: 0 8px; } .ds-light-card--on .ds-light-card__track { background: linear-gradient(to right, rgba(255,255,255,0.3), #fff); } .ds-light-card--off .ds-light-card__track { background: rgba(100,116,139,0.2); } .ds-light-card__thumb { position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 6px; transform: translate(-50%, -50%); transition: left 1000ms ease; } .ds-light-card--on .ds-light-card__thumb { background: #000; } .ds-light-card--off .ds-light-card__thumb { background: #fff; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night Console",
+    "overview": "The dashboard is a black instrument panel, not a page. color-scheme: dark and a pure black (#000000) canvas sit under everything; surfaces don't compete for attention, they recede into slate/neutral tone-steps until a value or a state needs to say something. Color is a signal, not decoration: the sidebar tiles carry one accent hue each so a room-scale glance tells Home from Energy from Weather from Vacuum; a light tile turns warm orange the instant it's on; the tariff trio (green / muted teal / burnt orange) is the one place hue directly encodes a number. Nothing here is trying to look expensive or branded — it's trying to be legible from the couch and forgiving to a thumb.\n\nBuilt for a wall-mounted kiosk tablet, touched, not clicked, and read from a few meters away — this is the reason for the oversized numerals (text-8xl clock), the chunky rounded-3xl tiles, and the total absence of small hit targets, hover-only affordances, or dense tabular UI. It is explicitly not a SaaS admin dashboard (no tables, no dense sidebars, no 12px captions) and not a skeuomorphic/glassy smart-home app (no blur, no glass panels, no decorative gradients beyond the two functional ones: weather sky and light-brightness track).",
+    "keyCharacteristics": [
+      "Pure black canvas; depth from tonal layering only, never shadows.",
+      "One accent hue per section/state, otherwise monochrome.",
+      "Everything sized for a thumb and readable from across the room.",
+      "Motion is slow and ambient (1s color/position fades) or a quick confirm (200ms tap feedback) — never decorative."
+    ],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "A surface gets exactly one reason to have color: its section identity (sidebar tile), its state (light on/off, tariff band), or an error. Never decorate a surface with color it doesn't need to communicate.", "section": "colors" },
+      { "name": "The No-Alarm-Red Rule", "body": "Red (#ef4444) is reserved for actual errors and the sidebar's \"high tariff\" badge. Peak cost itself is burnt orange (#DC6731), not red — a cost signal should read as \"pay attention,\" not \"something is broken.\"", "section": "colors" },
+      { "name": "The One Weight Does the Talking Rule", "body": "Hierarchy comes from size and weight (600 vs 400), never from a second typeface. If a new surface needs \"more emphasis,\" reach for size or weight before reaching for a new font.", "section": "typography" },
+      { "name": "The 24px Rhythm Rule", "body": "gap-6 (24px) is the default spacing between every major block — sidebar-to-content, card-to-card, section-to-section. gap-4 (16px) is the one step down, for internal card content.", "section": "layout" },
+      { "name": "The Flat-By-Default Rule", "body": "Never add a box-shadow to match a \"modern card\" instinct. If something needs to feel closer to the viewer, lighten its tone or brighten its color — don't lift it.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep the canvas pure black (#000000) and let card surfaces (slate-800/neutral-900/neutral-800) do all the tonal separation.",
+      "Do give each dashboard section exactly one accent hue and reuse it consistently for that section's identity (sidebar tile, related badges).",
+      "Do use rounded-3xl (24px) for any new primary surface (card, tile) so it matches the system's signature shape.",
+      "Do size interactive targets for a thumb, viewed from a few meters — err large, not compact.",
+      "Do use slow (~1000ms) transitions for ambient state changes (color, position) and fast (~200ms) transitions for direct tap feedback (scale)."
+    ],
+    "donts": [
+      "Don't add box-shadow anywhere — depth comes from tone, not elevation.",
+      "Don't introduce a second typeface or lean on italics/letter-spacing for hierarchy — Poppins weight and size already do that job.",
+      "Don't use red for anything other than genuine errors or the \"high tariff\" badge; peak-cost states use burnt orange (#DC6731), not alarm colors.",
+      "Don't add responsive breakpoints or a fluid layout without confirming the target device changed — this ships to one fixed kiosk viewport.",
+      "Don't promote a one-off functional color (like a single weather-icon hue) into a system-wide token; keep categorical lookups local to the component that needs them."
+    ]
+  }
+}
