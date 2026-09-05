@@ -8,7 +8,7 @@ import { formatCurrency } from '@/utils/formatCurrency';
 import { ChargeWindow } from '../useBestChargeWindow';
 
 interface CarChargeCardProps {
-  window: ChargeWindow;
+  chargeWindow: ChargeWindow;
 }
 
 const FALLBACK: Record<
@@ -37,16 +37,18 @@ const FALLBACK: Record<
   },
 };
 
-export const CarChargeCard = ({ window }: CarChargeCardProps) => {
-  if (window.status !== 'ready' || window.startsAt === null) {
+export const CarChargeCard = ({ chargeWindow }: CarChargeCardProps) => {
+  if (chargeWindow.status !== 'ready' || chargeWindow.startsAt === null) {
     const fallback =
-      FALLBACK[window.status === 'ready' ? 'unavailable' : window.status];
+      FALLBACK[
+        chargeWindow.status === 'ready' ? 'unavailable' : chargeWindow.status
+      ];
     return (
       <Card variant="panel" className="flex items-center gap-4 px-5 py-4">
         <IconBadge size={40} className="bg-ink/8 text-ink">
           <BiCar size={18} />
         </IconBadge>
-        <div className="min-w-0">
+        <div className="flex min-w-0 flex-col gap-1">
           <div className="text-ink-muted text-[11px] font-semibold tracking-[0.12em] uppercase">
             {fallback.title}
           </div>
@@ -59,22 +61,22 @@ export const CarChargeCard = ({ window }: CarChargeCardProps) => {
     );
   }
 
-  const solarPercent = Math.round(window.solarShare * 100);
+  const solarPercent = Math.round(chargeWindow.solarShare * 100);
 
   return (
     <Card variant="panel" className="flex items-center gap-4 px-5 py-4">
       <IconBadge size={40} className="bg-ink/8 text-ink">
         <BiTimeFive size={18} />
       </IconBadge>
-      <div className="min-w-0">
+      <div className="flex min-w-0 flex-col gap-1">
         <div className="text-ink-muted text-[11px] font-semibold tracking-[0.12em] uppercase">
           Tesla ingepland
         </div>
         <div className="text-2xl leading-tight font-bold tracking-tight tabular-nums">
-          {formatClock(window.startsAt)}
+          {formatClock(chargeWindow.startsAt)}
         </div>
         <div className="text-ink-muted text-xs">
-          bespaart {formatCurrency(window.savingsVsNow)}
+          bespaart {formatCurrency(chargeWindow.savingsVsNow)}
           {solarPercent > 0 ? ` · ${solarPercent}% zon` : ''}
         </div>
       </div>

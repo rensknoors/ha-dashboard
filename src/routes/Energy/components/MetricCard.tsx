@@ -16,9 +16,9 @@ export const MetricCard = ({
   value,
   sublabel,
 }: MetricCardProps) => (
-  <Card className="flex items-center gap-4 px-5 py-4">
-    <IconBadge size={40}>{icon}</IconBadge>
-    <div className="min-w-0">
+  <Card className="flex items-center gap-4 px-4 py-3">
+    <IconBadge size={28}>{icon}</IconBadge>
+    <div className="flex min-w-0 flex-col gap-1">
       <div className="text-mist-muted text-[11px] font-semibold tracking-[0.12em] uppercase">
         {label}
       </div>

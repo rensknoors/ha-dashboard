@@ -1,4 +1,4 @@
-import { BiSolidDroplet, BiSolidHome } from 'react-icons/bi';
+import { BiDroplet, BiHome } from 'react-icons/bi';
 
 import { formatCurrency } from '@/utils/formatCurrency';
 import { formatDecimal } from '@/utils/formatDecimal';
@@ -54,8 +54,8 @@ const Energy = () => {
         />
         <div className="grid grid-cols-3 gap-6">
           <MetricCard
-            icon={<BiSolidHome size={18} />}
-            label="Huis nu"
+            icon={<BiHome size={14} />}
+            label="Live verbruik"
             value={
               tariffs.currentUsage === null
                 ? '—'
@@ -63,7 +63,7 @@ const Energy = () => {
             }
           />
           <MetricCard
-            icon={<BiSolidDroplet size={18} />}
+            icon={<BiDroplet size={14} />}
             label="Gasprijs"
             value={
               tariffs.currentGasTariff === null
@@ -71,7 +71,7 @@ const Energy = () => {
                 : `${formatCurrency(tariffs.currentGasTariff)} /m³`
             }
           />
-          <CarChargeCard window={chargeWindow} />
+          <CarChargeCard chargeWindow={chargeWindow} />
         </div>
       </main>
     </div>
