@@ -1,7 +1,12 @@
 @import 'tailwindcss';
 
+/* This file compiles as its own Tailwind context (its own top-level
+   @import 'tailwindcss'), which doesn't resolve the custom theme-derived
+   utility names declared in index.css's @theme block — arbitrary values
+   referencing the CSS variables directly work regardless of that scoping. */
+
 .modal-container {
-  @apply min-w-[600px] !-translate-x-1/2 !bg-slate-800;
+  @apply !rounded-[var(--radius-bento)] min-w-[600px] !-translate-x-1/2 !bg-[var(--color-surface)];
 }
 
 .modal-inner {
@@ -9,12 +14,12 @@
 }
 
 .modal-close-button {
-  @apply !transition-background !bg-slate-700/70 hover:!bg-slate-700;
+  @apply !rounded-full !bg-[var(--color-surface-elevated)]/70 !transition-[background-color] hover:!bg-[var(--color-surface-elevated)];
 }
 
 .tooltip-inner {
-  @apply !bg-slate-700;
+  @apply !bg-[var(--color-surface-elevated)];
 }
 .tooltip-inner::before {
-  @apply !border-transparent !border-l-slate-700;
+  @apply !border-transparent !border-l-[var(--color-surface-elevated)];
 }

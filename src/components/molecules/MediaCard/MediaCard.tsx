@@ -45,20 +45,23 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
       <div
         className="absolute inset-0 z-0 scale-150 bg-cover bg-center bg-no-repeat blur-2xl filter"
         style={{
-          backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${thumbnail})`,
+          backgroundImage: `linear-gradient(0deg, rgb(0 0 0 / 70%), rgb(0 0 0 / 70%)), url(${thumbnail})`,
         }}
       />
 
       {/* Thumbnail */}
       <div className="z-10 shrink-0">
-        <img src={thumbnail} className="h-w-20 w-20 rounded-xl bg-black" />
+        <img
+          src={thumbnail}
+          className="rounded-tile bg-surface-elevated h-20 w-20 object-cover"
+        />
       </div>
 
       {/* Media info */}
       <div className="z-10 flex grow flex-col">
         <span className="text-lg font-semibold">{title}</span>
         {media.attributes.media_title && (
-          <span className="line-clamp-1 text-base text-ellipsis">
+          <span className="text-mist-muted line-clamp-1 text-base text-ellipsis">
             {media.attributes.media_title}
           </span>
         )}
@@ -66,8 +69,8 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
 
       {/* Controls */}
       {media.state === 'on' ? (
-        <BiPowerOff
-          className="z-10 box-content h-8 w-8 shrink-0 cursor-pointer p-8"
+        <button
+          className="bg-mist/10 hover:bg-mist/20 z-10 flex h-14 w-14 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors"
           onClick={() => {
             callService({
               domain: 'media_player',
@@ -77,10 +80,12 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
               },
             });
           }}
-        />
+        >
+          <BiPowerOff className="h-6 w-6" />
+        </button>
       ) : (
-        <PlayPauseIcon
-          className="z-10 h-14 w-14 shrink-0 cursor-pointer"
+        <button
+          className="bg-mist/10 hover:bg-mist/20 z-10 flex h-14 w-14 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors"
           onClick={() => {
             callService({
               domain: 'media_player',
@@ -90,7 +95,9 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
               },
             });
           }}
-        />
+        >
+          <PlayPauseIcon className="h-7 w-7" />
+        </button>
       )}
     </Card>
   );

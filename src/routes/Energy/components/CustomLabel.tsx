@@ -30,7 +30,7 @@ export const CustomLabel = ({ value, viewBox }: CustomLabelProps) => {
       width={width}
       height={40}
     >
-      <Label className="flex justify-center bg-[#4BA66A] bg-none px-1 py-1 font-bold">
+      <Label className="bg-tariff-low text-ink flex justify-center px-1 py-1 font-bold">
         {cents}
       </Label>
     </foreignObject>

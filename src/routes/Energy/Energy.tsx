@@ -1,13 +1,26 @@
-import clsx from 'clsx';
 import { BiSolidFlame, BiSolidZap } from 'react-icons/bi';
 
 import { Card } from '@/components/atoms/Card/Card';
+import { IconBadge } from '@/components/atoms/IconBadge/IconBadge';
+import { ChipTone, StatChip } from '@/components/atoms/StatChip/StatChip';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { formatDecimal } from '@/utils/formatDecimal';
 
 import { EnergyChart } from './components/EnergyChart';
 import { getTimeLabels } from './getTimeLabels';
 import { useEnergyTariffs } from './useEnergyTariffs';
+
+const tariffGroupHex: Record<string, string> = {
+  low: '#4ba66a',
+  normal: '#3c5551',
+  high: '#dc6731',
+};
+
+const tariffGroupTone: Record<string, ChipTone> = {
+  low: 'green',
+  normal: 'blue',
+  high: 'amber',
+};
 
 const Energy = () => {
   const {
@@ -28,79 +41,68 @@ const Energy = () => {
     tariff: parseFloat(hourlyTariffs[index]),
   }));
 
+  const tariffTone = tariffGroupTone[tariffGroup] ?? 'blue';
+  const tariffHex = tariffGroupHex[tariffGroup] ?? tariffGroupHex.normal;
+
   return (
     <div className="flex h-full w-full place-items-center gap-6">
-      <Card className="flex h-full w-full place-items-center bg-neutral-900">
+      <Card className="flex h-full w-full place-items-center">
         <EnergyChart tariffData={tariffData} />
       </Card>
 
-      <div className="grid h-full w-1/4 grid-cols-1 grid-rows-4 gap-6">
-        <Card
-          className={clsx(
-            'flex items-center justify-center bg-neutral-800',
-            tariffGroup === 'low' && 'text-[#4BA66A]',
-            tariffGroup === 'normal' && 'text-[#3C5551]',
-            tariffGroup === 'high' && 'text-[#DC6731]'
+      <div className="flex h-full w-1/4 flex-col gap-6">
+        <Card className="flex flex-1 items-center justify-center">
+          <IconBadge size={64} style={{ color: tariffHex }}>
+            <BiSolidZap size={28} />
+          </IconBadge>
+        </Card>
+        <StatChip
+          tone={tariffTone}
+          label="Huidig tarief · €/kWh"
+          value={formatDecimal(currentElectricityTariff)}
+          className="flex-1"
+        />
+        <StatChip
+          tone="pink"
+          label="Verbruikt · kWh"
+          value={formatDecimal(electricityConsumption)}
+          className="flex-1"
+        />
+        <StatChip
+          tone="blue"
+          label="Kosten"
+          value={formatCurrency(
+            parseFloat(electricityDeliveryCosts) -
+              parseFloat(electricityProductionCosts)
           )}
-        >
-          <BiSolidZap size={48} />
-        </Card>
-        <Card className="flex w-full flex-col justify-center gap-1 bg-neutral-900 text-center">
-          <span className="text-md mb-2">Huidig tarief</span>
-          <span className="text-4xl font-semibold">
-            {formatDecimal(currentElectricityTariff)}
-          </span>
-          <span className="text-md text-sm opacity-40">€/kWh</span>
-        </Card>
-        <Card className="flex w-full flex-col justify-center gap-1 bg-neutral-900 text-center">
-          <span className="text-md mb-2">Verbruikt</span>
-          <span className="text-4xl font-semibold">
-            {formatDecimal(electricityConsumption)}
-          </span>
-          <span className="text-md text-sm opacity-40">kWh</span>
-        </Card>
-        <Card className="flex w-full flex-col justify-center gap-1 bg-neutral-900 text-center">
-          <span className="text-md mb-2">Kosten</span>
-          <span className="text-4xl font-semibold">
-            {formatCurrency(
-              parseFloat(electricityDeliveryCosts) -
-                parseFloat(electricityProductionCosts)
-            )}
-          </span>
-        </Card>
+          className="flex-1"
+        />
       </div>
 
-      <div className="grid h-full w-1/4 grid-cols-1 grid-rows-4 gap-6">
-        <Card
-          className={clsx(
-            'flex items-center justify-center bg-neutral-800',
-            tariffGroup === 'low' && 'text-[#4BA66A]',
-            tariffGroup === 'normal' && 'text-[#3C5551]',
-            tariffGroup === 'high' && 'text-[#DC6731]'
-          )}
-        >
-          <BiSolidFlame size={48} />
+      <div className="flex h-full w-1/4 flex-col gap-6">
+        <Card className="flex flex-1 items-center justify-center">
+          <IconBadge size={64} style={{ color: tariffHex }}>
+            <BiSolidFlame size={28} />
+          </IconBadge>
         </Card>
-        <Card className="flex w-full flex-col items-center justify-center gap-1 bg-neutral-900 text-center">
-          <span className="text-md mb-2">Huidig tarief</span>
-          <span className="text-4xl font-semibold">
-            {formatDecimal(currentGasTariff)}
-          </span>
-          <span className="text-md text-sm opacity-40">€/m3</span>
-        </Card>
-        <Card className="flex w-full flex-col justify-center bg-neutral-900 text-center">
-          <span className="text-md mb-2">Verbruikt</span>
-          <span className="text-4xl font-semibold">
-            {formatDecimal(gasConsumption)}
-          </span>
-          <span className="text-md text-sm opacity-40">m3</span>
-        </Card>
-        <Card className="flex w-full flex-col justify-center bg-neutral-900 text-center">
-          <span className="text-md mb-2">Kosten</span>
-          <span className="text-4xl font-semibold">
-            {formatCurrency(gasDeliveryCosts)}
-          </span>
-        </Card>
+        <StatChip
+          tone={tariffTone}
+          label="Huidig tarief · €/m3"
+          value={formatDecimal(currentGasTariff)}
+          className="flex-1"
+        />
+        <StatChip
+          tone="pink"
+          label="Verbruikt · m3"
+          value={formatDecimal(gasConsumption)}
+          className="flex-1"
+        />
+        <StatChip
+          tone="blue"
+          label="Kosten"
+          value={formatCurrency(gasDeliveryCosts)}
+          className="flex-1"
+        />
       </div>
     </div>
   );

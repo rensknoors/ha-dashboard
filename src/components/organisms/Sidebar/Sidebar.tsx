@@ -17,9 +17,9 @@ const useSideBarButtons = (): TileButtonProps[] => {
       <Badge
         className={clsx(
           'absolute right-0 bottom-0 translate-x-1/4 translate-y-1/4',
-          tarriffGroupEntity.state === 'low' && 'bg-green-600',
-          tarriffGroupEntity.state === 'normal' && 'bg-white',
-          tarriffGroupEntity.state === 'high' && 'bg-red-500'
+          tarriffGroupEntity.state === 'low' && 'bg-chip-green-fg',
+          tarriffGroupEntity.state === 'normal' && 'bg-mist',
+          tarriffGroupEntity.state === 'high' && 'bg-danger'
         )}
       />
     );
@@ -29,23 +29,23 @@ const useSideBarButtons = (): TileButtonProps[] => {
     {
       path: ROUTES.HOME,
       icon: 'mdi:tablet-dashboard',
-      background: 'bg-blue-300',
+      tone: 'pink',
     },
     {
       path: ROUTES.ENERGY,
       icon: 'mdi:lightning-bolt',
-      background: 'bg-green-300',
+      tone: 'green',
       Badge: TariffGroupBadge,
     },
     {
       path: ROUTES.WEATHER,
       icon: 'mdi:weather-partly-cloudy',
-      background: 'bg-amber-200',
+      tone: 'blue',
     },
     {
-      path: ROUTES.VACUUM,
-      icon: 'mdi:vacuum',
-      background: 'bg-white',
+      path: ROUTES.CAR,
+      icon: 'mdi:car-electric',
+      tone: 'amber',
     },
   ];
 };

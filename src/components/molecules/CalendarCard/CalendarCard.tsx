@@ -68,14 +68,14 @@ const CalendarCard = () => {
     refetchInterval: 1000 * 60 * 10, // 10 minutes
   });
 
-  if (isPending) return <div>Loading...</div>;
+  if (isPending) return <div className="text-mist-muted">Laden...</div>;
 
   // Only show error if there are no events to show
   if (isError && !events) {
     console.error(error);
     return (
-      <div className="flex items-center justify-center gap-3 text-slate-400">
-        <BiErrorCircle className="h-6 w-6 text-red-500" />
+      <div className="text-mist-muted flex items-center justify-center gap-3">
+        <BiErrorCircle className="text-danger h-6 w-6" />
         Kalender kon niet geladen worden
       </div>
     );
@@ -84,8 +84,8 @@ const CalendarCard = () => {
   return (
     <>
       {events.length === 0 && (
-        <div className="flex items-center justify-center gap-3 text-slate-400">
-          <BiCalendarX className="h-6 w-6 text-white" />
+        <div className="text-mist-muted flex items-center justify-center gap-3">
+          <BiCalendarX className="text-mist h-6 w-6" />
           Geen events vandaag
         </div>
       )}
@@ -93,7 +93,7 @@ const CalendarCard = () => {
         <div className="flex w-full flex-col gap-4">
           <div className="flex items-center gap-4">
             <BiCalendar className="h-5 w-5" />
-            <span className="text-xl text-white">Kalender</span>
+            <span className="text-xl font-semibold">Kalender</span>
           </div>
           <div className="flex flex-col gap-2">
             {events.map((event) => (
@@ -105,11 +105,11 @@ const CalendarCard = () => {
                   <div
                     className={clsx(
                       'h-2 w-2 rounded-full',
-                      event.start.date && 'bg-blue-300',
-                      event.start.dateTime && 'bg-green-300'
+                      event.start.date && 'bg-chip-blue-fg',
+                      event.start.dateTime && 'bg-chip-green-fg'
                     )}
                   ></div>
-                  <span className="w-28 text-slate-400">
+                  <span className="text-mist-muted w-28">
                     {event.start.date && 'Hele dag'}
                     {event.start.dateTime &&
                       `${formatToTimeString(event.start.dateTime)} -
@@ -123,7 +123,7 @@ const CalendarCard = () => {
                 </span>
 
                 {event.description && (
-                  <span className="col-start-2 line-clamp-2 text-slate-400">{`${event.description}`}</span>
+                  <span className="text-mist-muted col-start-2 line-clamp-2">{`${event.description}`}</span>
                 )}
               </div>
             ))}

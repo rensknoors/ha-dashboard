@@ -19,15 +19,15 @@ const GraphCard = ({ entity, label, unit }: GraphCardProps) => {
   });
 
   return (
-    <Card className="relative flex flex-col place-items-start bg-slate-400 text-black">
-      <Label className="mb-6 text-slate-400">
+    <Card className="relative flex flex-col place-items-start">
+      <Label className="mb-6 text-black">
         {label ?? attributes.friendly_name}
       </Label>
-      <span className="text-4xl font-semibold">
+      <span className="text-4xl font-bold">
         {`${state} ${unit ?? attributes.unit_of_measurement}`}
       </span>
-      <span className="text-sm">{custom.relativeTime}</span>
-      <div className="absolute bottom-0 left-0 w-full">
+      <span className="text-mist-muted text-sm">{custom.relativeTime}</span>
+      <div className="absolute bottom-0 left-0 w-full opacity-70">
         {history.loading ? (
           <Alert className={'loading'} description="Loading..." />
         ) : (

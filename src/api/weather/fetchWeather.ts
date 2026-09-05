@@ -18,6 +18,8 @@ export const fetchWeather = async (latlong?: string) => {
     'hourly',
     'temperature_2m,weather_code,precipitation_probability,precipitation'
   );
+  url.searchParams.append('minutely_15', 'precipitation');
+  url.searchParams.append('forecast_minutely_15', '8'); // next 2 hours
   url.searchParams.append(
     'daily',
     'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max'

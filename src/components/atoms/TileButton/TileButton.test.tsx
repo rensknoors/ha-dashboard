@@ -4,7 +4,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { TileButton, TileButtonProps } from './TileButton';
 
 const mockProps: TileButtonProps = {
-  background: 'bg-blue-300',
+  tone: 'blue',
   icon: 'mdi:home',
   path: '/home',
 };
@@ -15,7 +15,7 @@ vi.mock('@hakit/core', () => ({
 
 test('TileButton', () => {
   render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={['/home']}>
       <TileButton {...mockProps} />
     </MemoryRouter>
   );
@@ -23,5 +23,17 @@ test('TileButton', () => {
   const linkElement = screen.getByRole('link');
   expect(linkElement.getAttribute('href')).toBe(mockProps.path);
 
-  expect(linkElement.classList.contains('bg-blue-300')).toBe(true);
+  // Active route: the tone's chip color shows.
+  expect(linkElement.classList.contains('bg-chip-blue')).toBe(true);
+});
+
+test('TileButton shows no tone color when its route is not active', () => {
+  render(
+    <MemoryRouter initialEntries={['/']}>
+      <TileButton {...mockProps} />
+    </MemoryRouter>
+  );
+
+  const linkElement = screen.getByRole('link');
+  expect(linkElement.classList.contains('bg-chip-blue')).toBe(false);
 });

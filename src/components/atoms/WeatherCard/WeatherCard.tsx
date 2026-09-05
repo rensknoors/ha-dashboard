@@ -46,20 +46,20 @@ const WeatherCard = () => {
   const { data, isPending, isError, error, refetch } = useWeather();
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <div className="text-mist-muted">Laden...</div>;
   }
 
   if (isError && error) {
     console.error(error);
     return (
-      <span className="flex flex-col items-center gap-2">
-        <BiErrorCircle className="h-6 w-6 text-red-500" />
-        {error.message}
+      <span className="flex flex-col items-center gap-2 text-center">
+        <BiErrorCircle className="text-danger h-6 w-6" />
+        <span className="text-mist-muted text-sm">{error.message}</span>
         <button
-          className="mt-4 rounded-md border border-blue-400 px-3 py-2 text-blue-400"
+          className="bg-chip-blue text-chip-blue-fg mt-2 rounded-full px-4 py-2 text-sm font-semibold transition-opacity hover:opacity-80"
           onClick={() => refetch()}
         >
-          Retry
+          Opnieuw proberen
         </button>
       </span>
     );
@@ -74,10 +74,10 @@ const WeatherCard = () => {
   return (
     <div className="flex items-center gap-4 text-3xl">
       {animation && (
-        <Lottie className="h-24 w-24" animationData={animation} loop={true} />
+        <Lottie className="h-16 w-16" animationData={animation} loop={true} />
       )}
       <div className="flex flex-col">
-        <div>{`${data?.current.temperature_2m} °C`}</div>
+        <div className="font-bold">{`${data?.current.temperature_2m}°`}</div>
       </div>
     </div>
   );

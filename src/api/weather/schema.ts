@@ -43,12 +43,24 @@ export const weatherSchema = z.object({
     temperature_2m: z.string(),
     weather_code: z.string(),
     precipitation_probability: z.string(),
+    precipitation: z.string(),
   }),
   hourly: z.object({
     time: z.array(z.string()),
     temperature_2m: z.array(z.number()),
     weather_code: z.array(z.number()),
     precipitation_probability: z.array(z.number()),
+    // Was already requested from the API but never validated here, so it
+    // silently never reached the app — the hourly rain-amount chart needs it.
+    precipitation: z.array(z.number()),
+  }),
+  minutely_15_units: z.object({
+    time: z.string(),
+    precipitation: z.string(),
+  }),
+  minutely_15: z.object({
+    time: z.array(z.string()),
+    precipitation: z.array(z.number()),
   }),
   daily_units: z.object({
     time: z.string(),

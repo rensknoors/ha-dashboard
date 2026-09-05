@@ -2,16 +2,28 @@ import { clsx } from 'clsx';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+export type CardVariant = 'surface' | 'panel';
+
 export type CardProps = {
   children?: ReactNode;
+  /** 'surface' (default): the charcoal bento tile used everywhere.
+   *  'panel': the one warm, light contrast surface — use sparingly, at most
+   *  once per screen, for the view's single "hero" card. */
+  variant?: CardVariant;
   onClick?: () => void;
   onLongPress?: () => void;
 } & React.HTMLAttributes<HTMLDivElement>;
+
+const variantClasses: Record<CardVariant, string> = {
+  surface: 'bento-card',
+  panel: 'bento-panel',
+};
 
 const Card = ({
   children,
   className,
   style,
+  variant = 'surface',
   onClick,
   onLongPress,
 }: CardProps) => {
@@ -49,7 +61,8 @@ const Card = ({
     <div
       className={twMerge(
         clsx(
-          'overflow-hidden rounded-3xl bg-slate-800 px-4 py-4',
+          'overflow-hidden px-6 py-6',
+          variantClasses[variant],
           onClick && 'card-interactive'
         ),
         className

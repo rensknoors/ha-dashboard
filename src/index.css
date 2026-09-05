@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap');
 
 @import 'react-toastify/dist/ReactToastify.css';
 
@@ -8,14 +8,48 @@
 
 @theme {
   --font-family-sans:
-    Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    sans-serif;
+    'Onest', ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+
+  /* Dark glassmorphic bento system (2026-08-31 redesign). Canvas/surface/
+     elevated is the charcoal stack; panel is the one warm contrast surface;
+     chip-* pairs are soft pastel glass, never solid accent blocks. */
+  --color-canvas: #0b0b0d;
+  --color-surface: #18181c;
+  --color-surface-elevated: #232328;
+  --color-panel: #eeece6;
+  --color-ink: #1a1a1c;
+  --color-ink-muted: #6f6d73;
+  --color-mist: rgb(255 255 255 / 92%);
+  --color-mist-muted: #97959d;
+
+  --color-chip-pink: #f4d9ea;
+  --color-chip-pink-fg: #b6467e;
+  --color-chip-blue: #d9e6f7;
+  --color-chip-blue-fg: #3b6ea5;
+  --color-chip-green: #dcefe0;
+  --color-chip-green-fg: #3f8557;
+  --color-chip-amber: #f6e8cf;
+  --color-chip-amber-fg: #a97a2b;
+
+  /* Reserved for genuine errors and the sidebar's "high tariff" badge —
+     never for peak-cost states, which stay warm (tariff-high), not alarmed. */
+  --color-danger: #ef4444;
+
+  /* Tariff bands are real Zonneplan price-domain colors, unchanged from the
+     prior system — a functional signal, not a decorative choice. */
+  --color-tariff-low: #4ba66a;
+  --color-tariff-normal: #3c5551;
+  --color-tariff-high: #dc6731;
+
+  --radius-bento: 1.75rem;
+  --radius-tile: 1.25rem;
 }
 
 :root {
   color-scheme: dark;
-  color: rgba(255, 255, 255, 0.9);
-  background-color: #000;
+  color: var(--color-mist);
+  background-color: var(--color-canvas);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -37,6 +71,30 @@ body {
     @apply my-4 flex w-full justify-center first:mt-0 last:mb-0;
   }
 
+  /* The charcoal bento tile: the default surface for nearly everything. */
+  .bento-card {
+    @apply bg-surface text-mist rounded-bento shadow-[0_24px_48px_-28px_rgb(0_0_0_/_65%)];
+  }
+
+  /* The one warm, light contrast surface — used sparingly, per the
+     reference's single light bento panel amid the dark field. */
+  .bento-panel {
+    @apply bg-panel text-ink rounded-bento shadow-[0_20px_40px_-26px_rgb(0_0_0_/_18%)];
+  }
+
+  /* Circular dark icon holder — the reference's recurring icon-badge motif. */
+  .icon-badge {
+    @apply bg-surface-elevated flex shrink-0 items-center justify-center rounded-full;
+  }
+
+  /* Soft pastel glass chip for a single stat/value — never a solid block. */
+  .stat-chip {
+    @apply rounded-tile flex flex-col gap-1 px-4 py-3;
+  }
+
+  /* Immediate tap feedback for interactive Cards (e.g. LightCard), decoupled
+     from the entity's real state so a press is acknowledged before the HA
+     round-trip resolves. */
   .card-interactive {
     @apply cursor-pointer transition-transform duration-150 ease-out active:scale-[0.97];
   }
