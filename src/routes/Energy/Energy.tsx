@@ -1,107 +1,79 @@
-import clsx from 'clsx';
-import { BiSolidFlame, BiSolidZap } from 'react-icons/bi';
+import { BiSolidDroplet, BiSolidHome } from 'react-icons/bi';
 
-import { Card } from '@/components/atoms/Card/Card';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { formatDecimal } from '@/utils/formatDecimal';
 
-import { EnergyChart } from './components/EnergyChart';
-import { getTimeLabels } from './getTimeLabels';
+import { CarChargeCard } from './components/CarChargeCard';
+import { MetricCard } from './components/MetricCard';
+import { PriceNowCard } from './components/PriceNowCard';
+import { TariffChartCard } from './components/TariffChartCard';
+import { TodayCard } from './components/TodayCard';
+import { useBestChargeWindow } from './useBestChargeWindow';
 import { useEnergyTariffs } from './useEnergyTariffs';
+import { useTariffForecast } from './useTariffForecast';
 
 const Energy = () => {
+  const tariffs = useEnergyTariffs();
   const {
-    hourlyTariffs,
-    tariffGroup,
-    currentElectricityTariff,
-    currentGasTariff,
-    electricityConsumption,
-    electricityDeliveryCosts,
-    electricityProductionCosts,
-    gasConsumption,
-    gasDeliveryCosts,
-  } = useEnergyTariffs();
-
-  const timeLabels = getTimeLabels(hourlyTariffs.length);
-  const tariffData = timeLabels.map((label, index) => ({
-    name: label,
-    tariff: parseFloat(hourlyTariffs[index]),
-  }));
+    points,
+    nowIndex,
+    chartPoints,
+    chartNowIndex,
+    dayBoundaries,
+    today,
+    currentPrice,
+  } = useTariffForecast();
+  const chargeWindow = useBestChargeWindow({ points, nowIndex });
 
   return (
-    <div className="flex h-full w-full place-items-center gap-6">
-      <Card className="flex h-full w-full place-items-center bg-neutral-900">
-        <EnergyChart tariffData={tariffData} />
-      </Card>
+    <div className="text-mist flex h-full w-full gap-6">
+      <aside className="flex w-70 shrink-0 flex-col gap-6">
+        <PriceNowCard
+          price={currentPrice ?? tariffs.currentElectricityTariff}
+          tariffGroup={tariffs.tariffGroup}
+          today={today}
+          paidAverage={tariffs.paidAverage}
+        />
+        <TodayCard
+          electricityConsumption={tariffs.electricityConsumption}
+          gasConsumption={tariffs.gasConsumption}
+          solarNow={tariffs.solarNow}
+          solarRemaining={tariffs.solarRemaining}
+          electricityReturned={tariffs.electricityReturned}
+          electricityProductionCosts={tariffs.electricityProductionCosts}
+          electricityDeliveryCosts={tariffs.electricityDeliveryCosts}
+          gasDeliveryCosts={tariffs.gasDeliveryCosts}
+        />
+      </aside>
 
-      <div className="grid h-full w-1/4 grid-cols-1 grid-rows-4 gap-6">
-        <Card
-          className={clsx(
-            'flex items-center justify-center bg-neutral-800',
-            tariffGroup === 'low' && 'text-[#4BA66A]',
-            tariffGroup === 'normal' && 'text-[#3C5551]',
-            tariffGroup === 'high' && 'text-[#DC6731]'
-          )}
-        >
-          <BiSolidZap size={48} />
-        </Card>
-        <Card className="flex w-full flex-col justify-center gap-1 bg-neutral-900 text-center">
-          <span className="text-md mb-2">Huidig tarief</span>
-          <span className="text-4xl font-semibold">
-            {formatDecimal(currentElectricityTariff)}
-          </span>
-          <span className="text-md text-sm opacity-40">€/kWh</span>
-        </Card>
-        <Card className="flex w-full flex-col justify-center gap-1 bg-neutral-900 text-center">
-          <span className="text-md mb-2">Verbruikt</span>
-          <span className="text-4xl font-semibold">
-            {formatDecimal(electricityConsumption)}
-          </span>
-          <span className="text-md text-sm opacity-40">kWh</span>
-        </Card>
-        <Card className="flex w-full flex-col justify-center gap-1 bg-neutral-900 text-center">
-          <span className="text-md mb-2">Kosten</span>
-          <span className="text-4xl font-semibold">
-            {formatCurrency(
-              parseFloat(electricityDeliveryCosts) -
-                parseFloat(electricityProductionCosts)
-            )}
-          </span>
-        </Card>
-      </div>
-
-      <div className="grid h-full w-1/4 grid-cols-1 grid-rows-4 gap-6">
-        <Card
-          className={clsx(
-            'flex items-center justify-center bg-neutral-800',
-            tariffGroup === 'low' && 'text-[#4BA66A]',
-            tariffGroup === 'normal' && 'text-[#3C5551]',
-            tariffGroup === 'high' && 'text-[#DC6731]'
-          )}
-        >
-          <BiSolidFlame size={48} />
-        </Card>
-        <Card className="flex w-full flex-col items-center justify-center gap-1 bg-neutral-900 text-center">
-          <span className="text-md mb-2">Huidig tarief</span>
-          <span className="text-4xl font-semibold">
-            {formatDecimal(currentGasTariff)}
-          </span>
-          <span className="text-md text-sm opacity-40">€/m3</span>
-        </Card>
-        <Card className="flex w-full flex-col justify-center bg-neutral-900 text-center">
-          <span className="text-md mb-2">Verbruikt</span>
-          <span className="text-4xl font-semibold">
-            {formatDecimal(gasConsumption)}
-          </span>
-          <span className="text-md text-sm opacity-40">m3</span>
-        </Card>
-        <Card className="flex w-full flex-col justify-center bg-neutral-900 text-center">
-          <span className="text-md mb-2">Kosten</span>
-          <span className="text-4xl font-semibold">
-            {formatCurrency(gasDeliveryCosts)}
-          </span>
-        </Card>
-      </div>
+      <main className="flex min-w-0 flex-1 flex-col gap-6">
+        <TariffChartCard
+          points={chartPoints}
+          nowIndex={chartNowIndex}
+          dayBoundaries={dayBoundaries}
+        />
+        <div className="grid grid-cols-3 gap-6">
+          <MetricCard
+            icon={<BiSolidHome size={18} />}
+            label="Huis nu"
+            value={
+              tariffs.currentUsage === null
+                ? '—'
+                : `${formatDecimal(tariffs.currentUsage, { decimals: 0 })} W`
+            }
+          />
+          <MetricCard
+            icon={<BiSolidDroplet size={18} />}
+            label="Gasprijs"
+            value={
+              tariffs.currentGasTariff === null
+                ? '—'
+                : `${formatCurrency(tariffs.currentGasTariff)} /m³`
+            }
+          />
+          <CarChargeCard window={chargeWindow} />
+        </div>
+      </main>
     </div>
   );
 };

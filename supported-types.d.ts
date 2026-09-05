@@ -357,34 +357,6 @@ declare module "@hakit/core" {
         }
       >;
     };
-    conversation: {
-      // undefined
-      process: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example Turn all lights on
-          text: string;
-          //  @example NL
-          language?: string;
-          //  @example homeassistant @constraints  conversation_agent:
-          agent_id?: string;
-          //  @example my_conversation_1
-          conversation_id?: string;
-        }
-      >;
-      // undefined
-      reload: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example NL
-          language?: string;
-          //  @example homeassistant @constraints  conversation_agent:
-          agent_id?: string;
-        }
-      >;
-    };
     camera: {
       // undefined
       enableMotionDetection: ServiceFunction<object, T, object>;
@@ -427,6 +399,49 @@ declare module "@hakit/core" {
           lookback?: number;
         }
       >;
+    };
+    conversation: {
+      // undefined
+      process: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example Turn all lights on
+          text: string;
+          //  @example NL
+          language?: string;
+          //  @example homeassistant @constraints  conversation_agent:
+          agent_id?: string;
+          //  @example my_conversation_1
+          conversation_id?: string;
+        }
+      >;
+      // undefined
+      reload: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example NL
+          language?: string;
+          //  @example homeassistant @constraints  conversation_agent:
+          agent_id?: string;
+        }
+      >;
+    };
+    googleAssistant: {
+      // undefined
+      requestSync: ServiceFunction<
+        object,
+        T,
+        {
+          //
+          agent_user_id?: string;
+        }
+      >;
+    };
+    button: {
+      // undefined
+      press: ServiceFunction<object, T, object>;
     };
     tts: {
       // undefined
@@ -483,195 +498,11 @@ declare module "@hakit/core" {
         }
       >;
     };
-    googleAssistant: {
-      // undefined
-      requestSync: ServiceFunction<
-        object,
-        T,
-        {
-          //
-          agent_user_id?: string;
-        }
-      >;
-    };
-    button: {
-      // undefined
-      press: ServiceFunction<object, T, object>;
-    };
     cloud: {
       // undefined
       remoteConnect: ServiceFunction<object, T, object>;
       // undefined
       remoteDisconnect: ServiceFunction<object, T, object>;
-    };
-    vacuum: {
-      // undefined
-      start: ServiceFunction<object, T, object>;
-      // undefined
-      pause: ServiceFunction<object, T, object>;
-      // undefined
-      returnToBase: ServiceFunction<object, T, object>;
-      // undefined
-      cleanSpot: ServiceFunction<object, T, object>;
-      // undefined
-      cleanArea: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  area: multiple: true, reorder: true
-          cleaning_area_id: unknown;
-        }
-      >;
-      // undefined
-      locate: ServiceFunction<object, T, object>;
-      // undefined
-      stop: ServiceFunction<object, T, object>;
-      // undefined
-      setFanSpeed: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example low @constraints  state: attribute: fan_speed, multiple: false
-          fan_speed: unknown;
-        }
-      >;
-      // undefined
-      sendCommand: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example set_dnd_timer
-          command: string;
-          //  @example { 'key': 'value' } @constraints  object: multiple: false
-          params?: object;
-        }
-      >;
-    };
-    switch: {
-      // undefined
-      turnOff: ServiceFunction<object, T, object>;
-      // undefined
-      turnOn: ServiceFunction<object, T, object>;
-      // undefined
-      toggle: ServiceFunction<object, T, object>;
-    };
-    lock: {
-      // undefined
-      unlock: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example 1234
-          code?: string;
-        }
-      >;
-      // undefined
-      lock: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example 1234
-          code?: string;
-        }
-      >;
-      // undefined
-      open: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example 1234
-          code?: string;
-        }
-      >;
-    };
-    light: {
-      // undefined
-      turnOn: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
-          transition?: number;
-          //  @example [255, 100, 100] @constraints  color_rgb:
-          rgb_color?: [number, number, number];
-          //  @constraints  color_temp: unit: kelvin, min: 2000, max: 6500
-          color_temp_kelvin?: number;
-          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
-          brightness_pct?: number;
-          //  @constraints  number: min: -100, max: 100, unit_of_measurement: %, step: 1, mode: slider
-          brightness_step_pct?: number;
-          //  @constraints  state: attribute: effect, multiple: false
-          effect?: unknown;
-          //
-          additional_fields?: object;
-        }
-      >;
-      // undefined
-      turnOff: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
-          transition?: number;
-          //
-          additional_fields?: object;
-        }
-      >;
-      // undefined
-      toggle: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
-          transition?: number;
-          //  @example [255, 100, 100] @constraints  color_rgb:
-          rgb_color?: [number, number, number];
-          //  @constraints  color_temp: unit: kelvin, min: 2000, max: 6500
-          color_temp_kelvin?: number;
-          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
-          brightness_pct?: number;
-          //  @constraints  state: attribute: effect, multiple: false
-          effect?: unknown;
-          //
-          additional_fields?: object;
-        }
-      >;
-    };
-    cover: {
-      // undefined
-      openCover: ServiceFunction<object, T, object>;
-      // undefined
-      closeCover: ServiceFunction<object, T, object>;
-      // undefined
-      setCoverPosition: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
-          position: number;
-        }
-      >;
-      // undefined
-      stopCover: ServiceFunction<object, T, object>;
-      // undefined
-      toggle: ServiceFunction<object, T, object>;
-      // undefined
-      openCoverTilt: ServiceFunction<object, T, object>;
-      // undefined
-      closeCoverTilt: ServiceFunction<object, T, object>;
-      // undefined
-      stopCoverTilt: ServiceFunction<object, T, object>;
-      // undefined
-      setCoverTiltPosition: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
-          tilt_position: number;
-        }
-      >;
-      // undefined
-      toggleCoverTilt: ServiceFunction<object, T, object>;
     };
     fan: {
       // undefined
@@ -744,9 +575,231 @@ declare module "@hakit/core" {
         }
       >;
     };
+    vacuum: {
+      // undefined
+      start: ServiceFunction<object, T, object>;
+      // undefined
+      pause: ServiceFunction<object, T, object>;
+      // undefined
+      returnToBase: ServiceFunction<object, T, object>;
+      // undefined
+      cleanSpot: ServiceFunction<object, T, object>;
+      // undefined
+      cleanArea: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  area: multiple: true, reorder: true
+          cleaning_area_id: unknown;
+        }
+      >;
+      // undefined
+      locate: ServiceFunction<object, T, object>;
+      // undefined
+      stop: ServiceFunction<object, T, object>;
+      // undefined
+      setFanSpeed: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example low @constraints  state: attribute: fan_speed, multiple: false
+          fan_speed: unknown;
+        }
+      >;
+      // undefined
+      sendCommand: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example set_dnd_timer
+          command: string;
+          //  @example { 'key': 'value' } @constraints  object: multiple: false
+          params?: object;
+        }
+      >;
+    };
+    valve: {
+      // undefined
+      openValve: ServiceFunction<object, T, object>;
+      // undefined
+      closeValve: ServiceFunction<object, T, object>;
+      // undefined
+      setValvePosition: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
+          position: number;
+        }
+      >;
+      // undefined
+      stopValve: ServiceFunction<object, T, object>;
+      // undefined
+      toggle: ServiceFunction<object, T, object>;
+    };
+    light: {
+      // undefined
+      turnOn: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
+          transition?: number;
+          //  @example [255, 100, 100] @constraints  color_rgb:
+          rgb_color?: [number, number, number];
+          //  @constraints  color_temp: unit: kelvin, min: 2000, max: 6500
+          color_temp_kelvin?: number;
+          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
+          brightness_pct?: number;
+          //  @constraints  number: min: -100, max: 100, unit_of_measurement: %, step: 1, mode: slider
+          brightness_step_pct?: number;
+          //  @constraints  state: attribute: effect, multiple: false
+          effect?: unknown;
+          //
+          additional_fields?: object;
+        }
+      >;
+      // undefined
+      turnOff: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
+          transition?: number;
+          //
+          additional_fields?: object;
+        }
+      >;
+      // undefined
+      toggle: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
+          transition?: number;
+          //  @example [255, 100, 100] @constraints  color_rgb:
+          rgb_color?: [number, number, number];
+          //  @constraints  color_temp: unit: kelvin, min: 2000, max: 6500
+          color_temp_kelvin?: number;
+          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
+          brightness_pct?: number;
+          //  @constraints  state: attribute: effect, multiple: false
+          effect?: unknown;
+          //
+          additional_fields?: object;
+        }
+      >;
+    };
+    select: {
+      // undefined
+      selectFirst: ServiceFunction<object, T, object>;
+      // undefined
+      selectLast: ServiceFunction<object, T, object>;
+      // undefined
+      selectNext: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  boolean:
+          cycle?: boolean;
+        }
+      >;
+      // undefined
+      selectOption: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example 'Item A' @constraints  state: hide_states: unavailable,unknown, multiple: false
+          option: unknown;
+        }
+      >;
+      // undefined
+      selectPrevious: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  boolean:
+          cycle?: boolean;
+        }
+      >;
+    };
+    waterHeater: {
+      // undefined
+      turnOn: ServiceFunction<object, T, object>;
+      // undefined
+      turnOff: ServiceFunction<object, T, object>;
+      // undefined
+      setAwayMode: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  boolean:
+          away_mode: boolean;
+        }
+      >;
+      // undefined
+      setTemperature: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 250, step: 0.5, mode: box, unit_of_measurement: °
+          temperature: number;
+          //  @example eco @constraints  state: hide_states: unavailable,unknown, multiple: false
+          operation_mode?: unknown;
+        }
+      >;
+      // undefined
+      setOperationMode: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example eco @constraints  state: hide_states: unavailable,unknown, multiple: false
+          operation_mode: unknown;
+        }
+      >;
+    };
     imageProcessing: {
       // undefined
       scan: ServiceFunction<object, T, object>;
+    };
+    scene: {
+      // undefined
+      reload: ServiceFunction<object, T, object>;
+      // undefined
+      apply: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example light.kitchen: 'on' light.ceiling:   state: 'on'   brightness: 80  @constraints  object: multiple: false
+          entities: object;
+          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
+          transition?: number;
+        }
+      >;
+      // undefined
+      create: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example all_lights
+          scene_id: string;
+          //  @example light.tv_back_light: 'on' light.ceiling:   state: 'on'   brightness: 200  @constraints  object: multiple: false
+          entities?: object;
+          //  @example - light.ceiling - light.kitchen
+          snapshot_entities?: string;
+        }
+      >;
+      // undefined
+      delete: ServiceFunction<object, T, object>;
+      // undefined
+      turnOn: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
+          transition?: number;
+        }
+      >;
     };
     remote: {
       // undefined
@@ -807,145 +860,6 @@ declare module "@hakit/core" {
           command: object;
         }
       >;
-    };
-    valve: {
-      // undefined
-      openValve: ServiceFunction<object, T, object>;
-      // undefined
-      closeValve: ServiceFunction<object, T, object>;
-      // undefined
-      setValvePosition: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
-          position: number;
-        }
-      >;
-      // undefined
-      stopValve: ServiceFunction<object, T, object>;
-      // undefined
-      toggle: ServiceFunction<object, T, object>;
-    };
-    climate: {
-      // undefined
-      turnOn: ServiceFunction<object, T, object>;
-      // undefined
-      turnOff: ServiceFunction<object, T, object>;
-      // undefined
-      toggle: ServiceFunction<object, T, object>;
-      // undefined
-      setHvacMode: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  state: hide_states: unavailable,unknown, multiple: false
-          hvac_mode?: unknown;
-        }
-      >;
-      // undefined
-      setPresetMode: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example away @constraints  state: attribute: preset_mode, multiple: false
-          preset_mode: unknown;
-        }
-      >;
-      // undefined
-      setTemperature: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 250, step: 0.1, mode: box
-          temperature?: number;
-          //
-          temperature_range?: object;
-          //  @constraints  state: hide_states: unavailable,unknown, multiple: false
-          hvac_mode?: unknown;
-        }
-      >;
-      // undefined
-      setHumidity: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 30, max: 99, unit_of_measurement: %, step: 1, mode: slider
-          humidity: number;
-        }
-      >;
-      // undefined
-      setFanMode: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example low @constraints  state: attribute: fan_mode, multiple: false
-          fan_mode: unknown;
-        }
-      >;
-      // undefined
-      setSwingMode: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example on @constraints  state: attribute: swing_mode, multiple: false
-          swing_mode: unknown;
-        }
-      >;
-      // undefined
-      setSwingHorizontalMode: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example on @constraints  state: attribute: swing_horizontal_mode, multiple: false
-          swing_horizontal_mode: unknown;
-        }
-      >;
-    };
-    number: {
-      // undefined
-      setValue: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example 42
-          value: string;
-        }
-      >;
-    };
-    humidifier: {
-      // undefined
-      turnOn: ServiceFunction<object, T, object>;
-      // undefined
-      turnOff: ServiceFunction<object, T, object>;
-      // undefined
-      toggle: ServiceFunction<object, T, object>;
-      // undefined
-      setMode: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example away @constraints  state: attribute: mode, multiple: false
-          mode: unknown;
-        }
-      >;
-      // undefined
-      setHumidity: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
-          humidity: number;
-        }
-      >;
-    };
-    lawnMower: {
-      // undefined
-      startMowing: ServiceFunction<object, T, object>;
-      // undefined
-      pause: ServiceFunction<object, T, object>;
-      // undefined
-      dock: ServiceFunction<object, T, object>;
     };
     alarmControlPanel: {
       // undefined
@@ -1009,39 +923,6 @@ declare module "@hakit/core" {
         {
           //  @example 1234
           code?: string;
-        }
-      >;
-    };
-    select: {
-      // undefined
-      selectFirst: ServiceFunction<object, T, object>;
-      // undefined
-      selectLast: ServiceFunction<object, T, object>;
-      // undefined
-      selectNext: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  boolean:
-          cycle?: boolean;
-        }
-      >;
-      // undefined
-      selectOption: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example 'Item A' @constraints  state: hide_states: unavailable,unknown, multiple: false
-          option: unknown;
-        }
-      >;
-      // undefined
-      selectPrevious: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  boolean:
-          cycle?: boolean;
         }
       >;
     };
@@ -1191,57 +1072,140 @@ declare module "@hakit/core" {
         }
       >;
     };
-    scene: {
-      // undefined
-      reload: ServiceFunction<object, T, object>;
-      // undefined
-      apply: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example light.kitchen: 'on' light.ceiling:   state: 'on'   brightness: 80  @constraints  object: multiple: false
-          entities: object;
-          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
-          transition?: number;
-        }
-      >;
-      // undefined
-      create: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example all_lights
-          scene_id: string;
-          //  @example light.tv_back_light: 'on' light.ceiling:   state: 'on'   brightness: 200  @constraints  object: multiple: false
-          entities?: object;
-          //  @example - light.ceiling - light.kitchen
-          snapshot_entities?: string;
-        }
-      >;
-      // undefined
-      delete: ServiceFunction<object, T, object>;
-      // undefined
-      turnOn: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 300, unit_of_measurement: seconds, step: 1, mode: slider
-          transition?: number;
-        }
-      >;
-    };
-    waterHeater: {
+    humidifier: {
       // undefined
       turnOn: ServiceFunction<object, T, object>;
       // undefined
       turnOff: ServiceFunction<object, T, object>;
       // undefined
-      setAwayMode: ServiceFunction<
+      toggle: ServiceFunction<object, T, object>;
+      // undefined
+      setMode: ServiceFunction<
         object,
         T,
         {
+          //  @example away @constraints  state: attribute: mode, multiple: false
+          mode: unknown;
+        }
+      >;
+      // undefined
+      setHumidity: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
+          humidity: number;
+        }
+      >;
+    };
+    switch: {
+      // undefined
+      turnOff: ServiceFunction<object, T, object>;
+      // undefined
+      turnOn: ServiceFunction<object, T, object>;
+      // undefined
+      toggle: ServiceFunction<object, T, object>;
+    };
+    update: {
+      // undefined
+      install: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example 1.0.0
+          version?: string;
           //  @constraints  boolean:
-          away_mode: boolean;
+          backup?: boolean;
+        }
+      >;
+      // undefined
+      skip: ServiceFunction<object, T, object>;
+      // undefined
+      clearSkipped: ServiceFunction<object, T, object>;
+    };
+    cover: {
+      // undefined
+      openCover: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example fast @constraints  state: attribute: speed, multiple: false
+          speed?: unknown;
+        }
+      >;
+      // undefined
+      closeCover: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example fast @constraints  state: attribute: speed, multiple: false
+          speed?: unknown;
+        }
+      >;
+      // undefined
+      setCoverPosition: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
+          position: number;
+          //  @example fast @constraints  state: attribute: speed, multiple: false
+          speed?: unknown;
+        }
+      >;
+      // undefined
+      stopCover: ServiceFunction<object, T, object>;
+      // undefined
+      toggle: ServiceFunction<object, T, object>;
+      // undefined
+      openCoverTilt: ServiceFunction<object, T, object>;
+      // undefined
+      closeCoverTilt: ServiceFunction<object, T, object>;
+      // undefined
+      stopCoverTilt: ServiceFunction<object, T, object>;
+      // undefined
+      setCoverTiltPosition: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 100, unit_of_measurement: %, step: 1, mode: slider
+          tilt_position: number;
+        }
+      >;
+      // undefined
+      toggleCoverTilt: ServiceFunction<object, T, object>;
+    };
+    lawnMower: {
+      // undefined
+      startMowing: ServiceFunction<object, T, object>;
+      // undefined
+      pause: ServiceFunction<object, T, object>;
+      // undefined
+      dock: ServiceFunction<object, T, object>;
+    };
+    climate: {
+      // undefined
+      turnOn: ServiceFunction<object, T, object>;
+      // undefined
+      turnOff: ServiceFunction<object, T, object>;
+      // undefined
+      toggle: ServiceFunction<object, T, object>;
+      // undefined
+      setHvacMode: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  state: hide_states: unavailable,unknown, multiple: false
+          hvac_mode?: unknown;
+        }
+      >;
+      // undefined
+      setPresetMode: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example away @constraints  state: attribute: preset_mode, multiple: false
+          preset_mode: unknown;
         }
       >;
       // undefined
@@ -1249,19 +1213,88 @@ declare module "@hakit/core" {
         object,
         T,
         {
-          //  @constraints  number: min: 0, max: 250, step: 0.5, mode: box, unit_of_measurement: °
-          temperature: number;
-          //  @example eco @constraints  state: hide_states: unavailable,unknown, multiple: false
-          operation_mode?: unknown;
+          //  @constraints  number: min: 0, max: 250, step: 0.1, mode: box
+          temperature?: number;
+          //
+          temperature_range?: object;
+          //  @constraints  state: hide_states: unavailable,unknown, multiple: false
+          hvac_mode?: unknown;
         }
       >;
       // undefined
-      setOperationMode: ServiceFunction<
+      setHumidity: ServiceFunction<
         object,
         T,
         {
-          //  @example eco @constraints  state: hide_states: unavailable,unknown, multiple: false
-          operation_mode: unknown;
+          //  @constraints  number: min: 30, max: 99, unit_of_measurement: %, step: 1, mode: slider
+          humidity: number;
+        }
+      >;
+      // undefined
+      setFanMode: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example low @constraints  state: attribute: fan_mode, multiple: false
+          fan_mode: unknown;
+        }
+      >;
+      // undefined
+      setSwingMode: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example on @constraints  state: attribute: swing_mode, multiple: false
+          swing_mode: unknown;
+        }
+      >;
+      // undefined
+      setSwingHorizontalMode: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example on @constraints  state: attribute: swing_horizontal_mode, multiple: false
+          swing_horizontal_mode: unknown;
+        }
+      >;
+    };
+    number: {
+      // undefined
+      setValue: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example 42
+          value: string;
+        }
+      >;
+    };
+    lock: {
+      // undefined
+      unlock: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example 1234
+          code?: string;
+        }
+      >;
+      // undefined
+      lock: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example 1234
+          code?: string;
+        }
+      >;
+      // undefined
+      open: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example 1234
+          code?: string;
         }
       >;
     };
@@ -1279,40 +1312,6 @@ declare module "@hakit/core" {
           entity_id?: string;
           //  @example light
           domain?: string;
-        }
-      >;
-    };
-    group: {
-      // undefined
-      reload: ServiceFunction<object, T, object>;
-      // undefined
-      set: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example test_group
-          object_id: string;
-          //  @example My test group
-          name?: string;
-          //  @example mdi:camera @constraints  icon:
-          icon?: string;
-          //  @example domain.entity_id1, domain.entity_id2
-          entities?: string;
-          //  @example domain.entity_id1, domain.entity_id2
-          add_entities?: string;
-          //  @example domain.entity_id1, domain.entity_id2
-          remove_entities?: string;
-          //  @constraints  boolean:
-          all?: boolean;
-        }
-      >;
-      // undefined
-      remove: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example test_group @constraints  object: multiple: false
-          object_id: object;
         }
       >;
     };
@@ -1354,6 +1353,40 @@ declare module "@hakit/core" {
         }
       >;
     };
+    group: {
+      // undefined
+      reload: ServiceFunction<object, T, object>;
+      // undefined
+      set: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example test_group
+          object_id: string;
+          //  @example My test group
+          name?: string;
+          //  @example mdi:camera @constraints  icon:
+          icon?: string;
+          //  @example domain.entity_id1, domain.entity_id2
+          entities?: string;
+          //  @example domain.entity_id1, domain.entity_id2
+          add_entities?: string;
+          //  @example domain.entity_id1, domain.entity_id2
+          remove_entities?: string;
+          //  @constraints  boolean:
+          all?: boolean;
+        }
+      >;
+      // undefined
+      remove: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example test_group @constraints  object: multiple: false
+          object_id: object;
+        }
+      >;
+    };
     script: {
       // Sets Tado presence mode to away when nobody in the household is home.
       1638709314016: ServiceFunction<object, T, object>;
@@ -1388,6 +1421,22 @@ declare module "@hakit/core" {
       // undefined
       reload: ServiceFunction<object, T, object>;
     };
+    inputBoolean: {
+      // undefined
+      reload: ServiceFunction<object, T, object>;
+      // undefined
+      turnOn: ServiceFunction<object, T, object>;
+      // undefined
+      turnOff: ServiceFunction<object, T, object>;
+      // undefined
+      toggle: ServiceFunction<object, T, object>;
+    };
+    inputButton: {
+      // undefined
+      reload: ServiceFunction<object, T, object>;
+      // undefined
+      press: ServiceFunction<object, T, object>;
+    };
     inputNumber: {
       // undefined
       reload: ServiceFunction<object, T, object>;
@@ -1404,22 +1453,6 @@ declare module "@hakit/core" {
       increment: ServiceFunction<object, T, object>;
       // undefined
       decrement: ServiceFunction<object, T, object>;
-    };
-    inputBoolean: {
-      // undefined
-      reload: ServiceFunction<object, T, object>;
-      // undefined
-      turnOn: ServiceFunction<object, T, object>;
-      // undefined
-      turnOff: ServiceFunction<object, T, object>;
-      // undefined
-      toggle: ServiceFunction<object, T, object>;
-    };
-    inputButton: {
-      // undefined
-      reload: ServiceFunction<object, T, object>;
-      // undefined
-      press: ServiceFunction<object, T, object>;
     };
     inputSelect: {
       // undefined
@@ -1504,19 +1537,8 @@ declare module "@hakit/core" {
         object,
         T,
         {
-          //  @constraints  number: min: 0, max: 9223372036854776000, mode: box, step: 1
+          //  @constraints  number: min: -9223372036854776000, max: 9223372036854776000, mode: box, step: 1
           value: number;
-        }
-      >;
-    };
-    text: {
-      // undefined
-      setValue: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example Hello world!
-          value: string;
         }
       >;
     };
@@ -1538,6 +1560,51 @@ declare module "@hakit/core" {
       turnOff: ServiceFunction<object, T, object>;
       // undefined
       toggle: ServiceFunction<object, T, object>;
+    };
+    weather: {
+      // undefined
+      getForecasts: ServiceFunction<
+        object,
+        T,
+        {
+          //
+          type: "daily" | "hourly" | "twice_daily";
+        }
+      >;
+    };
+    aiTask: {
+      // undefined
+      generateData: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example home summary
+          task_name: string;
+          //  @example Generate a funny notification that the garage door was left open
+          instructions: string;
+          //
+          entity_id?: string;
+          //  @example { 'name': { 'selector': { 'text': }, 'description': 'Name of the user', 'required': 'True' } } }, 'age': { 'selector': { 'number': }, 'description': 'Age of the user' } } @constraints  object: multiple: false
+          structure?: object;
+          //  @constraints  media: accept: *, multiple: true
+          attachments?: unknown;
+        }
+      >;
+      // undefined
+      generateImage: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example picture of a dog
+          task_name: string;
+          //  @example Generate a high quality square image of a dog on transparent background
+          instructions: string;
+          //
+          entity_id: string;
+          //  @constraints  media: accept: *, multiple: true
+          attachments?: unknown;
+        }
+      >;
     };
     assistSatellite: {
       // undefined
@@ -1592,34 +1659,6 @@ declare module "@hakit/core" {
         }
       >;
     };
-    update: {
-      // undefined
-      install: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example 1.0.0
-          version?: string;
-          //  @constraints  boolean:
-          backup?: boolean;
-        }
-      >;
-      // undefined
-      skip: ServiceFunction<object, T, object>;
-      // undefined
-      clearSkipped: ServiceFunction<object, T, object>;
-    };
-    weather: {
-      // undefined
-      getForecasts: ServiceFunction<
-        object,
-        T,
-        {
-          //
-          type: "daily" | "hourly" | "twice_daily";
-        }
-      >;
-    };
     time: {
       // undefined
       setValue: ServiceFunction<
@@ -1631,37 +1670,25 @@ declare module "@hakit/core" {
         }
       >;
     };
-    aiTask: {
+    text: {
       // undefined
-      generateData: ServiceFunction<
+      setValue: ServiceFunction<
         object,
         T,
         {
-          //  @example home summary
-          task_name: string;
-          //  @example Generate a funny notification that the garage door was left open
-          instructions: string;
-          //
-          entity_id?: string;
-          //  @example { 'name': { 'selector': { 'text': }, 'description': 'Name of the user', 'required': 'True' } } }, 'age': { 'selector': { 'number': }, 'description': 'Age of the user' } } @constraints  object: multiple: false
-          structure?: object;
-          //  @constraints  media: accept: *, multiple: true
-          attachments?: unknown;
+          //  @example Hello world!
+          value: string;
         }
       >;
+    };
+    datetime: {
       // undefined
-      generateImage: ServiceFunction<
+      setValue: ServiceFunction<
         object,
         T,
         {
-          //  @example picture of a dog
-          task_name: string;
-          //  @example Generate a high quality square image of a dog on transparent background
-          instructions: string;
-          //
-          entity_id: string;
-          //  @constraints  media: accept: *, multiple: true
-          attachments?: unknown;
+          //  @example 2023-10-07T21:35:22 @constraints  datetime:
+          datetime: string;
         }
       >;
     };
@@ -1687,105 +1714,73 @@ declare module "@hakit/core" {
         }
       >;
     };
-    datetime: {
+    sonos: {
       // undefined
-      setValue: ServiceFunction<
+      snapshot: ServiceFunction<
         object,
         T,
         {
-          //  @example 2023-10-07T21:35:22 @constraints  datetime:
-          datetime: string;
-        }
-      >;
-    };
-    shelly: {
-      // undefined
-      getKvsValue: ServiceFunction<
-        object,
-        T,
-        {
-          //
-          device_id: string;
-          //
-          key: string;
+          //  @constraints  boolean:
+          with_group?: boolean;
         }
       >;
       // undefined
-      setKvsValue: ServiceFunction<
+      restore: ServiceFunction<
         object,
         T,
         {
-          //
-          device_id: string;
-          //
-          key: string;
-          //  @constraints  object: multiple: false
-          value: object;
-        }
-      >;
-    };
-    radarr: {
-      // undefined
-      getMovies: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  config_entry: integration: radarr
-          entry_id: unknown;
+          //  @constraints  boolean:
+          with_group?: boolean;
         }
       >;
       // undefined
-      getQueue: ServiceFunction<
+      setSleepTimer: ServiceFunction<
         object,
         T,
         {
-          //  @constraints  config_entry: integration: radarr
-          entry_id: unknown;
-          //  @constraints  number: min: 0, max: 500, mode: box, step: 1
-          max_items?: number;
+          //  @constraints  number: min: 0, max: 7200, unit_of_measurement: seconds, step: 1, mode: slider
+          sleep_time?: number;
         }
       >;
-    };
-    inputText: {
       // undefined
-      reload: ServiceFunction<object, T, object>;
+      clearSleepTimer: ServiceFunction<object, T, object>;
       // undefined
-      setValue: ServiceFunction<
+      updateAlarm: ServiceFunction<
         object,
         T,
         {
-          //  @example This is an example text
-          value: string;
+          //  @constraints  number: min: 1, max: 1440, mode: box, step: 1
+          alarm_id: number;
+          //  @example 07:00 @constraints  time:
+          time?: string;
+          //  @constraints  number: min: 0, max: 1, step: 0.01, mode: slider
+          volume?: number;
+          //  @constraints  boolean:
+          enabled?: boolean;
+          //  @constraints  boolean:
+          include_linked_zones?: boolean;
         }
       >;
-    };
-    file: {
       // undefined
-      readFile: ServiceFunction<
+      playQueue: ServiceFunction<
         object,
         T,
         {
-          //  @example www/my_file.json
-          file_name?: string;
-          //  @example JSON
-          file_encoding?: "JSON" | "YAML";
+          //  @constraints  number: min: 0, max: 10000, mode: box, step: 1
+          queue_position?: number;
         }
       >;
-    };
-    zonneplanOne: {
-      // Refetch statistics from a given date until now, repairing any gaps or incorrect historical values.
-      fetchStatistics: ServiceFunction<
+      // undefined
+      removeFromQueue: ServiceFunction<
         object,
         T,
         {
-          // The data endpoint to refetch statistics for. @example electricity
-          endpoint: "electricity" | "gas";
-          // The date to start refetching from. Accepted formats: YYYYMMDD or YYYY-MM-DD. @example 2025-01-01
-          start_date: string;
-          // Optionally limit the refetch to a specific connection UUID. If omitted, all matching connections are updated (see last part of statistics_id: `zonneplan_one:electricity_delivered_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`).
-          connection_uuid?: string;
+          //  @constraints  number: min: 0, max: 10000, mode: box, step: 1
+          queue_position?: number;
         }
       >;
+      // undefined
+      getQueue: ServiceFunction<object, T, object>;
     };
     mqtt: {
       // undefined
@@ -1815,9 +1810,219 @@ declare module "@hakit/core" {
       // undefined
       reload: ServiceFunction<object, T, object>;
     };
-    commandLine: {
+    energyzero: {
+      // undefined
+      getGasPrices: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  config_entry: integration: energyzero
+          config_entry: unknown;
+          //  @constraints  boolean:
+          incl_vat: boolean;
+          //  @example 2023-01-01 00:00:00 @constraints  datetime:
+          start?: string;
+          //  @example 2023-01-01 00:00:00 @constraints  datetime:
+          end?: string;
+        }
+      >;
+      // undefined
+      getEnergyPrices: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  config_entry: integration: energyzero
+          config_entry: unknown;
+          //  @constraints  boolean:
+          incl_vat: boolean;
+          //  @example 2023-01-01 00:00:00 @constraints  datetime:
+          start?: string;
+          //  @example 2023-01-01 00:00:00 @constraints  datetime:
+          end?: string;
+        }
+      >;
+    };
+    inputText: {
       // undefined
       reload: ServiceFunction<object, T, object>;
+      // undefined
+      setValue: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example This is an example text
+          value: string;
+        }
+      >;
+    };
+    shelly: {
+      // undefined
+      getKvsValue: ServiceFunction<
+        object,
+        T,
+        {
+          //
+          device_id: string;
+          //
+          key: string;
+        }
+      >;
+      // undefined
+      setKvsValue: ServiceFunction<
+        object,
+        T,
+        {
+          //
+          device_id: string;
+          //
+          key: string;
+          //  @constraints  object: multiple: false
+          value: object;
+        }
+      >;
+    };
+    cast: {
+      // undefined
+      showLovelaceView: ServiceFunction<
+        object,
+        T,
+        {
+          //
+          entity_id: string;
+          //  @example lovelace-cast
+          dashboard_path?: string;
+          //  @example downstairs
+          view_path: string;
+        }
+      >;
+    };
+    hue: {
+      // undefined
+      hueActivateScene: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example Living Room
+          group_name?: string;
+          //  @example Energize
+          scene_name?: string;
+          //  @constraints  boolean:
+          dynamic?: boolean;
+        }
+      >;
+      // undefined
+      activateScene: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  number: min: 0, max: 3600, unit_of_measurement: seconds, step: 1, mode: slider
+          transition?: number;
+          //  @constraints  boolean:
+          dynamic?: boolean;
+          //
+          scene_customization?: object;
+        }
+      >;
+    };
+    inputDatetime: {
+      // undefined
+      reload: ServiceFunction<object, T, object>;
+      // undefined
+      setDatetime: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example '2019-04-20'
+          date?: string;
+          //  @example '05:04:20' @constraints  time:
+          time?: string;
+          //  @example '2019-04-20 05:04:20'
+          datetime?: string;
+          //  @constraints  number: min: 0, max: 9223372036854776000, mode: box, step: 1
+          timestamp?: number;
+        }
+      >;
+    };
+    wakeOnLan: {
+      // undefined
+      sendMagicPacket: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example aa:bb:cc:dd:ee:ff
+          mac: string;
+          //  @example 11:22:33:44:55:66
+          secureon_password?: string;
+          //  @example 192.168.255.255
+          broadcast_address?: string;
+          //  @constraints  number: min: 1, max: 65535, mode: box, step: 1
+          broadcast_port?: number;
+        }
+      >;
+    };
+    file: {
+      // undefined
+      readFile: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example www/my_file.json
+          file_name?: string;
+          //  @example JSON
+          file_encoding?: "JSON" | "YAML";
+        }
+      >;
+    };
+    forecastSolar: {
+      // undefined
+      getForecast: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  config_entry: integration: forecast_solar
+          config_entry: unknown;
+          //  @constraints  datetime:
+          start?: string;
+          //  @constraints  datetime:
+          end?: string;
+          //
+          resolution?: "raw" | "hourly";
+        }
+      >;
+    };
+    roborock: {
+      // undefined
+      getMaps: ServiceFunction<object, T, object>;
+      // undefined
+      getVacuumCurrentPosition: ServiceFunction<object, T, object>;
+      // undefined
+      setVacuumGotoPosition: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example 27500
+          x: string;
+          //  @example 32000
+          y: string;
+        }
+      >;
+      // undefined
+      setVacuumZonedCleaning: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example 28582
+          x1: string;
+          //  @example 21363
+          y1: string;
+          //  @example 27425
+          x2: string;
+          //  @example 22816
+          y2: string;
+          //  @constraints  number: min: 0, max: 2, step: 1, mode: slider
+          repeats: number;
+        }
+      >;
     };
     openaiConversation: {
       // undefined
@@ -1848,6 +2053,86 @@ declare module "@hakit/core" {
           quality?: "standard" | "hd";
           //  @example vivid
           style?: "vivid" | "natural";
+        }
+      >;
+    };
+    schedule: {
+      // undefined
+      reload: ServiceFunction<object, T, object>;
+      // undefined
+      getSchedule: ServiceFunction<object, T, object>;
+    };
+    radarr: {
+      // undefined
+      getMovies: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  config_entry: integration: radarr
+          entry_id: unknown;
+        }
+      >;
+      // undefined
+      getQueue: ServiceFunction<
+        object,
+        T,
+        {
+          //  @constraints  config_entry: integration: radarr
+          entry_id: unknown;
+          //  @constraints  number: min: 0, max: 500, mode: box, step: 1
+          max_items?: number;
+        }
+      >;
+    };
+    zonneplanOne: {
+      // Refetch statistics from a given date until now, repairing any gaps or incorrect historical values.
+      fetchStatistics: ServiceFunction<
+        object,
+        T,
+        {
+          // The data endpoint to refetch statistics for. @example electricity
+          endpoint: "electricity" | "gas";
+          // The date to start refetching from. Accepted formats: YYYYMMDD or YYYY-MM-DD. @example 2025-01-01
+          start_date: string;
+          // Optionally limit the refetch to a specific connection UUID. If omitted, all matching connections are updated (see last part of statistics_id: `zonneplan_one:electricity_delivered_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`).
+          connection_uuid?: string;
+        }
+      >;
+    };
+    webostv: {
+      // undefined
+      button: ServiceFunction<
+        object,
+        T,
+        {
+          //
+          entity_id: string;
+          //  @example LEFT
+          button: string;
+        }
+      >;
+      // undefined
+      command: ServiceFunction<
+        object,
+        T,
+        {
+          //
+          entity_id: string;
+          //  @example system.launcher/open
+          command: string;
+          //  @example target: https://www.google.com @constraints  object: multiple: false
+          payload?: object;
+        }
+      >;
+      // undefined
+      selectSoundOutput: ServiceFunction<
+        object,
+        T,
+        {
+          //
+          entity_id: string;
+          //  @example external_speaker
+          sound_output: string;
         }
       >;
     };
@@ -1930,182 +2215,9 @@ declare module "@hakit/core" {
         }
       >;
     };
-    schedule: {
+    commandLine: {
       // undefined
       reload: ServiceFunction<object, T, object>;
-      // undefined
-      getSchedule: ServiceFunction<object, T, object>;
-    };
-    webrtc: {
-      // undefined
-      createLink: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example fd0a53ca-e9ab-4e7a-86a2-441642b16ae1
-          link_id: string;
-          //  @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
-          url?: string;
-          //  @example camera.generic_stream
-          entity?: string;
-          //  @constraints  number: min: 0, max: 100, unit_of_measurement: times, step: 1, mode: slider
-          open_limit?: number;
-          //  @constraints  number: min: 0, max: 100000, unit_of_measurement: seconds, step: 1, mode: slider
-          time_to_live?: number;
-        }
-      >;
-      // undefined
-      dashCast: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example media_player.mibox4
-          entity_id: string;
-          //  @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
-          url?: string;
-          //  @example camera.generic_stream
-          entity?: string;
-          //  @constraints  object: multiple: false
-          extra?: object;
-          //  @constraints  boolean:
-          force?: boolean;
-          //  @example http://192.168.1.123:8123
-          hass_url?: string;
-        }
-      >;
-    };
-    wakeOnLan: {
-      // undefined
-      sendMagicPacket: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example aa:bb:cc:dd:ee:ff
-          mac: string;
-          //  @example 11:22:33:44:55:66
-          secureon_password?: string;
-          //  @example 192.168.255.255
-          broadcast_address?: string;
-          //  @constraints  number: min: 1, max: 65535, mode: box, step: 1
-          broadcast_port?: number;
-        }
-      >;
-    };
-    energyzero: {
-      // undefined
-      getGasPrices: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  config_entry: integration: energyzero
-          config_entry: unknown;
-          //  @constraints  boolean:
-          incl_vat: boolean;
-          //  @example 2023-01-01 00:00:00 @constraints  datetime:
-          start?: string;
-          //  @example 2023-01-01 00:00:00 @constraints  datetime:
-          end?: string;
-        }
-      >;
-      // undefined
-      getEnergyPrices: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  config_entry: integration: energyzero
-          config_entry: unknown;
-          //  @constraints  boolean:
-          incl_vat: boolean;
-          //  @example 2023-01-01 00:00:00 @constraints  datetime:
-          start?: string;
-          //  @example 2023-01-01 00:00:00 @constraints  datetime:
-          end?: string;
-        }
-      >;
-    };
-    hue: {
-      // undefined
-      hueActivateScene: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example Living Room
-          group_name?: string;
-          //  @example Energize
-          scene_name?: string;
-          //  @constraints  boolean:
-          dynamic?: boolean;
-        }
-      >;
-      // undefined
-      activateScene: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 3600, unit_of_measurement: seconds, step: 1, mode: slider
-          transition?: number;
-          //  @constraints  boolean:
-          dynamic?: boolean;
-          //
-          scene_customization?: object;
-        }
-      >;
-    };
-    webostv: {
-      // undefined
-      button: ServiceFunction<
-        object,
-        T,
-        {
-          //
-          entity_id: string;
-          //  @example LEFT
-          button: string;
-        }
-      >;
-      // undefined
-      command: ServiceFunction<
-        object,
-        T,
-        {
-          //
-          entity_id: string;
-          //  @example system.launcher/open
-          command: string;
-          //  @example target: https://www.google.com @constraints  object: multiple: false
-          payload?: object;
-        }
-      >;
-      // undefined
-      selectSoundOutput: ServiceFunction<
-        object,
-        T,
-        {
-          //
-          entity_id: string;
-          //  @example external_speaker
-          sound_output: string;
-        }
-      >;
-    };
-    uiLovelaceMinimalist: {
-      // Reload dashboard configuration for UI Lovelace Minimalist
-      reload: ServiceFunction<object, T, object>;
-    };
-    cast: {
-      // undefined
-      showLovelaceView: ServiceFunction<
-        object,
-        T,
-        {
-          //
-          entity_id: string;
-          //  @example lovelace-cast
-          dashboard_path?: string;
-          //  @example downstairs
-          view_path: string;
-        }
-      >;
     };
     musicAssistant: {
       // undefined
@@ -2132,6 +2244,8 @@ declare module "@hakit/core" {
           album?: string;
           //
           search_options?: object;
+          //  @example john
+          username?: string;
         }
       >;
       // undefined
@@ -2180,6 +2294,8 @@ declare module "@hakit/core" {
           album_type?: "album" | "single" | "compilation" | "ep" | "unknown";
           //  @example true @constraints  boolean:
           album_artists_only?: boolean;
+          //  @example john
+          username?: string;
         }
       >;
       // undefined
@@ -2239,127 +2355,6 @@ declare module "@hakit/core" {
       >;
       // undefined
       getQueue: ServiceFunction<object, T, object>;
-    };
-    sonos: {
-      // undefined
-      snapshot: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  boolean:
-          with_group?: boolean;
-        }
-      >;
-      // undefined
-      restore: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  boolean:
-          with_group?: boolean;
-        }
-      >;
-      // undefined
-      setSleepTimer: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 7200, unit_of_measurement: seconds, step: 1, mode: slider
-          sleep_time?: number;
-        }
-      >;
-      // undefined
-      clearSleepTimer: ServiceFunction<object, T, object>;
-      // undefined
-      updateAlarm: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 1, max: 1440, mode: box, step: 1
-          alarm_id: number;
-          //  @example 07:00 @constraints  time:
-          time?: string;
-          //  @constraints  number: min: 0, max: 1, step: 0.01, mode: slider
-          volume?: number;
-          //  @constraints  boolean:
-          enabled?: boolean;
-          //  @constraints  boolean:
-          include_linked_zones?: boolean;
-        }
-      >;
-      // undefined
-      playQueue: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 10000, mode: box, step: 1
-          queue_position?: number;
-        }
-      >;
-      // undefined
-      removeFromQueue: ServiceFunction<
-        object,
-        T,
-        {
-          //  @constraints  number: min: 0, max: 10000, mode: box, step: 1
-          queue_position?: number;
-        }
-      >;
-      // undefined
-      getQueue: ServiceFunction<object, T, object>;
-    };
-    roborock: {
-      // undefined
-      getMaps: ServiceFunction<object, T, object>;
-      // undefined
-      getVacuumCurrentPosition: ServiceFunction<object, T, object>;
-      // undefined
-      setVacuumGotoPosition: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example 27500
-          x: string;
-          //  @example 32000
-          y: string;
-        }
-      >;
-      // undefined
-      setVacuumZonedCleaning: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example 28582
-          x1: string;
-          //  @example 21363
-          y1: string;
-          //  @example 27425
-          x2: string;
-          //  @example 22816
-          y2: string;
-          //  @constraints  number: min: 0, max: 2, step: 1, mode: slider
-          repeats: number;
-        }
-      >;
-    };
-    inputDatetime: {
-      // undefined
-      reload: ServiceFunction<object, T, object>;
-      // undefined
-      setDatetime: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example '2019-04-20'
-          date?: string;
-          //  @example '05:04:20' @constraints  time:
-          time?: string;
-          //  @example '2019-04-20 05:04:20'
-          datetime?: string;
-          //  @constraints  number: min: 0, max: 9223372036854776000, mode: box, step: 1
-          timestamp?: number;
-        }
-      >;
     };
     trend: {
       // undefined
@@ -2510,62 +2505,6 @@ declare module "@hakit/core" {
           snooze_motion: boolean;
           // Will home base be snoozed? @constraints  boolean:
           snooze_homebase: boolean;
-        }
-      >;
-    };
-    googleAssistantSdk: {
-      // undefined
-      sendTextCommand: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example turn off kitchen TV
-          command?: string;
-          //  @example media_player.living_room_speaker
-          media_player?: string;
-        }
-      >;
-    };
-    calendar: {
-      // undefined
-      createEvent: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example Department Party
-          summary: string;
-          //  @example Meeting to provide technical review for 'Phoenix' design.
-          description?: string;
-          //  @example 2022-03-22 20:00:00 @constraints  datetime:
-          start_date_time?: string;
-          //  @example 2022-03-22 22:00:00 @constraints  datetime:
-          end_date_time?: string;
-          //  @example 2022-03-22 @constraints  date:
-          start_date?: string;
-          //  @example 2022-03-23 @constraints  date:
-          end_date?: string;
-          //  @example {'days': 2} or {'weeks': 2}
-          in?: object;
-          //  @example Conference Room - F123, Bldg. 002
-          location?: string;
-        }
-      >;
-      // undefined
-      getEvents: ServiceFunction<
-        object,
-        T,
-        {
-          //  @example 2022-03-22 20:00:00 @constraints  datetime:
-          start_date_time?: string;
-          //  @example 2022-03-22 22:00:00 @constraints  datetime:
-          end_date_time?: string;
-          //  @constraints  duration: enable_second: true
-          duration?: {
-            hours?: number;
-            days?: number;
-            minutes?: number;
-            seconds?: number;
-          };
         }
       >;
     };
@@ -2768,17 +2707,68 @@ declare module "@hakit/core" {
         }
       >;
     };
-    template: {
+    webrtc: {
       // undefined
+      createLink: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example fd0a53ca-e9ab-4e7a-86a2-441642b16ae1
+          link_id: string;
+          //  @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
+          url?: string;
+          //  @example camera.generic_stream
+          entity?: string;
+          //  @constraints  number: min: 0, max: 100, unit_of_measurement: times, step: 1, mode: slider
+          open_limit?: number;
+          //  @constraints  number: min: 0, max: 100000, unit_of_measurement: seconds, step: 1, mode: slider
+          time_to_live?: number;
+        }
+      >;
+      // undefined
+      dashCast: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example media_player.mibox4
+          entity_id: string;
+          //  @example rtsp://rtsp:12345678@192.168.1.123:554/av_stream/ch0
+          url?: string;
+          //  @example camera.generic_stream
+          entity?: string;
+          //  @constraints  object: multiple: false
+          extra?: object;
+          //  @constraints  boolean:
+          force?: boolean;
+          //  @example http://192.168.1.123:8123
+          hass_url?: string;
+        }
+      >;
+    };
+    uiLovelaceMinimalist: {
+      // Reload dashboard configuration for UI Lovelace Minimalist
       reload: ServiceFunction<object, T, object>;
     };
+    googleAssistantSdk: {
+      // undefined
+      sendTextCommand: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example turn off kitchen TV
+          command?: string;
+          //  @example media_player.living_room_speaker
+          media_player?: string;
+        }
+      >;
+    };
     tadoHijack: {
-      // Force immediate data refresh.
+      // undefined
       manualPoll: ServiceFunction<
         object,
         T,
         {
-          // Which data to refresh. Use with entity_id for a targeted single-entity fetch (saves API quota). Without entity_id, all entities of that type are refreshed.
+          //
           refresh_type?:
             | "all"
             | "zone"
@@ -2787,109 +2777,156 @@ declare module "@hakit/core" {
             | "away"
             | "capabilities"
             | "presence";
-          // Optional: restrict the refresh to a single entity (targeted fetch). Supported for: offsets, away, capabilities. Other types fall back to a full refresh.
+          //
           entity_id?: string;
-          // Optional: Target a specific Tado Home. If omitted and no entity_id is provided, applies to all Tado Homes. @constraints  config_entry: integration: tado_hijack
+          //  @constraints  config_entry: integration: tado_hijack
           config_entry?: unknown;
         }
       >;
-      // Restore Smart Schedule across all zones.
+      // undefined
       resumeAllSchedules: ServiceFunction<
         object,
         T,
         {
-          // Optional: Target a specific Tado Home. If omitted, applies to all Tado Homes. @constraints  config_entry: integration: tado_hijack
+          //  @constraints  config_entry: integration: tado_hijack
           config_entry?: unknown;
         }
       >;
-      // Turn off all zones instantly.
+      // undefined
       turnOffAllZones: ServiceFunction<
         object,
         T,
         {
-          // Optional: Target a specific Tado Home. If omitted, applies to all Tado Homes. @constraints  config_entry: integration: tado_hijack
+          //  @constraints  config_entry: integration: tado_hijack
           config_entry?: unknown;
         }
       >;
-      // Boost all zones to 25°C.
+      // undefined
       boostAllZones: ServiceFunction<
         object,
         T,
         {
-          // Optional: Target a specific Tado Home. If omitted, applies to all Tado Homes. @constraints  config_entry: integration: tado_hijack
+          //  @constraints  config_entry: integration: tado_hijack
           config_entry?: unknown;
         }
       >;
-      // Set a manual mode (overlay) with optional timer for Heating and AC zones.
+      // undefined
       setMode: ServiceFunction<
         object,
         T,
         {
-          // Any Tado zone entity (e.g. climate.living_room, switch.living_room_schedule). Device entities (e.g. TRV battery) will automatically resolve to their zone.
+          //
           entity_id: string;
-          // Operation mode: 'auto' (resume schedule), 'heat' (manual overlay), or 'off'.
+          //
           hvac_mode: "off" | "heat" | "auto";
-          // Duration in minutes after which the manual mode ends. @constraints  number: min: 1, max: 1440, unit_of_measurement: min, step: 1, mode: slider
+          //  @constraints  number: min: 1, max: 1440, unit_of_measurement: min, step: 1, mode: slider
           duration?: number;
-          // Termination mode: 'manual' (indefinite), 'next_block' (return to schedule at next time block), or 'presence' (until presence change).
+          //
           overlay: "manual" | "next_block" | "presence";
-          // Target temperature (optional, 5-30°C). @constraints  number: min: 5, max: 30, step: 0.1, unit_of_measurement: °C, mode: slider
+          //  @constraints  number: min: 5, max: 30, step: 0.1, unit_of_measurement: °C, mode: slider
           temperature?: number;
-          // Force immediate data refresh. Note: For permanent changes or 'Resume Schedule' (auto), this triggers immediately. For timed modes (duration), the refresh is deferred until the timer expires. @constraints  boolean:
+          //  @constraints  boolean:
           refresh_after: boolean;
         }
       >;
-      // Set a manual overlay for all heating and/or AC zones at once.
+      // undefined
       setModeAllZones: ServiceFunction<
         object,
         T,
         {
-          // Optional: Target a specific Tado Home. If omitted, applies to all Tado Homes. @constraints  config_entry: integration: tado_hijack
+          //  @constraints  config_entry: integration: tado_hijack
           config_entry?: unknown;
-          // Include all heating zones (Thermostats). @constraints  boolean:
+          //  @constraints  boolean:
           include_heating: boolean;
-          // Include all air conditioning zones. @constraints  boolean:
+          //  @constraints  boolean:
           include_ac: boolean;
-          // Operation mode: 'auto' (resume schedule), 'heat' (manual overlay), or 'off'.
+          //
           hvac_mode: "off" | "heat" | "auto";
-          // Duration in minutes after which the manual mode ends. @constraints  number: min: 1, max: 1440, unit_of_measurement: min, step: 1, mode: slider
+          //  @constraints  number: min: 1, max: 1440, unit_of_measurement: min, step: 1, mode: slider
           duration?: number;
-          // Termination mode: 'manual' (indefinite), 'next_block' (return to schedule at next time block), or 'presence' (until presence change).
+          //
           overlay: "manual" | "next_block" | "presence";
-          // Target temperature (will be automatically capped). @constraints  number: min: 5, max: 30, step: 0.1, unit_of_measurement: °C, mode: slider
+          //  @constraints  number: min: 5, max: 30, step: 0.1, unit_of_measurement: °C, mode: slider
           temperature?: number;
-          // Force immediate data refresh. Note: For permanent changes or 'Resume Schedule' (auto), this triggers immediately. For timed modes (duration), the refresh is deferred until the timer expires. @constraints  boolean:
+          //  @constraints  boolean:
           refresh_after: boolean;
         }
       >;
-      // Set a manual mode (overlay) with optional timer for Water Heater zones.
+      // undefined
       setWaterHeaterMode: ServiceFunction<
         object,
         T,
         {
-          // Any Tado Hijack water heater entity (e.g. water_heater.hot_water).
+          //
           entity_id: string;
-          // Operation mode: 'auto' (resume schedule), 'heat' (on), or 'off'.
+          //
           operation_mode: "off" | "heat" | "auto";
-          // Duration in minutes after which the manual mode ends. @constraints  number: min: 1, max: 1440, unit_of_measurement: min, step: 1, mode: slider
+          //  @constraints  number: min: 1, max: 1440, unit_of_measurement: min, step: 1, mode: slider
           duration?: number;
-          // Termination mode: 'manual' (indefinite), 'next_block' (return to schedule at next time block), or 'presence' (until presence change).
+          //
           overlay: "manual" | "next_block" | "presence";
-          // Target temperature (30-65°C). @constraints  number: min: 30, max: 65, step: 1, unit_of_measurement: °C, mode: slider
+          //  @constraints  number: min: 30, max: 65, step: 1, unit_of_measurement: °C, mode: slider
           temperature?: number;
-          // Force immediate data refresh. Note: For permanent changes or 'Resume Schedule' (auto), this triggers immediately. For timed modes (duration), the refresh is deferred until the timer expires. @constraints  boolean:
+          //  @constraints  boolean:
           refresh_after: boolean;
         }
       >;
-      // Upload a meter reading to Tado Energy IQ.
+      // undefined
       addMeterReading: ServiceFunction<
         object,
         T,
         {
-          // Tado Hijack configuration entry. @constraints  config_entry: integration: tado_hijack
+          //  @constraints  config_entry: integration: tado_hijack
           config_entry: unknown;
-          // Meter reading value (integer). @constraints  number: min: 0, max: 9999999, mode: box, step: 1
+          //  @constraints  number: min: 0, max: 9999999, mode: box, step: 1
           reading: number;
+        }
+      >;
+    };
+    template: {
+      // undefined
+      reload: ServiceFunction<object, T, object>;
+    };
+    calendar: {
+      // undefined
+      createEvent: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example Department Party
+          summary: string;
+          //  @example Meeting to provide technical review for 'Phoenix' design.
+          description?: string;
+          //  @example 2022-03-22 20:00:00 @constraints  datetime:
+          start_date_time?: string;
+          //  @example 2022-03-22 22:00:00 @constraints  datetime:
+          end_date_time?: string;
+          //  @example 2022-03-22 @constraints  date:
+          start_date?: string;
+          //  @example 2022-03-23 @constraints  date:
+          end_date?: string;
+          //  @example {'days': 2} or {'weeks': 2}
+          in?: object;
+          //  @example Conference Room - F123, Bldg. 002
+          location?: string;
+        }
+      >;
+      // undefined
+      getEvents: ServiceFunction<
+        object,
+        T,
+        {
+          //  @example 2022-03-22 20:00:00 @constraints  datetime:
+          start_date_time?: string;
+          //  @example 2022-03-22 22:00:00 @constraints  datetime:
+          end_date_time?: string;
+          //  @constraints  duration: enable_second: true
+          duration?: {
+            hours?: number;
+            days?: number;
+            minutes?: number;
+            seconds?: number;
+          };
         }
       >;
     };
@@ -3116,11 +3153,11 @@ declare module "@hakit/core" {
     names:
       | "conversation.home_assistant"
       | "event.backup_automatic_backup"
+      | "button.synchronize_devices"
       | "sensor.backup_backup_manager_state"
       | "sensor.backup_next_scheduled_automatic_backup"
       | "sensor.backup_last_successful_automatic_backup"
       | "sensor.backup_last_attempted_automatic_backup"
-      | "button.synchronize_devices"
       | "sensor.time"
       | "sensor.date"
       | "sensor.date_time"
@@ -3164,14 +3201,14 @@ declare module "@hakit/core" {
       | "zone.parents_claire"
       | "zone.frontliners"
       | "zone.de_keet"
-      | "input_number.garage_door_current_orientation"
-      | "input_number.garage_door_last_orientation"
-      | "input_number.cheapest_hour_average_price"
       | "input_boolean.minimalist_welcome_toggle"
       | "input_boolean.ventilation_request_shower"
       | "input_boolean.ventilation_request_toilet"
       | "input_boolean.cheapest_hour"
       | "input_select.airco_energie_modus"
+      | "input_number.garage_door_current_orientation"
+      | "input_number.garage_door_last_orientation"
+      | "input_number.cheapest_hour_average_price"
       | "zone.home"
       | "input_select.wled_live_override"
       | "person.rens"
@@ -3188,35 +3225,11 @@ declare module "@hakit/core" {
       | "sensor.sun_next_rising"
       | "sensor.sun_next_setting"
       | "binary_sensor.humidity_rising"
-      | "button.shelly_plus_1_reboot"
-      | "event.shellyplus1_a8032ab8a210_input_0"
-      | "switch.garage_door"
-      | "update.shelly_plus_1_firmware_update"
-      | "binary_sensor.zonnescherm_overheating"
-      | "button.zonnescherm_reboot"
-      | "cover.zonnescherm"
-      | "sensor.zonnescherm_power"
-      | "sensor.zonnescherm_energy"
-      | "button.wled_restart_2"
-      | "light.wled_2"
-      | "number.wled_speed_2"
-      | "number.wled_intensity_2"
-      | "select.wled_live_override_2"
-      | "select.wled_playlist_2"
-      | "select.wled_preset_2"
-      | "select.wled_color_palette_2"
-      | "sensor.wled_estimated_current_2"
-      | "sensor.wled_led_count_2"
-      | "sensor.wled_max_current_2"
-      | "sensor.wled_ip"
-      | "switch.wled_nightlight_2"
-      | "switch.wled_sync_send_2"
-      | "switch.wled_sync_receive_2"
-      | "switch.wled_reverse_2"
-      | "switch.wled_freeze"
-      | "update.wled_firmware_2"
+      | "camera.buienradar"
       | "binary_sensor.iphone_focus"
       | "binary_sensor.renss_iphone_kiosk_mode"
+      | "binary_sensor.renss_iphone_camera_motion"
+      | "binary_sensor.renss_iphone_kiosk_screensaver"
       | "device_tracker.iphone"
       | "notify.renss_iphone"
       | "sensor.iphone_sim_1"
@@ -3243,6 +3256,7 @@ declare module "@hakit/core" {
       | "sensor.renss_iphone_pressure"
       | "sensor.renss_iphone_kiosk_brightness"
       | "sensor.renss_iphone_kiosk_volume"
+      | "sensor.renss_iphone_camera_stream"
       | "device_tracker.galaxy_watch5_yr0h"
       | "notify.galaxy_watch5_yr0h"
       | "sensor.galaxy_watch5_yr0h_battery_level"
@@ -3263,65 +3277,6 @@ declare module "@hakit/core" {
       | "sensor.pixel_9_battery_level"
       | "sensor.pixel_9_battery_state"
       | "sensor.pixel_9_charger_type"
-      | "binary_sensor.radarr_health"
-      | "calendar.radarr"
-      | "sensor.radarr_disk_space_movies"
-      | "sensor.count_lights_on"
-      | "sensor.living_room_temperature"
-      | "sensor.living_room_humidity"
-      | "sensor.outside_temperature"
-      | "sensor.outside_humidity"
-      | "sensor.rain_incoming"
-      | "sensor.lg_channel"
-      | "sensor.date_and_time"
-      | "sensor.optimaal_airco_setpoint"
-      | "fan.mechanical_ventilation"
-      | "cover.garage_door_cover"
-      | "sensor.energy_prices"
-      | "camera.buienradar"
-      | "ai_task.openai_ai_task"
-      | "conversation.chatgpt"
-      | "stt.openai_stt"
-      | "tts.openai_tts"
-      | "switch.mini_graph_card_pre_release"
-      | "switch.card_mod_pre_release"
-      | "update.zonneplan_update"
-      | "update.simple_weather_card_update"
-      | "update.tado_hijack_update"
-      | "update.entso_e_transparency_platform_update"
-      | "update.layout_card_update"
-      | "update.hass_hue_icons_update"
-      | "update.mushroom_update"
-      | "update.mini_graph_card_update"
-      | "update.my_cards_bundle_update"
-      | "update.light_entity_card_update"
-      | "update.plex_recently_added_sensor_update"
-      | "update.auto_entities_update"
-      | "update.virtual_battery_update"
-      | "update.mini_media_player_update"
-      | "update.ui_lovelace_minimalist_update"
-      | "update.bambu_lab_update"
-      | "update.card_mod_update"
-      | "update.browser_mod_update"
-      | "update.hacs_update"
-      | "update.fontawesome_update"
-      | "update.state_switch_update"
-      | "update.eufy_security_update"
-      | "update.weather_radar_card_update"
-      | "update.button_card_update"
-      | "update.webrtc_camera_update"
-      | "update.kiosk_mode_update_2"
-      | "calendar.kantoor_sonarr"
-      | "sensor.sonarr_upcoming"
-      | "weather.huis"
-      | "sensor.energy_production_today"
-      | "sensor.energy_production_today_remaining"
-      | "sensor.energy_production_tomorrow"
-      | "sensor.power_highest_peak_time_today"
-      | "sensor.power_highest_peak_time_tomorrow"
-      | "sensor.power_production_now"
-      | "sensor.energy_current_hour"
-      | "sensor.energy_next_hour"
       | "sensor.energyzero_today_gas_current_hour_price"
       | "sensor.energyzero_today_gas_next_hour_price"
       | "sensor.energyzero_today_energy_current_hour_price"
@@ -3333,19 +3288,44 @@ declare module "@hakit/core" {
       | "sensor.energyzero_today_energy_lowest_price_time"
       | "sensor.energyzero_today_energy_percentage_of_max"
       | "sensor.energyzero_today_energy_hours_priced_equal_or_lower"
-      | "sensor.cpu_temperature"
-      | "sensor.dcp_l2530dw_status"
-      | "sensor.dcp_l2530dw_page_counter"
-      | "sensor.dcp_l2530dw_duplex_unit_page_counter"
-      | "sensor.dcp_l2530dw_drum_remaining_lifetime"
-      | "sensor.dcp_l2530dw_drum_remaining_pages"
-      | "sensor.dcp_l2530dw_drum_page_counter"
-      | "sensor.dcp_l2530dw_black_toner_remaining"
-      | "media_player.nest_wifi_kantoor"
-      | "media_player.tv"
       | "media_player.nest_hub"
+      | "binary_sensor.zonnescherm_overheating"
+      | "button.zonnescherm_reboot"
+      | "cover.zonnescherm"
+      | "sensor.zonnescherm_power"
+      | "sensor.zonnescherm_energy"
+      | "button.shelly_plus_1_reboot"
+      | "event.shellyplus1_a8032ab8a210_input_0"
+      | "switch.garage_door"
+      | "update.shelly_plus_1_firmware_update"
       | "media_player.google_home_mini"
+      | "button.wled_restart_2"
+      | "light.wled_2"
+      | "number.wled_speed_2"
+      | "number.wled_intensity_2"
+      | "select.wled_live_override_2"
+      | "select.wled_playlist_2"
+      | "select.wled_preset_2"
+      | "select.wled_color_palette_2"
+      | "sensor.wled_estimated_current_2"
+      | "sensor.wled_led_count_2"
+      | "sensor.wled_max_current_2"
+      | "sensor.wled_ip"
+      | "switch.wled_nightlight_2"
+      | "switch.wled_sync_send_2"
+      | "switch.wled_sync_receive_2"
+      | "switch.wled_reverse_2"
+      | "switch.wled_freeze"
+      | "update.wled_firmware_2"
+      | "media_player.nest_wifi_kantoor"
+      | "sensor.woonkamer_audio_input_format"
+      | "binary_sensor.woonkamer_microphone"
+      | "media_player.sonos_living_room"
+      | "media_player.tv"
       | "stt.elevenlabs_speech_to_text"
+      | "media_player.chromecast"
+      | "remote.chromecast"
+      | "weather.buienradar"
       | "binary_sensor.hue_motion_sensor_hal_motion"
       | "binary_sensor.tv_entertainment_configuration"
       | "binary_sensor.entertainmentruimte_1_entertainment_configuration"
@@ -3567,17 +3547,189 @@ declare module "@hakit/core" {
       | "switch.automation_mimic_presence"
       | "switch.automation_leaving_home"
       | "switch.automation_tuin_aan"
-      | "media_player.lg_c8"
-      | "sensor.neerslag_buienalarm_regen_data"
+      | "number.woonkamer_audio_delay"
+      | "number.woonkamer_bass"
+      | "number.living_room_balance"
+      | "number.woonkamer_treble"
+      | "number.woonkamer_sub_gain"
+      | "number.woonkamer_surround_level"
+      | "number.woonkamer_music_surround_level"
+      | "switch.sonos_woonkamer_crossfade"
+      | "switch.woonkamer_loudness"
+      | "switch.woonkamer_surround_music_full_volume"
+      | "switch.sonos_woonkamer_night_sound"
+      | "switch.sonos_woonkamer_speech_enhancement"
+      | "switch.sonos_woonkamer_subwoofer_enabled"
+      | "switch.sonos_woonkamer_surround_enabled"
+      | "switch.living_room_tv_autoplay"
+      | "switch.living_room_ungroup_on_autoplay"
+      | "tts.elevenlabs"
+      | "switch.mini_graph_card_pre_release"
+      | "switch.card_mod_pre_release"
+      | "update.browser_mod_update"
+      | "update.mushroom_update"
+      | "update.light_entity_card_update"
+      | "update.bambu_lab_update"
+      | "update.kiosk_mode_update_2"
+      | "update.auto_entities_update"
+      | "update.hacs_update"
+      | "update.simple_weather_card_update"
+      | "update.hass_hue_icons_update"
+      | "update.plex_recently_added_sensor_update"
+      | "update.tado_hijack_update"
+      | "update.eufy_security_update"
+      | "update.webrtc_camera_update"
+      | "update.layout_card_update"
+      | "update.button_card_update"
+      | "update.ui_lovelace_minimalist_update"
+      | "update.mini_graph_card_update"
+      | "update.virtual_battery_update"
+      | "update.entso_e_transparency_platform_update"
+      | "update.fontawesome_update"
+      | "update.zonneplan_update"
+      | "update.card_mod_update"
+      | "update.weather_radar_card_update"
+      | "update.state_switch_update"
+      | "update.mini_media_player_update"
+      | "update.my_cards_bundle_update"
+      | "sensor.energy_production_today"
+      | "sensor.energy_production_today_remaining"
+      | "sensor.energy_production_tomorrow"
+      | "sensor.power_highest_peak_time_today"
+      | "sensor.power_highest_peak_time_tomorrow"
+      | "sensor.power_production_now"
+      | "sensor.energy_current_hour"
+      | "sensor.energy_next_hour"
+      | "sensor.tado_thuis_api_status"
+      | "sensor.tado_thuis_home_mode"
+      | "sensor.tado_thuis_tado_generation"
+      | "sensor.tado_thuis_proxy_url"
+      | "sensor.tado_thuis_proxy_token"
+      | "sensor.tado_thuis_api_limit"
+      | "sensor.tado_thuis_api_remaining"
+      | "sensor.tado_thuis_outdoor_absolute_humidity"
+      | "sensor.tado_thuis_quota_reset_last"
+      | "sensor.tado_thuis_quota_reset_expected_window"
+      | "sensor.tado_thuis_quota_reset_next"
+      | "sensor.tado_thuis_quota_reset_pattern_confidence"
+      | "sensor.tado_thuis_quota_reset_history_count"
+      | "sensor.tado_thuis_current_zone_interval"
+      | "sensor.tado_thuis_min_interval_configured"
+      | "sensor.tado_thuis_min_interval_enforced"
+      | "sensor.tado_thuis_reduced_polling_interval"
+      | "sensor.tado_thuis_debounce_time"
+      | "sensor.tado_thuis_presence_poll_interval"
+      | "sensor.tado_thuis_slow_poll_interval"
+      | "sensor.tado_thuis_offset_poll_interval"
+      | "sensor.tado_thuis_auto_quota_percent"
+      | "sensor.tado_thuis_throttle_threshold"
+      | "sensor.tado_thuis_jitter_percent"
+      | "sensor.tado_thuis_reduced_polling_start"
+      | "sensor.tado_thuis_reduced_polling_end"
+      | "sensor.tado_thuis_suppress_redundant_calls"
+      | "sensor.tado_thuis_suppress_redundant_buttons"
+      | "sensor.woonkamer_heating_power"
+      | "sensor.woonkamer_zone_mode"
+      | "sensor.woonkamer_humidity"
+      | "sensor.woonkamer_dew_point"
+      | "sensor.woonkamer_mold_risk"
+      | "sensor.woonkamer_next_schedule_change"
+      | "sensor.zolder_next_schedule_change"
+      | "sensor.woonkamer_next_schedule_temperature"
+      | "sensor.zolder_next_schedule_temperature"
+      | "sensor.woonkamer_next_schedule_mode"
+      | "sensor.zolder_next_schedule_mode"
+      | "sensor.woonkamer_next_time_block_start"
+      | "sensor.zolder_next_time_block_start"
+      | "sensor.tado_thuis_log_level"
+      | "sensor.tado_thuis_quota_safety_reserve"
+      | "sensor.tado_thuis_outdoor_weather_entity"
+      | "sensor.tado_thuis_ventilation_ah_threshold"
+      | "sensor.tado_thuis_scan_interval"
+      | "switch.tado_thuis_polling_active"
+      | "switch.tado_thuis_reduced_polling_logic"
+      | "switch.woonkamer_schedule"
+      | "switch.woonkamer_dazzle_mode"
+      | "switch.woonkamer_early_start"
+      | "binary_sensor.tado_thuis_heating_demand"
+      | "binary_sensor.woonkamer_mold_risk"
+      | "binary_sensor.tado_thuis_reduced_polling_active"
+      | "binary_sensor.tado_thuis_call_jitter_enabled"
+      | "binary_sensor.tado_thuis_disable_polling_when_throttled"
+      | "binary_sensor.tado_thuis_refresh_after_resume"
+      | "binary_sensor.tado_thuis_full_cloud_mode"
+      | "binary_sensor.tado_thuis_feature_dew_point"
+      | "binary_sensor.tado_thuis_feature_mold_detection"
+      | "binary_sensor.tado_thuis_fetch_extended_data"
+      | "binary_sensor.tado_smart_thermostat_ru1795430400_battery"
+      | "binary_sensor.tado_smart_thermostat_ru1795430400_cloud_connection"
+      | "binary_sensor.tado_ib_thuis_cloud_connection"
+      | "binary_sensor.zolder_overlay"
+      | "binary_sensor.zolder_power"
+      | "binary_sensor.zolder_connectivity"
+      | "button.tado_thuis_refresh_metadata"
+      | "button.tado_thuis_refresh_offsets"
+      | "button.tado_thuis_refresh_away"
+      | "button.tado_thuis_refresh_presence"
+      | "button.tado_thuis_full_manual_poll"
+      | "button.tado_thuis_resume_all_schedules"
+      | "button.tado_thuis_turn_off_all_zones"
+      | "button.tado_thuis_boost_all_zones"
+      | "button.woonkamer_resume_schedule"
+      | "number.tado_smart_thermostat_ru1795430400_temperature_offset"
+      | "number.woonkamer_away_temperature"
+      | "number.zolder_target_temperature"
+      | "number.woonkamer_open_window_timeout"
+      | "select.tado_thuis_presence_mode"
+      | "select.woonkamer_temperature_source"
+      | "select.woonkamer_humidity_source"
+      | "select.zolder_temperature_source"
+      | "select.zolder_humidity_source"
+      | "water_heater.zolder"
       | "climate.henk"
       | "event.henk_notification"
       | "number.henk_sleep_timer"
       | "sensor.henk_humidity"
+      | "sensor.slaapkamer_henk_filter_remaining"
       | "sensor.henk_sleep_timer"
       | "sensor.henk_schedule_turn_on"
       | "sensor.henk_schedule_turn_off"
       | "switch.henk_power"
       | "switch.henk_lighting"
+      | "sensor.dcp_l2530dw_status"
+      | "sensor.dcp_l2530dw_page_counter"
+      | "sensor.dcp_l2530dw_duplex_unit_page_counter"
+      | "sensor.dcp_l2530dw_drum_remaining_lifetime"
+      | "sensor.dcp_l2530dw_drum_remaining_pages"
+      | "sensor.dcp_l2530dw_drum_page_counter"
+      | "sensor.dcp_l2530dw_black_toner_remaining"
+      | "sensor.count_lights_on"
+      | "sensor.living_room_temperature"
+      | "sensor.living_room_humidity"
+      | "sensor.outside_temperature"
+      | "sensor.outside_humidity"
+      | "sensor.rain_incoming"
+      | "sensor.lg_channel"
+      | "sensor.date_and_time"
+      | "sensor.optimaal_airco_setpoint"
+      | "fan.mechanical_ventilation"
+      | "cover.garage_door_cover"
+      | "sensor.energy_prices"
+      | "binary_sensor.morning"
+      | "binary_sensor.evening"
+      | "binary_sensor.night"
+      | "binary_sensor.afternoon"
+      | "ai_task.openai_ai_task"
+      | "conversation.chatgpt"
+      | "stt.openai_stt"
+      | "tts.openai_tts"
+      | "sensor.cpu_temperature"
+      | "sensor.slaapkamer_henk_energy_today"
+      | "sensor.neerslag_buienalarm_regen_data"
+      | "sensor.neerslag_buienradar_regen_data"
+      | "sensor.henk_energy_yesterday"
+      | "sensor.henk_energy_this_month"
+      | "weather.huis"
       | "button.lg_webos_tv_oled55c8pla_favorite_current_song_2"
       | "media_player.lg_webos_tv_oled55c8pla_2"
       | "button.renss_macbook_pro_favorite_current_song_2"
@@ -3586,19 +3738,64 @@ declare module "@hakit/core" {
       | "media_player.renss_macbook_pro_2"
       | "button.android_tv_favorite_current_song_2"
       | "media_player.android_tv_3"
-      | "button.living_room_favorite_current_song_2"
-      | "media_player.living_room_2"
+      | "button.macbook_pro_van_agxeed_favorite_current_song"
+      | "media_player.macbook_pro_van_agxeed"
       | "button.nest_wifi_kantoor_favorite_current_song"
       | "media_player.nest_wifi_kantoor_ma"
       | "button.google_home_mini_favorite_current_song"
       | "media_player.google_home_mini_ma"
-      | "button.nest_hub_favorite_current_song"
-      | "media_player.nest_hub_ma"
       | "button.woonkamer_tv_favorite_current_song"
       | "media_player.woonkamer_tv"
-      | "binary_sensor.morning"
-      | "media_player.chromecast"
-      | "remote.chromecast"
+      | "button.nest_hub_favorite_current_song"
+      | "media_player.nest_hub_ma"
+      | "button.living_room_favorite_current_song_2"
+      | "media_player.living_room_2"
+      | "select.home_assistant_voice_0969ee_assistant"
+      | "select.home_assistant_voice_0969ee_assistant_2"
+      | "select.home_assistant_voice_0969ee_finished_speaking_detection"
+      | "select.home_assistant_voice_0969ee_wake_word"
+      | "select.home_assistant_voice_0969ee_wake_word_2"
+      | "select.home_assistant_voice_0969ee_wake_word_sensitivity"
+      | "switch.home_assistant_voice_0969ee_mute"
+      | "switch.home_assistant_voice_0969ee_wake_sound"
+      | "update.home_assistant_voice_0969ee_home_assistant_voice_0969ee"
+      | "event.home_assistant_voice_0969ee_button_press"
+      | "light.home_assistant_voice_0969ee_led_ring"
+      | "media_player.home_assistant_voice_0969ee_media_player"
+      | "calendar.kantoor_sonarr"
+      | "sensor.sonarr_upcoming"
+      | "binary_sensor.xiaomi_pad_5_kiosk_mode"
+      | "binary_sensor.xiaomi_pad_5_plugged_in"
+      | "binary_sensor.xiaomi_pad_5_device_admin"
+      | "button.xiaomi_pad_5_restart_browser"
+      | "button.xiaomi_pad_5_restart_device"
+      | "button.xiaomi_pad_5_bring_to_foreground"
+      | "button.xiaomi_pad_5_send_to_background"
+      | "button.xiaomi_pad_5_load_start_url"
+      | "button.xiaomi_pad_5_clear_browser_cache"
+      | "button.xiaomi_pad_5_trigger_motion_activity"
+      | "camera.xiaomi_pad_5"
+      | "image.xiaomi_pad_5_screenshot"
+      | "media_player.xiaomi_pad_5"
+      | "notify.xiaomi_pad_5_overlay_message"
+      | "notify.xiaomi_pad_5_text_to_speech"
+      | "number.xiaomi_pad_5_screensaver_timer"
+      | "number.xiaomi_pad_5_screensaver_brightness"
+      | "number.xiaomi_pad_5_screen_off_timer"
+      | "number.xiaomi_pad_5_screen_brightness"
+      | "sensor.xiaomi_pad_5_battery"
+      | "sensor.xiaomi_pad_5_battery_temperature_2"
+      | "sensor.xiaomi_pad_5_current_page"
+      | "sensor.xiaomi_pad_5_screen_orientation"
+      | "sensor.xiaomi_pad_5_internal_storage_free_space"
+      | "sensor.xiaomi_pad_5_internal_storage_total_space"
+      | "sensor.xiaomi_pad_5_free_memory"
+      | "sensor.xiaomi_pad_5_total_memory"
+      | "switch.xiaomi_pad_5_screensaver"
+      | "switch.xiaomi_pad_5_maintenance_mode"
+      | "switch.xiaomi_pad_5_kiosk_lock"
+      | "switch.xiaomi_pad_5_motion_detection"
+      | "switch.xiaomi_pad_5_screen"
       | "binary_sensor.voordeur_motion_detected"
       | "binary_sensor.voordeur_person_detected"
       | "binary_sensor.garage_pet_detected"
@@ -3699,136 +3896,38 @@ declare module "@hakit/core" {
       | "button.garage_reset_alarm"
       | "image.voordeur_event_image"
       | "image.garage_event_image"
-      | "sensor.tado_thuis_api_status"
-      | "sensor.tado_thuis_home_mode"
-      | "sensor.tado_thuis_tado_generation"
-      | "sensor.tado_thuis_proxy_url"
-      | "sensor.tado_thuis_proxy_token"
-      | "sensor.tado_thuis_api_limit"
-      | "sensor.tado_thuis_api_remaining"
-      | "sensor.tado_thuis_outdoor_absolute_humidity"
-      | "sensor.tado_thuis_quota_reset_last"
-      | "sensor.tado_thuis_quota_reset_expected_window"
-      | "sensor.tado_thuis_quota_reset_next"
-      | "sensor.tado_thuis_quota_reset_pattern_confidence"
-      | "sensor.tado_thuis_quota_reset_history_count"
-      | "sensor.tado_thuis_current_zone_interval"
-      | "sensor.tado_thuis_min_interval_configured"
-      | "sensor.tado_thuis_min_interval_enforced"
-      | "sensor.tado_thuis_reduced_polling_interval"
-      | "sensor.tado_thuis_debounce_time"
-      | "sensor.tado_thuis_presence_poll_interval"
-      | "sensor.tado_thuis_slow_poll_interval"
-      | "sensor.tado_thuis_offset_poll_interval"
-      | "sensor.tado_thuis_auto_quota_percent"
-      | "sensor.tado_thuis_throttle_threshold"
-      | "sensor.tado_thuis_jitter_percent"
-      | "sensor.tado_thuis_reduced_polling_start"
-      | "sensor.tado_thuis_reduced_polling_end"
-      | "sensor.tado_thuis_suppress_redundant_calls"
-      | "sensor.tado_thuis_suppress_redundant_buttons"
-      | "sensor.woonkamer_heating_power"
-      | "sensor.woonkamer_zone_mode"
-      | "sensor.woonkamer_humidity"
-      | "sensor.woonkamer_dew_point"
-      | "sensor.woonkamer_mold_risk"
-      | "sensor.woonkamer_next_schedule_change"
-      | "sensor.zolder_next_schedule_change"
-      | "sensor.woonkamer_next_schedule_temperature"
-      | "sensor.zolder_next_schedule_temperature"
-      | "sensor.woonkamer_next_schedule_mode"
-      | "sensor.zolder_next_schedule_mode"
-      | "sensor.woonkamer_next_time_block_start"
-      | "sensor.zolder_next_time_block_start"
-      | "sensor.tado_thuis_log_level"
-      | "sensor.tado_thuis_quota_safety_reserve"
-      | "sensor.tado_thuis_outdoor_weather_entity"
-      | "sensor.tado_thuis_ventilation_ah_threshold"
-      | "sensor.tado_thuis_scan_interval"
-      | "switch.tado_thuis_polling_active"
-      | "switch.tado_thuis_reduced_polling_logic"
-      | "switch.woonkamer_schedule"
-      | "switch.woonkamer_dazzle_mode"
-      | "switch.woonkamer_early_start"
-      | "binary_sensor.woonkamer_mold_risk"
-      | "binary_sensor.tado_thuis_reduced_polling_active"
-      | "binary_sensor.tado_thuis_call_jitter_enabled"
-      | "binary_sensor.tado_thuis_disable_polling_when_throttled"
-      | "binary_sensor.tado_thuis_refresh_after_resume"
-      | "binary_sensor.tado_thuis_full_cloud_mode"
-      | "binary_sensor.tado_thuis_feature_dew_point"
-      | "binary_sensor.tado_thuis_feature_mold_detection"
-      | "binary_sensor.tado_thuis_fetch_extended_data"
-      | "binary_sensor.tado_smart_thermostat_ru1795430400_battery"
-      | "binary_sensor.tado_smart_thermostat_ru1795430400_cloud_connection"
-      | "binary_sensor.tado_ib_thuis_cloud_connection"
-      | "binary_sensor.zolder_overlay"
-      | "binary_sensor.zolder_power"
-      | "binary_sensor.zolder_connectivity"
-      | "button.tado_thuis_refresh_metadata"
-      | "button.tado_thuis_refresh_offsets"
-      | "button.tado_thuis_refresh_away"
-      | "button.tado_thuis_refresh_presence"
-      | "button.tado_thuis_full_manual_poll"
-      | "button.tado_thuis_resume_all_schedules"
-      | "button.tado_thuis_turn_off_all_zones"
-      | "button.tado_thuis_boost_all_zones"
-      | "button.woonkamer_resume_schedule"
-      | "number.tado_smart_thermostat_ru1795430400_temperature_offset"
-      | "number.woonkamer_away_temperature"
-      | "number.zolder_target_temperature"
-      | "number.woonkamer_open_window_timeout"
-      | "select.tado_thuis_presence_mode"
-      | "select.woonkamer_temperature_source"
-      | "select.woonkamer_humidity_source"
-      | "select.zolder_temperature_source"
-      | "select.zolder_humidity_source"
-      | "water_heater.zolder"
-      | "select.home_assistant_voice_0969ee_assistant"
-      | "select.home_assistant_voice_0969ee_assistant_2"
-      | "select.home_assistant_voice_0969ee_finished_speaking_detection"
-      | "select.home_assistant_voice_0969ee_wake_word"
-      | "select.home_assistant_voice_0969ee_wake_word_2"
-      | "light.home_assistant_voice_0969ee_led_ring"
-      | "switch.home_assistant_voice_0969ee_mute"
-      | "switch.home_assistant_voice_0969ee_wake_sound"
-      | "event.home_assistant_voice_0969ee_button_press"
-      | "update.home_assistant_voice_0969ee_home_assistant_voice_0969ee"
-      | "select.home_assistant_voice_0969ee_wake_word_sensitivity"
-      | "media_player.home_assistant_voice_0969ee_media_player"
-      | "binary_sensor.xiaomi_pad_5_kiosk_mode"
-      | "binary_sensor.xiaomi_pad_5_plugged_in"
-      | "binary_sensor.xiaomi_pad_5_device_admin"
-      | "button.xiaomi_pad_5_restart_browser"
-      | "button.xiaomi_pad_5_restart_device"
-      | "button.xiaomi_pad_5_bring_to_foreground"
-      | "button.xiaomi_pad_5_send_to_background"
-      | "button.xiaomi_pad_5_load_start_url"
-      | "button.xiaomi_pad_5_clear_browser_cache"
-      | "button.xiaomi_pad_5_trigger_motion_activity"
-      | "camera.xiaomi_pad_5"
-      | "image.xiaomi_pad_5_screenshot"
-      | "media_player.xiaomi_pad_5"
-      | "notify.xiaomi_pad_5_overlay_message"
-      | "notify.xiaomi_pad_5_text_to_speech"
-      | "number.xiaomi_pad_5_screensaver_timer"
-      | "number.xiaomi_pad_5_screensaver_brightness"
-      | "number.xiaomi_pad_5_screen_off_timer"
-      | "number.xiaomi_pad_5_screen_brightness"
-      | "sensor.xiaomi_pad_5_battery"
-      | "sensor.xiaomi_pad_5_battery_temperature_2"
-      | "sensor.xiaomi_pad_5_current_page"
-      | "sensor.xiaomi_pad_5_screen_orientation"
-      | "sensor.xiaomi_pad_5_foreground_app"
-      | "sensor.xiaomi_pad_5_internal_storage_free_space"
-      | "sensor.xiaomi_pad_5_internal_storage_total_space"
-      | "sensor.xiaomi_pad_5_free_memory"
-      | "sensor.xiaomi_pad_5_total_memory"
-      | "switch.xiaomi_pad_5_screensaver"
-      | "switch.xiaomi_pad_5_maintenance_mode"
-      | "switch.xiaomi_pad_5_kiosk_lock"
-      | "switch.xiaomi_pad_5_motion_detection"
-      | "switch.xiaomi_pad_5_screen"
+      | "media_player.lg_c8"
+      | "binary_sensor.radarr_health"
+      | "calendar.radarr"
+      | "sensor.radarr_disk_space_movies"
+      | "automation.leaving_home"
+      | "automation.coming_home"
+      | "automation.start_movie_mode"
+      | "automation.turn_off_movie_mode"
+      | "automation.turn_off_music_in_kitchen"
+      | "automation.driveway_monitor_camera"
+      | "automation.washing_machine"
+      | "automation.key_reminder"
+      | "automation.subwoofer_nightmode"
+      | "automation.low_battery_level_detection_notification_for_all_battery_sensors"
+      | "automation.lg_webos_tv_on"
+      | "automation.ventilatie_aan_tijdens_douchen"
+      | "automation.turn_off_hyperion_when_dimming_living_room_lights"
+      | "automation.morning_routine"
+      | "automation.ventilation_toilet"
+      | "automation.turn_on_garden_lights_when_door_opens"
+      | "automation.turn_off_garage_door_switch_in_the_night"
+      | "automation.close_sunshade"
+      | "automation.home_turn_on_garage_door_plug_when_manually_toggling_the_garage_door"
+      | "automation.home_wallpanel_charging"
+      | "automation.notify_about_failing_backups"
+      | "automation.toggle_christmas_tree_lights_on_via_niko_switch"
+      | "automation.toggle_front_window_cover"
+      | "automation.auto_stop_sleeping_noises"
+      | "automation.warn_about_open_garage_door"
+      | "automation.update_airco_energie_modus"
+      | "automation.sync_optimaal_setpoint_naar_airco_henk"
+      | "automation.zonneplan_cheapest_consecutive_hour_price_window"
       | "sensor.zonneplan_current_usage"
       | "sensor.zonneplan_current_usage_measured_at"
       | "sensor.zonneplan_status_message"
@@ -3874,63 +3973,6 @@ declare module "@hakit/core" {
       | "sensor.zonneplan_current_gas_tariff"
       | "sensor.zonneplan_next_gas_tariff"
       | "binary_sensor.zonneplan_one_omvormer_power_limit_active"
-      | "sensor.neerslag_buienradar_regen_data"
-      | "binary_sensor.evening"
-      | "binary_sensor.night"
-      | "binary_sensor.afternoon"
-      | "sensor.slaapkamer_henk_energy_today"
-      | "tts.elevenlabs"
-      | "automation.leaving_home"
-      | "automation.coming_home"
-      | "automation.start_movie_mode"
-      | "automation.turn_off_movie_mode"
-      | "automation.turn_off_music_in_kitchen"
-      | "automation.driveway_monitor_camera"
-      | "automation.washing_machine"
-      | "automation.key_reminder"
-      | "automation.subwoofer_nightmode"
-      | "automation.low_battery_level_detection_notification_for_all_battery_sensors"
-      | "automation.lg_webos_tv_on"
-      | "automation.ventilatie_aan_tijdens_douchen"
-      | "automation.turn_off_hyperion_when_dimming_living_room_lights"
-      | "automation.morning_routine"
-      | "automation.ventilation_toilet"
-      | "automation.turn_on_garden_lights_when_door_opens"
-      | "automation.turn_off_garage_door_switch_in_the_night"
-      | "automation.close_sunshade"
-      | "automation.home_turn_on_garage_door_plug_when_manually_toggling_the_garage_door"
-      | "automation.home_wallpanel_charging"
-      | "automation.notify_about_failing_backups"
-      | "automation.toggle_christmas_tree_lights_on_via_niko_switch"
-      | "automation.toggle_front_window_cover"
-      | "automation.auto_stop_sleeping_noises"
-      | "automation.warn_about_open_garage_door"
-      | "automation.update_airco_energie_modus"
-      | "automation.sync_optimaal_setpoint_naar_airco_henk"
-      | "automation.zonneplan_cheapest_consecutive_hour_price_window"
-      | "sensor.henk_energy_yesterday"
-      | "sensor.henk_energy_this_month"
-      | "sensor.henk_energy_last_month"
-      | "weather.buienradar"
-      | "sensor.woonkamer_audio_input_format"
-      | "binary_sensor.woonkamer_microphone"
-      | "media_player.sonos_living_room"
-      | "number.woonkamer_audio_delay"
-      | "number.woonkamer_bass"
-      | "number.living_room_balance"
-      | "number.woonkamer_treble"
-      | "number.woonkamer_sub_gain"
-      | "number.woonkamer_surround_level"
-      | "number.woonkamer_music_surround_level"
-      | "switch.sonos_woonkamer_crossfade"
-      | "switch.woonkamer_loudness"
-      | "switch.woonkamer_surround_music_full_volume"
-      | "switch.sonos_woonkamer_night_sound"
-      | "switch.sonos_woonkamer_speech_enhancement"
-      | "switch.sonos_woonkamer_subwoofer_enabled"
-      | "switch.sonos_woonkamer_surround_enabled"
-      | "switch.living_room_tv_autoplay"
-      | "switch.living_room_ungroup_on_autoplay"
       | "calendar.clairebongers_gmail_com"
       | "calendar.feestdagen_in_nederland"
       | "calendar.persoonlijk_rens"
@@ -3938,13 +3980,65 @@ declare module "@hakit/core" {
       | "calendar.family"
       | "calendar.rensknoors_gmail_com"
       | "calendar.birthdays"
-      | "climate.tado"
-      | "select.tado_smart_thermostat_ru1795430400_temperature_display_units"
-      | "sensor.tado_smart_thermostat_ru1795430400_current_temperature"
-      | "sensor.tado_smart_thermostat_ru1795430400_current_humidity"
+      | "binary_sensor.tesla_model_3_status"
+      | "binary_sensor.tesla_model_3_charge_cable"
+      | "binary_sensor.tesla_model_3_user_present"
+      | "binary_sensor.tesla_model_3_front_driver_window"
+      | "binary_sensor.tesla_model_3_front_passenger_window"
+      | "binary_sensor.tesla_model_3_rear_driver_window"
+      | "binary_sensor.tesla_model_3_rear_passenger_window"
+      | "binary_sensor.tesla_model_3_front_driver_door"
+      | "binary_sensor.tesla_model_3_rear_driver_door"
+      | "binary_sensor.tesla_model_3_front_passenger_door"
+      | "binary_sensor.tesla_model_3_rear_passenger_door"
+      | "button.tesla_model_3_wake"
+      | "button.tesla_model_3_flash_lights"
+      | "button.tesla_model_3_honk_horn"
+      | "button.tesla_model_3_keyless_driving"
+      | "button.tesla_model_3_play_fart"
+      | "button.tesla_model_3_homelink"
+      | "climate.tesla_model_3_climate"
+      | "cover.tesla_model_3_windows"
+      | "cover.tesla_model_3_charge_port_door"
+      | "cover.tesla_model_3_frunk"
+      | "cover.tesla_model_3_trunk"
+      | "device_tracker.tesla_model_3_location"
+      | "device_tracker.tesla_model_3_route"
+      | "lock.tesla_model_3_lock"
+      | "lock.tesla_model_3_charge_cable_lock"
+      | "media_player.tesla_model_3_media_player"
+      | "number.tesla_model_3_charge_current"
+      | "number.tesla_model_3_charge_limit"
+      | "select.tesla_model_3_seat_heater_front_left"
+      | "select.tesla_model_3_seat_heater_front_right"
+      | "select.tesla_model_3_steering_wheel_heater"
+      | "sensor.tesla_model_3_charging"
+      | "sensor.tesla_model_3_battery_level"
+      | "sensor.tesla_model_3_charge_energy_added"
+      | "sensor.tesla_model_3_charger_power"
+      | "sensor.tesla_model_3_charger_voltage"
+      | "sensor.tesla_model_3_charger_current"
+      | "sensor.tesla_model_3_charge_rate"
+      | "sensor.tesla_model_3_battery_range"
+      | "sensor.tesla_model_3_inside_temperature"
+      | "sensor.tesla_model_3_outside_temperature"
+      | "sensor.tesla_model_3_distance_to_arrival"
+      | "sensor.tesla_model_3_time_to_full_charge"
+      | "sensor.tesla_model_3_time_to_arrival"
+      | "switch.tesla_model_3_sentry_mode"
+      | "switch.tesla_model_3_auto_seat_climate_left"
+      | "switch.tesla_model_3_auto_seat_climate_right"
+      | "switch.tesla_model_3_auto_steering_wheel_heater"
+      | "switch.tesla_model_3_defrost"
+      | "switch.tesla_model_3_charge"
+      | "update.tesla_model_3_update"
+      | "sensor.henk_energy_last_month"
       | "button.tado_internet_bridge_ib0819992320_identify"
       | "button.tado_smart_thermostat_ru1795430400_identify"
-      | "binary_sensor.roborock_s8_dock_mop_drying"
+      | "sensor.tado_smart_thermostat_ru1795430400_current_temperature"
+      | "sensor.tado_smart_thermostat_ru1795430400_current_humidity"
+      | "select.tado_smart_thermostat_ru1795430400_temperature_display_units"
+      | "climate.tado"
       | "binary_sensor.roborock_s8_mop_attached"
       | "binary_sensor.roborock_s8_water_box_attached"
       | "binary_sensor.roborock_s8_water_shortage"
@@ -3979,6 +4073,7 @@ declare module "@hakit/core" {
       | "sensor.roborock_s8_current_room"
       | "switch.roborock_s8_child_lock"
       | "switch.roborock_s8_do_not_disturb"
+      | "switch.roborock_s8_dock_dust_emptying"
       | "time.roborock_s8_do_not_disturb_begin"
       | "time.roborock_s8_do_not_disturb_end"
       | "vacuum.roborock_s8"
@@ -4115,6 +4210,7 @@ declare module "@hakit/core" {
       | "sensor.front_window_cover_window_covering_type"
       | "sensor.zonneplan_one_omvormer_current_scenario"
       | "sensor.smartplug_3d_printer_power_factor"
+      | "sensor.xiaomi_pad_5_foreground_app"
       | "sensor.bambu_lab_p1s_active_tray"
       | "sensor.bambu_lab_p1s_active_tray_index"
       | "fan.bambu_lab_p1s_aux_fan"

@@ -10,7 +10,10 @@ const App = () => {
   const HASS_URL = import.meta.env.VITE_HASS_URL;
 
   return (
-    <HassConnect hassUrl={HASS_URL}>
+    <HassConnect
+      hassUrl={HASS_URL}
+      hassToken={import.meta.env.VITE_HA_LONG_LIVED_TOKEN}
+    >
       <QueryClientProvider client={queryClient}>
         <Router />
         <ToastContainer
