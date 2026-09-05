@@ -4,7 +4,7 @@ export default {
   theme: {
     fontFamily: {
       sans: [
-        'Poppins',
+        'Onest',
         'ui-sans-serif',
         'system-ui',
         '-apple-system',

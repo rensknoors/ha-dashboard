@@ -1,16 +1,26 @@
+import { clsx } from 'clsx';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+export type CardVariant = 'surface' | 'panel';
+
 export type CardProps = {
   children?: ReactNode;
+  variant?: CardVariant;
   onClick?: () => void;
   onLongPress?: () => void;
 } & React.HTMLAttributes<HTMLDivElement>;
+
+const variantClasses: Record<CardVariant, string> = {
+  surface: 'bento-card',
+  panel: 'bento-panel',
+};
 
 const Card = ({
   children,
   className,
   style,
+  variant = 'surface',
   onClick,
   onLongPress,
 }: CardProps) => {
@@ -41,20 +51,24 @@ const Card = ({
   };
 
   useEffect(() => {
-    return () => stopPressTimer(); // Clear any remaining timers on component unmount
+    return () => stopPressTimer();
   }, []);
 
   return (
     <div
       className={twMerge(
-        'overflow-hidden rounded-3xl bg-slate-800 px-4 py-4',
+        clsx(
+          'overflow-hidden px-6 py-6',
+          variantClasses[variant],
+          onClick && 'card-interactive'
+        ),
         className
       )}
       style={style}
       onClick={handleClick}
       onMouseDown={startPressTimer}
       onMouseUp={stopPressTimer}
-      onMouseLeave={stopPressTimer} // Stop timer if mouse leaves element
+      onMouseLeave={stopPressTimer}
       onTouchStart={startPressTimer}
       onTouchEnd={stopPressTimer}
     >
