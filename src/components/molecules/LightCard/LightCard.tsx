@@ -37,8 +37,8 @@ const LightCard = ({ entity, className, Icon, label }: LightCardProps) => {
       <Card
         className={twMerge(
           clsx(
-            'transition-background flex min-h-31.25 cursor-pointer flex-col border-0 duration-1000',
-            light.state === 'on' && 'bg-orange-300 text-black',
+            'transition-background flex min-h-31.25 cursor-pointer flex-col duration-1000',
+            light.state === 'on' && 'border-0 bg-orange-300 text-black',
             light.state === 'off' && 'text-white'
           ),
           className

@@ -36,6 +36,8 @@
   --color-tariff-normal: #3c5551;
   --color-tariff-high: #dc6731;
 
+  --color-nav-active: #e8def8;
+
   --radius-bento: 1.75rem;
   --radius-tile: 1.25rem;
 }

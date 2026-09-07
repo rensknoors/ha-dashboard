@@ -1,9 +1,8 @@
-import { Column } from '@hakit/components';
 import { useEntity } from '@hakit/core';
 import clsx from 'clsx';
 import { BiCar, BiSun } from 'react-icons/bi';
 import { BsLightningCharge } from 'react-icons/bs';
-import { RiDashboardHorizontalLine } from 'react-icons/ri';
+import { RiHomeLine } from 'react-icons/ri';
 
 import { Badge } from '@/components/atoms/Badge/Badge';
 import {
@@ -31,24 +30,24 @@ const useSideBarButtons = (): TileButtonProps[] => {
   return [
     {
       path: ROUTES.HOME,
-      icon: <RiDashboardHorizontalLine size={20} />,
-      background: 'bg-blue-300',
+      icon: <RiHomeLine size={22} />,
+      label: 'Home',
     },
     {
       path: ROUTES.ENERGY,
-      icon: <BsLightningCharge size={18} />,
-      background: 'bg-green-300',
+      icon: <BsLightningCharge size={20} />,
+      label: 'Energie',
       Badge: TariffGroupBadge,
     },
     {
       path: ROUTES.WEATHER,
-      icon: <BiSun size={20} />,
-      background: 'bg-amber-200',
+      icon: <BiSun size={22} />,
+      label: 'Weer',
     },
     {
       path: ROUTES.CAR,
-      icon: <BiCar size={20} />,
-      background: 'bg-white',
+      icon: <BiCar size={22} />,
+      label: 'Auto',
     },
   ];
 };
@@ -57,11 +56,13 @@ const SideBar = () => {
   const buttons = useSideBarButtons();
 
   return (
-    <Column className="flex">
-      {buttons.map((route, index) => (
-        <TileButton key={index} {...route} />
-      ))}
-    </Column>
+    <nav className="flex h-full flex-col items-center pr-6">
+      <div className="flex flex-col items-center gap-5">
+        {buttons.map((route) => (
+          <TileButton key={route.path} {...route} />
+        ))}
+      </div>
+    </nav>
   );
 };
 
