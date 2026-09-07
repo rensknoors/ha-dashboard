@@ -17,7 +17,8 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
   });
   const callService = useHass((state) => state.helpers.callService);
 
-  if (!entity || !media) return <Placeholder />;
+  const displayPlaceholder = !entity || !media;
+  if (displayPlaceholder) return <Placeholder />;
 
   const PlayPauseIcon = media.state === 'playing' ? BiPause : BiPlay;
 
@@ -37,7 +38,7 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
   return (
     <Card
       className={clsx(
-        'relative z-0 flex min-h-[180px] place-items-center gap-6',
+        'relative z-0 flex min-h-45 place-items-center gap-6 border-0',
         className
       )}
     >
