@@ -26,12 +26,6 @@ export default defineConfig({
       '@fullcalendar/daygrid': 'fullcalendar/daygrid',
       '@fullcalendar/interaction': 'fullcalendar/interaction',
       '@fullcalendar/list': 'fullcalendar/list',
-      'lottie-react': fileURLToPath(
-        new URL(
-          './node_modules/lottie-react/build/index.es.js',
-          import.meta.url
-        )
-      ),
     },
   },
 });

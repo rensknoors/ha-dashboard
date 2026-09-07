@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Lottie from 'lottie-react';
+import { Lottie } from 'lottie-react';
 import { BiErrorCircle, BiWind } from 'react-icons/bi';
 import { WiHumidity, WiRain } from 'react-icons/wi';
 
@@ -111,17 +111,13 @@ const Weather = () => {
         {/* Temperature overview */}
         <Card
           className={clsx(
-            'flex flex-1 items-center justify-between bg-gradient-to-br p-8',
+            'flex flex-1 items-center justify-between bg-linear-to-br p-8',
             gradientClasses
           )}
         >
           <div className="flex items-center gap-6">
             {animation && (
-              <Lottie
-                className="h-48 w-48"
-                animationData={animation}
-                loop={true}
-              />
+              <Lottie className="h-48 w-48" src={animation} autoplay loop />
             )}
             <div className="flex flex-col">
               <div className="text-6xl font-light text-white">

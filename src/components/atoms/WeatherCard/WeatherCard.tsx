@@ -1,4 +1,4 @@
-import Lottie from 'lottie-react';
+import { Lottie } from 'lottie-react';
 import { BiErrorCircle } from 'react-icons/bi';
 
 import { useWeather } from '@/api/weather/useWeather';
@@ -74,7 +74,7 @@ const WeatherCard = () => {
   return (
     <div className="flex items-center gap-4 text-3xl">
       {animation && (
-        <Lottie className="h-24 w-24" animationData={animation} loop={true} />
+        <Lottie className="h-24 w-24" src={animation} autoplay loop />
       )}
       <div className="flex flex-col">
         <div>{`${data?.current.temperature_2m} °C`}</div>
