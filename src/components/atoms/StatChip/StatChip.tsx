@@ -24,7 +24,7 @@ export type StatChipProps = {
 const StatChip = ({ tone, label, value, icon, className }: StatChipProps) => (
   <div
     className={twMerge(
-      clsx('stat-chip flex flex-col justify-between gap-5', toneClasses[tone]),
+      clsx('stat-chip flex flex-col justify-between gap-3', toneClasses[tone]),
       className
     )}
   >

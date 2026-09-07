@@ -13,9 +13,7 @@ export const StatRow = ({ label, value, sublabel, icon }: StatRowProps) => (
       {icon}
       <div className="min-w-0">
         <div className="text-sm font-medium">{label}</div>
-        {sublabel ? (
-          <div className="text-mist-muted truncate text-xs">{sublabel}</div>
-        ) : null}
+        {sublabel && <div className="text-mist-muted text-xs">{sublabel}</div>}
       </div>
     </div>
     <div className="shrink-0 text-sm font-semibold tabular-nums">{value}</div>
