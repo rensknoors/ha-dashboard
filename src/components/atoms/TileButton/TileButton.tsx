@@ -5,27 +5,23 @@ import { NavLink } from 'react-router-dom';
 export interface TileButtonProps {
   path: string;
   icon: ReactElement;
-  background: string;
+  label: string;
   Badge?: ComponentType;
 }
 
-/**
- * @param path path to the route
- * @param icon icon component
- * @param background tailwindcss color classes
- * @param Badge badge text
- */
-const TileButton = ({ path, icon, background, Badge }: TileButtonProps) => {
+const TileButton = ({ path, icon, label, Badge }: TileButtonProps) => {
   return (
     <NavLink
       to={path}
+      end
+      aria-label={label}
       className={({ isActive }) =>
         clsx(
-          'relative m-2 flex aspect-square w-16 place-content-center place-items-center rounded-3xl text-black transition-all duration-200',
-          background,
-          !isActive &&
-            'bg-[radial-gradient(circle,rgba(0,0,0,0.1),rgba(0,0,0,0.4))]',
-          isActive && 'scale-105'
+          'relative flex size-11 items-center justify-center rounded-2xl transition-colors duration-200',
+          'focus-visible:ring-mist/40 focus-visible:ring-2 focus-visible:outline-none',
+          isActive
+            ? 'bg-nav-active text-canvas'
+            : 'text-mist-muted hover:text-mist'
         )
       }
     >

@@ -6,7 +6,9 @@ type BadgeProps = {
 
 const Badge = ({ text, className }: BadgeProps) => {
   return (
-    <div className={twMerge('min-h-6 min-w-6 rounded-full px-2', className)}>
+    <div
+      className={twMerge('min-h-2.5 min-w-2.5 rounded-full px-1', className)}
+    >
       {text}
     </div>
   );
