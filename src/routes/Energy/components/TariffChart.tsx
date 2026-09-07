@@ -147,6 +147,7 @@ export const TariffChart = ({
       width="100%"
       height="100%"
       responsive
+      accessibilityLayer={false}
       margin={{ top: 12, right: 12, left: 0, bottom: 0 }}
     >
       <defs>

@@ -59,6 +59,11 @@ body {
   min-height: 100vh;
 }
 
+.recharts-wrapper *:focus,
+.recharts-wrapper *:focus-visible {
+  outline: none !important;
+}
+
 @layer components {
   .centered-row {
     @apply my-4 flex w-full justify-center first:mt-0 last:mb-0;
