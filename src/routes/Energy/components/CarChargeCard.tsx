@@ -13,25 +13,21 @@ interface CarChargeCardProps {
 
 const FALLBACK: Record<
   Exclude<ChargeWindow['status'], 'ready'>,
-  { label: string; value: string; sublabel: string }
+  { value: string; sublabel: string }
 > = {
   full: {
-    label: 'Tesla laden',
     value: 'Accu vol',
     sublabel: 'Geen laadvenster nodig',
   },
   away: {
-    label: 'Tesla laden',
     value: 'Niet thuis',
     sublabel: 'Auto niet thuis',
   },
   unplugged: {
-    label: 'Tesla laden',
     value: 'Niet aangesloten',
     sublabel: 'Kabel niet aangesloten',
   },
   unavailable: {
-    label: 'Tesla laden',
     value: 'Onbekend',
     sublabel: 'Geen laadvenster beschikbaar',
   },
@@ -43,6 +39,7 @@ const getContent = (
   if (chargeWindow.status !== 'ready' || chargeWindow.startsAt === null) {
     return {
       icon: <BiCar size={14} />,
+      label: 'Tesla',
       ...FALLBACK[
         chargeWindow.status === 'ready' ? 'unavailable' : chargeWindow.status
       ],
@@ -53,7 +50,7 @@ const getContent = (
 
   return {
     icon: <BiTimeFive size={14} />,
-    label: 'Tesla ingepland',
+    label: `Tesla ${chargeWindow.batteryLevel}%`,
     value: formatClock(chargeWindow.startsAt),
     sublabel: `bespaart ${formatCurrency(chargeWindow.savingsVsNow)}${
       solarPercent > 0 ? ` · ${solarPercent}% zon` : ''

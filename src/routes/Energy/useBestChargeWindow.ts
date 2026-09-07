@@ -6,7 +6,7 @@ import { parseNumber } from '@/utils/parseNumber';
 import { TariffPoint } from './types';
 import { useSolarForecast } from './useSolarForecast';
 
-const CAR_BATTERY_KWH = 57.5;
+const CAR_BATTERY_KWH = 57;
 const CHARGE_POWER_KW = 11;
 const QUARTER_HOURS = 0.25;
 
@@ -15,6 +15,7 @@ export type ChargeWindowStatus =
 
 export interface ChargeWindow {
   status: ChargeWindowStatus;
+  batteryLevel: number;
   startsAt: Date | null;
   endsAt: Date | null;
   cost: number;
@@ -29,6 +30,7 @@ interface UseBestChargeWindowArgs {
 
 const emptyWindow = (status: ChargeWindowStatus): ChargeWindow => ({
   status,
+  batteryLevel: 0,
   startsAt: null,
   endsAt: null,
   cost: 0,
@@ -117,6 +119,7 @@ export const useBestChargeWindow = ({
 
     return {
       status: 'ready',
+      batteryLevel: batteryLevel,
       startsAt: upcoming[bestStart].startsAt,
       endsAt: new Date(last.startsAt.getTime() + 15 * 60 * 1000),
       cost: best.cost,
