@@ -5,7 +5,7 @@ import { TileButton, TileButtonProps } from './TileButton';
 
 const mockProps: TileButtonProps = {
   background: 'bg-blue-300',
-  icon: 'mdi:home',
+  icon: <div>Home</div>,
   path: '/home',
 };
 

@@ -19,7 +19,7 @@ const GraphCard = ({ entity, label, unit }: GraphCardProps) => {
   });
 
   return (
-    <Card className="relative flex flex-col place-items-start bg-slate-400 text-black">
+    <Card className="relative flex flex-col place-items-start border-0 bg-slate-400 text-black">
       <Label className="mb-6 text-slate-400">
         {label ?? attributes.friendly_name}
       </Label>

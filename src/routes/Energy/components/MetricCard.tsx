@@ -1,3 +1,4 @@
+import { clsx } from 'clsx';
 import { ReactNode } from 'react';
 
 import { Card, CardVariant } from '@/components/atoms/Card/Card';
@@ -14,6 +15,7 @@ const iconTone: Record<CardVariant, string | undefined> = {
 };
 
 interface MetricCardProps {
+  className?: string;
   icon: ReactNode;
   label: string;
   value: ReactNode;
@@ -22,13 +24,17 @@ interface MetricCardProps {
 }
 
 export const MetricCard = ({
+  className,
   icon,
   label,
   value,
   sublabel,
   variant = 'surface',
 }: MetricCardProps) => (
-  <Card variant={variant} className="flex items-center gap-4 px-4 py-3">
+  <Card
+    variant={variant}
+    className={clsx('flex items-center gap-4 px-4 py-3', className)}
+  >
     <IconBadge size={28} className={iconTone[variant]}>
       {icon}
     </IconBadge>

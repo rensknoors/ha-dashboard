@@ -1,6 +1,9 @@
 import { Column } from '@hakit/components';
 import { useEntity } from '@hakit/core';
 import clsx from 'clsx';
+import { BiCar, BiSun } from 'react-icons/bi';
+import { BsLightningCharge } from 'react-icons/bs';
+import { RiDashboardHorizontalLine } from 'react-icons/ri';
 
 import { Badge } from '@/components/atoms/Badge/Badge';
 import {
@@ -28,23 +31,23 @@ const useSideBarButtons = (): TileButtonProps[] => {
   return [
     {
       path: ROUTES.HOME,
-      icon: 'mdi:tablet-dashboard',
+      icon: <RiDashboardHorizontalLine size={20} />,
       background: 'bg-blue-300',
     },
     {
       path: ROUTES.ENERGY,
-      icon: 'mdi:lightning-bolt',
+      icon: <BsLightningCharge size={18} />,
       background: 'bg-green-300',
       Badge: TariffGroupBadge,
     },
     {
       path: ROUTES.WEATHER,
-      icon: 'mdi:weather-partly-cloudy',
+      icon: <BiSun size={20} />,
       background: 'bg-amber-200',
     },
     {
-      path: ROUTES.VACUUM,
-      icon: 'mdi:vacuum',
+      path: ROUTES.CAR,
+      icon: <BiCar size={20} />,
       background: 'bg-white',
     },
   ];

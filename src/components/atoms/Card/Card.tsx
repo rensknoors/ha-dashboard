@@ -58,7 +58,7 @@ const Card = ({
     <div
       className={twMerge(
         clsx(
-          'border-surface-elevated overflow-hidden border px-6 py-6',
+          'border-surface-border overflow-hidden border px-6 py-6',
           variantClasses[variant],
           onClick && 'card-interactive'
         ),

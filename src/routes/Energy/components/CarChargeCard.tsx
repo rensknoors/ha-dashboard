@@ -59,5 +59,9 @@ const getContent = (
 };
 
 export const CarChargeCard = ({ chargeWindow }: CarChargeCardProps) => (
-  <MetricCard variant="panel" {...getContent(chargeWindow)} />
+  <MetricCard
+    className="border-0"
+    variant="panel"
+    {...getContent(chargeWindow)}
+  />
 );

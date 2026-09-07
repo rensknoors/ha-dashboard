@@ -1,6 +1,6 @@
 export const ROUTES = {
   HOME: '/',
-  VACUUM: '/vacuum',
+  CAR: '/car',
   WEATHER: '/weather',
   ENERGY: '/energy',
 };

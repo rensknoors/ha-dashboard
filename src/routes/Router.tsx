@@ -2,10 +2,10 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import { ErrorPage } from '@/routes/ErrorPage/ErrorPage';
 
+import { Car } from './Car/Car';
 import { Energy } from './Energy/Energy';
 import { Home } from './Home/Home';
 import { Root } from './Root';
-import { Vacuum } from './Vacuum/Vacuum';
 import { Weather } from './Weather/Weather';
 import { ROUTES } from './routes';
 
@@ -20,16 +20,16 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: ROUTES.VACUUM,
-        element: <Vacuum />,
+        path: ROUTES.ENERGY,
+        element: <Energy />,
       },
       {
         path: ROUTES.WEATHER,
         element: <Weather />,
       },
       {
-        path: ROUTES.ENERGY,
-        element: <Energy />,
+        path: ROUTES.CAR,
+        element: <Car />,
       },
     ],
   },
