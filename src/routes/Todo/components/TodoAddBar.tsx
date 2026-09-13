@@ -4,8 +4,6 @@ import { BiPlus } from 'react-icons/bi';
 
 import { IconBadge } from '@/components/atoms/IconBadge/IconBadge';
 
-import { TODO_COPY } from '../copy.nl';
-
 interface TodoAddBarProps {
   isPending: boolean;
   onAdd: (summary: string) => void;
@@ -30,7 +28,7 @@ export const TodoAddBar = ({ isPending, onAdd }: TodoAddBarProps) => {
       <input
         value={value}
         onChange={(event) => setValue(event.target.value)}
-        placeholder={TODO_COPY.addPlaceholder}
+        placeholder="Nieuw item toevoegen..."
         disabled={isPending}
         className={clsx(
           'bg-surface-elevated text-mist placeholder:text-mist-muted',
@@ -41,7 +39,7 @@ export const TodoAddBar = ({ isPending, onAdd }: TodoAddBarProps) => {
       <button
         type="submit"
         disabled={isPending || !value.trim()}
-        aria-label={TODO_COPY.addItem}
+        aria-label="Item toevoegen"
         className={clsx(
           'shrink-0 transition-opacity disabled:cursor-not-allowed disabled:opacity-40',
           'focus-visible:ring-nav-active/40 rounded-full focus-visible:ring-2 focus-visible:outline-none'

@@ -1,6 +1,5 @@
 import { BiBell } from 'react-icons/bi';
 
-import { TODO_COPY } from './copy.nl';
 import { TodoListCard } from './components/TodoListCard';
 import { useTodoItems } from './useTodoItems';
 
@@ -35,9 +34,9 @@ export const TodoListPage = () => {
   return (
     <div className="text-mist flex h-full w-full">
       <TodoListCard
-        title={TODO_COPY.reminders.title}
-        subtitle={TODO_COPY.reminders.subtitle}
-        emptyLabel={TODO_COPY.reminders.emptyLabel}
+        title="Herinneringen"
+        subtitle="Taken en afspraken om niet te vergeten"
+        emptyLabel="Geen herinneringen"
         Icon={BiBell}
         open={open}
         completed={completed}
