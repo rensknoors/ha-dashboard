@@ -1,6 +1,6 @@
 import { useEntity } from '@hakit/core';
 import clsx from 'clsx';
-import { BiCar, BiSun } from 'react-icons/bi';
+import { BiBell, BiCar, BiSun } from 'react-icons/bi';
 import { BsLightningCharge } from 'react-icons/bs';
 import { RiHomeLine } from 'react-icons/ri';
 
@@ -9,7 +9,27 @@ import {
   TileButton,
   TileButtonProps,
 } from '@/components/atoms/TileButton/TileButton';
+import { TODO_COPY } from '@/routes/Todo/copy.nl';
 import { ROUTES } from '@/routes/routes';
+
+const REMINDERS_ENTITY = 'todo.reminders' as const;
+
+const TodoCountBadge = () => {
+  const entity = useEntity(REMINDERS_ENTITY);
+  const parsedCount = parseInt(entity.state, 10);
+  const count = Number.isNaN(parsedCount) ? 0 : parsedCount;
+
+  if (count === 0) {
+    return null;
+  }
+
+  return (
+    <Badge
+      text={count > 99 ? '99+' : String(count)}
+      className="bg-tariff-high absolute -top-1 -right-1 text-white"
+    />
+  );
+};
 
 const useSideBarButtons = (): TileButtonProps[] => {
   const tarriffGroupEntity = useEntity('sensor.zonneplan_current_tariff_group');
@@ -26,6 +46,8 @@ const useSideBarButtons = (): TileButtonProps[] => {
       />
     );
   };
+
+  const RemindersBadge = () => <TodoCountBadge />;
 
   return [
     {
@@ -48,6 +70,12 @@ const useSideBarButtons = (): TileButtonProps[] => {
       path: ROUTES.CAR,
       icon: <BiCar size={22} />,
       label: 'Auto',
+    },
+    {
+      path: ROUTES.REMINDERS,
+      icon: <BiBell size={20} />,
+      label: TODO_COPY.reminders.navLabel,
+      Badge: RemindersBadge,
     },
   ];
 };
