@@ -3,4 +3,5 @@ export const ROUTES = {
   CAR: '/car',
   WEATHER: '/weather',
   ENERGY: '/energy',
+  REMINDERS: '/reminders',
 };

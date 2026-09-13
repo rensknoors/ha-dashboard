@@ -5,6 +5,7 @@ import { ErrorPage } from '@/routes/ErrorPage/ErrorPage';
 import { Car } from './Car/Car';
 import { Energy } from './Energy/Energy';
 import { Home } from './Home/Home';
+import { Reminders } from './Reminders/Reminders';
 import { Root } from './Root';
 import { Weather } from './Weather/Weather';
 import { ROUTES } from './routes';
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.CAR,
         element: <Car />,
+      },
+      {
+        path: ROUTES.REMINDERS,
+        element: <Reminders />,
       },
     ],
   },
