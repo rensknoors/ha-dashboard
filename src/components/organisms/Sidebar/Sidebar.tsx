@@ -9,7 +9,6 @@ import {
   TileButton,
   TileButtonProps,
 } from '@/components/atoms/TileButton/TileButton';
-import { TODO_COPY } from '@/routes/Todo/copy.nl';
 import { ROUTES } from '@/routes/routes';
 
 const REMINDERS_ENTITY = 'todo.reminders' as const;
@@ -74,7 +73,7 @@ const useSideBarButtons = (): TileButtonProps[] => {
     {
       path: ROUTES.REMINDERS,
       icon: <BiBell size={20} />,
-      label: TODO_COPY.reminders.navLabel,
+      label: 'Herinneringen',
       Badge: RemindersBadge,
     },
   ];

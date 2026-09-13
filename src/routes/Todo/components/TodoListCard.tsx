@@ -1,7 +1,6 @@
 import { Card } from '@/components/atoms/Card/Card';
 import { IconBadge } from '@/components/atoms/IconBadge/IconBadge';
 
-import { TODO_COPY } from '../copy.nl';
 import { TodoItem } from '../types';
 import { TodoAddBar } from './TodoAddBar';
 import { TodoItemRow } from './TodoItemRow';
@@ -51,7 +50,7 @@ export const TodoListCard = ({
       <div className="mt-4 min-h-0 flex-1 overflow-y-auto">
         {isPending ? (
           <div className="text-mist-muted py-8 text-center text-sm">
-            {TODO_COPY.loading}
+            Laden...
           </div>
         ) : isEmpty ? (
           <div className="flex flex-col items-center justify-center gap-3 py-10">
@@ -80,7 +79,7 @@ export const TodoListCard = ({
             {completed.length > 0 ? (
               <div className="flex flex-col">
                 <div className="text-mist-muted mb-1 text-xs font-semibold tracking-[0.12em] uppercase">
-                  {TODO_COPY.completed}
+                  Voltooid
                 </div>
                 {completed.map((item) => (
                   <TodoItemRow

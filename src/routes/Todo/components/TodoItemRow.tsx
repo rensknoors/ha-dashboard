@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import { BiCheck, BiTrash } from 'react-icons/bi';
 
-import { TODO_COPY } from '../copy.nl';
 import { formatTodoDue } from '../formatTodoDue';
 import { TodoItem } from '../types';
 
@@ -29,7 +28,7 @@ export const TodoItemRow = ({
   return (
     <div
       className={clsx(
-        'flex items-start justify-between gap-3 border-t border-white/8 py-2 first:border-t-0 first:pt-0',
+        'flex items-center justify-between gap-3 border-t border-white/8 py-2 first:border-t-0 first:pt-0',
         isCompleted && 'opacity-60'
       )}
     >
@@ -38,14 +37,14 @@ export const TodoItemRow = ({
         disabled={isPending}
         onClick={() => onToggle(item)}
         className={clsx(
-          'flex min-w-0 flex-1 items-start gap-3 text-left',
+          'flex min-w-0 flex-1 items-center gap-3 text-left',
           'focus-visible:ring-nav-active/40 rounded-lg focus-visible:ring-2 focus-visible:outline-none',
           'disabled:cursor-not-allowed disabled:opacity-50'
         )}
       >
         <span
           className={clsx(
-            'mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-full border',
+            'flex size-7 shrink-0 items-center justify-center rounded-full border',
             isCompleted
               ? 'border-chip-green-fg bg-chip-green text-chip-green-fg'
               : 'border-white/20 bg-transparent'
@@ -82,10 +81,10 @@ export const TodoItemRow = ({
       <button
         type="button"
         disabled={isPending}
-        aria-label={TODO_COPY.removeItem(item.summary)}
+        aria-label={`Verwijder ${item.summary}`}
         onClick={() => onRemove(item)}
         className={clsx(
-          'text-mist-muted hover:text-mist mt-0.5 shrink-0 p-1 transition-colors',
+          'text-mist-muted hover:text-mist shrink-0 p-1 transition-colors',
           'focus-visible:ring-nav-active/40 rounded-md focus-visible:ring-2 focus-visible:outline-none',
           'disabled:cursor-not-allowed disabled:opacity-50'
         )}
