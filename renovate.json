@@ -5,6 +5,17 @@
     ":dependencyDashboard",
     ":semanticCommits"
   ],
+  "constraints": {
+    "bun": "1.4.2"
+  },
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "bun.lockb"
+  ],
+  "bun": {
+    "managerFilePatterns": ["/(^|/)package\\.json$/", "/(^|/)bun\\.lock$/"]
+  },
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],
