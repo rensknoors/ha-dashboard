@@ -20,7 +20,7 @@
   "dependencies": {
     "@hakit/components": "6.0.2",
     "@hakit/core": "6.0.2",
-    "@tanstack/react-query": "5.102.8",
+    "@tanstack/react-query": "5.103.1",
     "clsx": "2.1.1",
     "lottie-react": "3.1.2",
     "react": "19.3.0",
