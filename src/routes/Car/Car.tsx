@@ -6,7 +6,6 @@ import { QuickControls } from './components/QuickControls';
 import { SceneErrorBoundary } from './components/SceneErrorBoundary';
 import { StatusPanel } from './components/StatusPanel';
 import { TeslaModel } from './components/TeslaModel';
-import { CAR_FALLBACK_IMAGE } from './constants';
 import { useCarState } from './useCarState';
 
 const Car = () => {
@@ -17,15 +16,6 @@ const Car = () => {
   return (
     <div className="relative h-full w-full">
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_60%_55%,var(--color-surface-elevated),var(--color-canvas)_70%)]">
-        <img
-          src={CAR_FALLBACK_IMAGE}
-          alt=""
-          className={clsx(
-            'absolute inset-0 h-full w-full object-cover transition-opacity duration-700',
-            isModelReady && 'opacity-0'
-          )}
-        />
-
         <div
           className={clsx(
             'absolute inset-0 transition-opacity duration-1000',

@@ -6,7 +6,6 @@ import {
   AnimationClip,
   AnimationMixer,
   LoopOnce,
-  LoopPingPong,
   Object3D,
   Quaternion,
 } from 'three';
@@ -17,7 +16,6 @@ import {
   CHARGE_PORT_NODE,
   PART_NODES,
   REMOVED_NODES,
-  STEERING_NODES,
   WHEEL_NODES,
 } from '../constants';
 import {
@@ -66,24 +64,23 @@ export const TeslaModel = ({ parts, hotspots, onReady }: TeslaModelProps) => {
     };
   }, [scene]);
   const anchors = useMemo(() => getHotspotAnchors(scene), [scene]);
-  const { mixer, partActions, steeringAction } = useMemo(
+  const { mixer, partActions } = useMemo(
     () => createActions(scene, animations),
     [scene, animations]
   );
 
   useEffect(() => {
-    steeringAction?.reset().play();
     invalidate();
     onReady();
     return () => {
       mixer.stopAllAction();
     };
-  }, [invalidate, mixer, onReady, steeringAction]);
+  }, [invalidate, mixer, onReady]);
 
   useFrame((_, delta) => {
     mixer.update(Math.min(delta, MAX_FRAME_DELTA));
-    const isAnimating = [...Object.values(partActions), steeringAction].some(
-      (action) => action?.isRunning()
+    const isAnimating = Object.values(partActions).some((action) =>
+      action?.isRunning()
     );
     if (isAnimating) {
       invalidate();
@@ -141,14 +138,10 @@ const createActions = (scene: Object3D, animations: AnimationClip[]) => {
     return {
       mixer,
       partActions: {} as Partial<Record<AnimatedPart, AnimationAction>>,
-      steeringAction: undefined,
     };
   }
 
-  const clips = createPartClips(source, {
-    ...PART_NODES,
-    steering: STEERING_NODES,
-  });
+  const clips = createPartClips(source, PART_NODES);
 
   const toAction = (part: keyof typeof clips) => {
     const action = mixer.clipAction(clips[part]);
@@ -160,11 +153,7 @@ const createActions = (scene: Object3D, animations: AnimationClip[]) => {
   const partActions: Partial<Record<AnimatedPart, AnimationAction>> =
     Object.fromEntries(ANIMATED_PARTS.map((part) => [part, toAction(part)]));
 
-  const steeringAction = toAction('steering');
-  steeringAction.setLoop(LoopPingPong, 2);
-  steeringAction.timeScale = STEERING_TIME_SCALE;
-
-  return { mixer, partActions, steeringAction };
+  return { mixer, partActions };
 };
 
 const getHotspotAnchors = (
@@ -183,7 +172,5 @@ const getHotspotAnchors = (
 
 const CAR_LENGTH = 4.72;
 const MAX_FRAME_DELTA = 1 / 30;
-const STEERING_TIME_SCALE = 0.8;
-
 const ANIMATED_PARTS = Object.keys(PART_NODES) as AnimatedPart[];
 const HOTSPOT_PARTS: HotspotPart[] = ['frunk', 'trunk', 'chargePort'];

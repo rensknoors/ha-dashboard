@@ -1,8 +1,6 @@
 import { AnimatedPart } from './types';
 
 export const CAR_MODEL_URL = './tesla/model3.glb';
-export const CAR_FALLBACK_IMAGE = './tesla/thumbnail.jpeg';
-
 export const CAR_ANIMATION_CLIP = 'Take 001';
 
 export const PART_NODES: Record<AnimatedPart, string> = {
@@ -14,7 +12,6 @@ export const PART_NODES: Record<AnimatedPart, string> = {
   rearRightDoor: 'RR_DOOR',
 };
 
-export const STEERING_NODES = ['Steering_Wheel', 'LF_WHEEL', 'RF_WHEEL'];
 export const WHEEL_NODES = ['LF_WHEEL', 'RF_WHEEL', 'LR_WHEEL', 'RR_WHEEL'];
 
 export const CHARGE_PORT_NODE = 'TeslaTap';
