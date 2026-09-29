@@ -83,7 +83,7 @@ const SideBar = () => {
   const buttons = useSideBarButtons();
 
   return (
-    <nav className="flex h-full flex-col items-center pr-6">
+    <nav className="relative z-10 flex h-full flex-col items-center pr-6">
       <div className="flex flex-col items-center gap-5">
         {buttons.map((route) => (
           <TileButton key={route.path} {...route} />
