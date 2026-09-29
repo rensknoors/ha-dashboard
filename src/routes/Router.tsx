@@ -2,7 +2,6 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import { ErrorPage } from '@/routes/ErrorPage/ErrorPage';
 
-import { Car } from './Car/Car';
 import { Energy } from './Energy/Energy';
 import { Home } from './Home/Home';
 import { Reminders } from './Reminders/Reminders';
@@ -30,7 +29,10 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTES.CAR,
-        element: <Car />,
+        lazy: async () => {
+          const { Car } = await import('./Car/Car');
+          return { Component: Car };
+        },
       },
       {
         path: ROUTES.REMINDERS,

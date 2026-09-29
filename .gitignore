@@ -24,3 +24,6 @@ dist-ssr
 *.sln
 *.sw?
 coverage
+
+# Unoptimized source assets
+assets-src
