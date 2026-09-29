@@ -1,7 +1,10 @@
 import { clsx } from 'clsx';
 import { ReactNode } from 'react';
-import { BiLockAlt, BiLockOpenAlt } from 'react-icons/bi';
-import { MdBolt } from 'react-icons/md';
+import {
+  PiLightningFill,
+  PiLockSimple,
+  PiLockSimpleOpen,
+} from 'react-icons/pi';
 
 import { Card } from '@/components/atoms/Card/Card';
 import { formatClock } from '@/utils/formatClock';
@@ -28,7 +31,11 @@ export const StatusPanel = ({ status, isLocked }: StatusPanelProps) => (
         label="Slot"
         value={
           <span className="flex items-center gap-1">
-            {isLocked ? <BiLockAlt size={14} /> : <BiLockOpenAlt size={14} />}
+            {isLocked ? (
+              <PiLockSimple size={14} />
+            ) : (
+              <PiLockSimpleOpen size={14} />
+            )}
             {isLocked ? 'Dicht' : 'Open'}
           </span>
         }
@@ -73,7 +80,7 @@ const BatteryStatus = ({ status }: { status: CarStatus }) => {
 
       {status.isCharging ? (
         <div className="text-tariff-low flex items-center gap-1 text-sm font-semibold">
-          <MdBolt size={16} />
+          <PiLightningFill size={14} />
           {getChargingLabel(status)}
         </div>
       ) : null}

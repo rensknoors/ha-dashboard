@@ -1,6 +1,6 @@
 import { Html } from '@react-three/drei';
 import { clsx } from 'clsx';
-import { BiLoaderAlt } from 'react-icons/bi';
+import { PiSpinnerGap } from 'react-icons/pi';
 
 import { CarHotspot as CarHotspotState, HotspotPart } from '../types';
 
@@ -33,7 +33,7 @@ export const CarHotspot = ({
         {LABELS[part]}
       </span>
       <span className="flex items-center gap-1 text-sm font-semibold">
-        {isPending ? <BiLoaderAlt className="animate-spin" size={14} /> : null}
+        {isPending ? <PiSpinnerGap className="animate-spin" size={14} /> : null}
         {getActionLabel(isOpen, canToggle)}
       </span>
     </button>

@@ -1,8 +1,15 @@
 import { clsx } from 'clsx';
 import { ReactElement } from 'react';
-import { BiLoaderAlt, BiLockAlt, BiLockOpenAlt } from 'react-icons/bi';
-import { PiFan, PiHeadlights, PiPower, PiSpeakerHigh } from 'react-icons/pi';
-import { TbRadar2, TbWindow } from 'react-icons/tb';
+import {
+  PiEye,
+  PiFan,
+  PiHeadlights,
+  PiLockSimple,
+  PiLockSimpleOpen,
+  PiMegaphoneSimple,
+  PiPower,
+  PiSpinnerGap,
+} from 'react-icons/pi';
 
 import { CarConnection, CarControls } from '../types';
 
@@ -19,8 +26,8 @@ export const QuickControls = ({ controls, connection }: QuickControlsProps) => {
       {connection === 'asleep' ? (
         <>
           <ControlButton
-            icon={<PiPower size={20} />}
-            label="Wake"
+            icon={<PiPower size={ICON_SIZE} />}
+            label="Wekken"
             onClick={controls.wake}
           />
           <div className="bg-surface-border mx-1 h-8 w-px" />
@@ -28,7 +35,11 @@ export const QuickControls = ({ controls, connection }: QuickControlsProps) => {
       ) : null}
       <ControlButton
         icon={
-          lock.isActive ? <BiLockAlt size={20} /> : <BiLockOpenAlt size={20} />
+          lock.isActive ? (
+            <PiLockSimple size={ICON_SIZE} />
+          ) : (
+            <PiLockSimpleOpen size={ICON_SIZE} />
+          )
         }
         label={lock.isActive ? 'Vergrendeld' : 'Ontgrendeld'}
         isActive={lock.isActive}
@@ -36,33 +47,33 @@ export const QuickControls = ({ controls, connection }: QuickControlsProps) => {
         onClick={lock.toggle}
       />
       <ControlButton
-        icon={<PiFan size={20} />}
+        icon={<PiFan size={ICON_SIZE} />}
         label="Klimaat"
         isActive={climate.isActive}
         isPending={climate.isPending}
         onClick={climate.toggle}
       />
       <ControlButton
-        icon={<TbWindow size={20} />}
+        icon={<DefrostIcon size={ICON_SIZE} />}
         label="Ontdooien"
         isActive={defrost.isActive}
         isPending={defrost.isPending}
         onClick={defrost.toggle}
       />
       <ControlButton
-        icon={<TbRadar2 size={20} />}
+        icon={<PiEye size={ICON_SIZE} />}
         label="Sentry"
         isActive={sentry.isActive}
         isPending={sentry.isPending}
         onClick={sentry.toggle}
       />
       <ControlButton
-        icon={<PiHeadlights size={20} />}
+        icon={<PiHeadlights size={ICON_SIZE} />}
         label="Lichten"
         onClick={controls.flashLights}
       />
       <ControlButton
-        icon={<PiSpeakerHigh size={20} />}
+        icon={<PiMegaphoneSimple size={ICON_SIZE} />}
         label="Toeter"
         onClick={controls.honkHorn}
       />
@@ -100,8 +111,33 @@ const ControlButton = ({
         isActive ? 'bg-nav-active text-canvas' : 'bg-surface-elevated text-mist'
       )}
     >
-      {isPending ? <BiLoaderAlt size={20} className="animate-spin" /> : icon}
+      {isPending ? (
+        <PiSpinnerGap size={ICON_SIZE} className="animate-spin" />
+      ) : (
+        icon
+      )}
     </span>
     <span className="text-mist-muted text-[11px] font-semibold">{label}</span>
   </button>
 );
+
+const DefrostIcon = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 256 256"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={16}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
+    <path d="M32 200c64-16 128-16 192 0L196 72c-45-12-91-12-136 0Z" />
+    <path d="M96 164c-12-12 12-24 0-36s12-24 0-36" />
+    <path d="M128 164c-12-12 12-24 0-36s12-24 0-36" />
+    <path d="M160 164c-12-12 12-24 0-36s12-24 0-36" />
+  </svg>
+);
+
+const ICON_SIZE = 22;
