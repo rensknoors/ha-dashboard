@@ -6,7 +6,7 @@
       "name": "ha-dashboard",
       "dependencies": {
         "@hakit/components": "6.0.2",
-        "@hakit/core": "6.0.2",
+        "@hakit/core": "6.1.0",
         "@react-three/drei": "10.7.9",
         "@react-three/fiber": "9.8.2",
         "@tanstack/react-query": "5.104.5",
@@ -173,7 +173,7 @@
 
     "@hakit/components": ["@hakit/components@6.0.2", "", { "peerDependencies": { "@emotion/is-prop-valid": ">=1.3.x", "@emotion/react": ">=11.x.x", "@emotion/styled": ">=11.x", "@fullcalendar/react": ">=6.x.x", "@hakit/core": "^6.0.2", "@use-gesture/react": ">=10.x", "autolinker": ">=4.x", "fullcalendar": ">=6.x.x", "hls.js": ">=1.x.x", "leaflet": ">=1.x.x", "lodash": ">=4.x", "react": ">=19.x", "react-dom": ">=19.x", "react-error-boundary": "^5.x", "react-leaflet": ">=5.x", "react-resize-detector": ">=12.x.x", "react-switch": "^7.1.0", "react-use": ">=17.x", "use-debounce": ">=9.x", "use-long-press": ">=3.x.x", "zustand": ">=5.x.x" } }, "sha512-x6o5JsY10PXhSY6eWGPCngsRBQn+sRyKYl0PXVoOrMho4aVFQSY3R/qPXR3dz/JeLiZZXaFkb965qxiEhZ81qg=="],
 
-    "@hakit/core": ["@hakit/core@6.0.2", "", { "peerDependencies": { "@emotion/react": ">=11.x", "@emotion/styled": ">=11.x", "@iconify/react": ">=5.x", "home-assistant-js-websocket": ">=9.x.x", "lodash": ">=4.x", "prettier": ">=3.4.2", "react": ">=19.x", "react-dom": ">=19.x", "use-debounce": ">=9.x", "ws": ">=8.x.x", "yargs": ">=17.x.x", "zustand": "^5.0.5" }, "bin": { "hakit-sync-types": "dist/sync/cli/cli.js" } }, "sha512-kvT8Oo4zXWPUYtymVHVJoTkbQ9BLZsx3sBSGoOEBxezQHpcAhp/v6d6UR7EG00y5HDNCQz7DIDJK8rtDtJcPjA=="],
+    "@hakit/core": ["@hakit/core@6.1.0", "", { "peerDependencies": { "@emotion/react": ">=11.x", "@emotion/styled": ">=11.x", "@iconify/react": ">=5.x", "home-assistant-js-websocket": ">=9.x.x", "lodash": ">=4.x", "prettier": ">=3.4.2", "react": ">=19.x", "react-dom": ">=19.x", "use-debounce": ">=9.x", "ws": ">=8.x.x", "yargs": ">=17.x.x", "zustand": "^5.0.5" }, "bin": { "hakit-sync-types": "dist/sync/cli/cli.js" } }, "sha512-Kj3NWwadfP442rBOS1+VBFTmJXpDI0xqTLHZvTZevviVjwTf6sCR/C6IpqHNFdBrFJJ4/ddOGvBt0mHdNT2Yeg=="],
 
     "@iconify/react": ["@iconify/react@6.0.2", "", { "dependencies": { "@iconify/types": "^2.0.0" }, "peerDependencies": { "react": ">=16" } }, "sha512-SMmC2sactfpJD427WJEDN6PMyznTFMhByK9yLW0gOTtnjzzbsi/Ke/XqsumsavFPwNiXs8jSiYeZTmLCLwO+Fg=="],
 
