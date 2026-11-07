@@ -45,7 +45,7 @@
     "@types/three": "0.186.0",
     "@vitejs/plugin-react-swc": "4.3.3",
     "@vitest/coverage-v8": "5.0.5",
-    "globals": "17.13.0",
+    "globals": "17.14.0",
     "happy-dom": "20.14.6",
     "husky": "9.1.7",
     "oxlint": "1.90.0",
