@@ -36,7 +36,7 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "4.3.3",
+    "@tailwindcss/vite": "4.3.4",
     "@testing-library/react": "16.3.3",
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
     "@types/node": "26.6.6",
@@ -52,7 +52,7 @@
     "oxlint-tsgolint": "7.0.2005",
     "prettier": "3.9.10",
     "prettier-plugin-tailwindcss": "0.8.1",
-    "tailwindcss": "4.3.3",
+    "tailwindcss": "4.3.4",
     "tsx": "4.23.15",
     "typescript": "7.0.2",
     "vite": "8.3.5",
