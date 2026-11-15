@@ -1,39 +1,48 @@
-import { EntityName, useEntity, useHass } from '@hakit/core';
+import { useHass } from '@hakit/core';
 import clsx from 'clsx';
 import { BiPause, BiPlay, BiPowerOff } from 'react-icons/bi';
 
 import { Card, CardProps } from '@/components/atoms/Card/Card';
-import { getThumbnailForSource } from '@/utils/getThumbnailForSource';
+import { MediaPlayer } from '@/hooks/useActiveMediaPlayer';
+import { getMediaDisplay } from '@/utils/media/getMediaDisplay';
 
 import { Placeholder } from './Placeholder';
 
 export type MediaCardProps = CardProps & {
-  entity: EntityName | undefined;
+  player: MediaPlayer | undefined;
 };
 
-const MediaCard = ({ entity, className }: MediaCardProps) => {
-  const media = useEntity(entity ?? 'unknown', {
-    returnNullIfNotFound: true,
-  });
+// Artwork served by Home Assistant is a path relative to the HA instance.
+const isHassPath = (url: string) => url.startsWith('/api/');
+
+const MediaCard = ({ player, className }: MediaCardProps) => {
   const callService = useHass((state) => state.helpers.callService);
+  const joinHassUrl = useHass((state) => state.helpers.joinHassUrl);
 
-  const displayPlaceholder = !entity || !media;
-  if (displayPlaceholder) return <Placeholder />;
+  if (!player) return <Placeholder />;
 
-  const PlayPauseIcon = media.state === 'playing' ? BiPause : BiPlay;
+  const { title, subtitle, thumbnail } = getMediaDisplay(player.attributes);
+  const thumbnailUrl = isHassPath(thumbnail)
+    ? joinHassUrl(thumbnail)
+    : thumbnail;
 
-  const title =
-    media.attributes.media_artist ??
-    media.attributes.app_name ??
-    media.attributes.source ??
-    media.attributes.friendly_name;
-  const thumbnail =
-    media.attributes.device_class === 'tv' ||
-    media.attributes.friendly_name === 'Tv'
-      ? getThumbnailForSource(
-          media.attributes.source ?? media.attributes.app_name
-        )
-      : (media.attributes.entity_picture ?? '/cast.svg');
+  // A device that is merely switched on has nothing to play or pause.
+  const isOn = player.state === 'on';
+  const isPlaying = player.state === 'playing' || player.state === 'buffering';
+  const ControlIcon = isOn ? BiPowerOff : isPlaying ? BiPause : BiPlay;
+  const controlLabel = isOn
+    ? 'Uitschakelen'
+    : isPlaying
+      ? 'Pauzeren'
+      : 'Afspelen';
+
+  const handleControl = () => {
+    void callService({
+      domain: 'media_player',
+      service: isOn ? 'turn_off' : 'media_play_pause',
+      target: { entity_id: player.entity_id },
+    });
+  };
 
   return (
     <Card
@@ -46,53 +55,40 @@ const MediaCard = ({ entity, className }: MediaCardProps) => {
       <div
         className="absolute inset-0 z-0 scale-150 bg-cover bg-center bg-no-repeat blur-2xl filter"
         style={{
-          backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${thumbnail})`,
+          backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)), url("${thumbnailUrl}")`,
         }}
       />
 
       {/* Thumbnail */}
       <div className="z-10 shrink-0">
-        <img src={thumbnail} className="h-w-20 w-20 rounded-xl bg-black" />
+        <img
+          src={thumbnailUrl}
+          alt=""
+          className="h-20 w-20 rounded-xl bg-black object-cover"
+        />
       </div>
 
       {/* Media info */}
-      <div className="z-10 flex grow flex-col">
-        <span className="text-lg font-semibold">{title}</span>
-        {media.attributes.media_title && (
+      <div className="z-10 flex min-w-0 grow flex-col">
+        <span className="line-clamp-1 text-lg font-semibold">{title}</span>
+        {subtitle && (
           <span className="line-clamp-1 text-base text-ellipsis">
-            {media.attributes.media_title}
+            {subtitle}
           </span>
         )}
       </div>
 
       {/* Controls */}
-      {media.state === 'on' ? (
-        <BiPowerOff
-          className="z-10 box-content h-8 w-8 shrink-0 cursor-pointer p-8"
-          onClick={() => {
-            callService({
-              domain: 'media_player',
-              service: 'turn_off',
-              target: {
-                entity_id: entity,
-              },
-            });
-          }}
+      <button
+        type="button"
+        aria-label={controlLabel}
+        className="z-10 shrink-0 cursor-pointer"
+        onClick={handleControl}
+      >
+        <ControlIcon
+          className={isOn ? 'box-content h-8 w-8 p-8' : 'h-14 w-14'}
         />
-      ) : (
-        <PlayPauseIcon
-          className="z-10 h-14 w-14 shrink-0 cursor-pointer"
-          onClick={() => {
-            callService({
-              domain: 'media_player',
-              service: 'media_play_pause',
-              target: {
-                entity_id: entity,
-              },
-            });
-          }}
-        />
-      )}
+      </button>
     </Card>
   );
 };

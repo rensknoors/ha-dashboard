@@ -1,4 +1,4 @@
-export const getThumbnailForSource = (source: string) => {
+export const getThumbnailForSource = (source?: string) => {
   switch (source) {
     case 'PS5/Switch':
       return '/logos/playstation.svg';

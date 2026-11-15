@@ -5,8 +5,8 @@ import { CalendarCard } from '@/components/molecules/CalendarCard/CalendarCard';
 import { GraphCard } from '@/components/molecules/GraphCard/GraphCard';
 import { LightCard } from '@/components/molecules/LightCard/LightCard';
 import { MediaCard } from '@/components/molecules/MediaCard/MediaCard';
+import { useActiveMediaPlayer } from '@/hooks/useActiveMediaPlayer';
 import { useLowBatteryNotification } from '@/hooks/useLowBatteryNotification';
-import { useActiveMediaPlayer } from '@/utils/useActiveMediaPlayer';
 
 const Home = () => {
   useLowBatteryNotification();
@@ -39,7 +39,7 @@ const Home = () => {
           <GraphCard entity="sensor.bedroom_temperature" label="Slaapkamer" />
         </div>
 
-        <MediaCard entity={activeMediaPlayer} />
+        <MediaCard player={activeMediaPlayer} />
 
         <div className="wrap grid grid-cols-2 gap-6">
           <LightCard entity="light.kitchen_group" />
