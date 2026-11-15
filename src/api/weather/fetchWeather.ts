@@ -16,12 +16,14 @@ export const fetchWeather = async (latlong?: string) => {
   );
   url.searchParams.append(
     'hourly',
-    'temperature_2m,weather_code,precipitation_probability,precipitation,shortwave_radiation'
+    'temperature_2m,weather_code,precipitation_probability,precipitation,shortwave_radiation,is_day'
   );
   url.searchParams.append(
     'daily',
-    'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max'
+    'weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,sunrise,sunset'
   );
+  url.searchParams.append('minutely_15', 'precipitation');
+  url.searchParams.append('forecast_minutely_15', '8');
   url.searchParams.append('timezone', import.meta.env.VITE_TIMEZONE);
   url.searchParams.append('forecast_days', '7');
 

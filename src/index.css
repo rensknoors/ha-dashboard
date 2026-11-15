@@ -38,6 +38,9 @@
 
   --color-nav-active: #e8def8;
 
+  --color-rain: #5aa9e6;
+  --color-sun: #f5c451;
+
   --radius-bento: 1.75rem;
   --radius-tile: 1.25rem;
 }
@@ -91,9 +94,33 @@ body {
   .card-interactive {
     @apply cursor-pointer transition-transform duration-150 ease-out active:scale-[0.97];
   }
+
+  .weather-tile {
+    @apply rounded-tile bg-surface-elevated/60 border border-white/5;
+  }
+
+  .sky-blob {
+    @apply absolute rounded-full;
+    filter: blur(36px);
+    animation: sky-drift 28s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+}
+
+@keyframes sky-drift {
+  from {
+    transform: translate3d(-8%, 0, 0);
+  }
+  to {
+    transform: translate3d(10%, -6%, 0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .sky-blob {
+    animation: none;
+  }
+
   .card-interactive {
     transition-property: opacity;
     transform: none !important;

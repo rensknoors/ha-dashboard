@@ -1,23 +1,22 @@
-export const getWindDirection = (direction: number) => {
-  const directions = [
-    'N',
-    'NNE',
-    'NE',
-    'ENE',
-    'E',
-    'ESE',
-    'SE',
-    'SSE',
-    'S',
-    'SSW',
-    'SW',
-    'WSW',
-    'W',
-    'WNW',
-    'NW',
-    'NNW',
-  ];
+const directions = [
+  'N',
+  'NNO',
+  'NO',
+  'ONO',
+  'O',
+  'OZO',
+  'ZO',
+  'ZZO',
+  'Z',
+  'ZZW',
+  'ZW',
+  'WZW',
+  'W',
+  'WNW',
+  'NW',
+  'NNW',
+];
 
-  const index = Math.round(direction / 22.5) % 16;
-  return directions[index];
-};
+/** Dutch 16-point compass name for the bearing the wind blows from. */
+export const getWindDirection = (degrees: number) =>
+  directions[Math.round((((degrees % 360) + 360) % 360) / 22.5) % 16];

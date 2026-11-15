@@ -4,6 +4,7 @@ export const weatherSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
   timezone: z.string(),
+  utc_offset_seconds: z.number(),
   timezone_abbreviation: z.string(),
   elevation: z.number(),
   current_units: z.object({
@@ -50,7 +51,13 @@ export const weatherSchema = z.object({
     temperature_2m: z.array(z.number()),
     weather_code: z.array(z.number()),
     precipitation_probability: z.array(z.number()),
+    precipitation: z.array(z.number()),
     shortwave_radiation: z.array(z.number()),
+    is_day: z.array(z.number()),
+  }),
+  minutely_15: z.object({
+    time: z.array(z.string()),
+    precipitation: z.array(z.number().nullable()),
   }),
   daily_units: z.object({
     time: z.string(),
@@ -67,6 +74,8 @@ export const weatherSchema = z.object({
     temperature_2m_min: z.array(z.number()),
     precipitation_sum: z.array(z.number()),
     precipitation_probability_max: z.array(z.number()),
+    sunrise: z.array(z.string()),
+    sunset: z.array(z.string()),
   }),
 });
 
