@@ -12,7 +12,6 @@ type PlayerState = {
 
 export type ActiveMediaPlayer<T> = {
   player: T | undefined;
-  /** Timestamp at which the selection has to be re-evaluated, if any. */
   expiresAt: number | undefined;
 };
 
@@ -25,13 +24,6 @@ const getPausedExpiry = (player: PlayerState) => {
   return Number.isNaN(pausedAt) ? undefined : pausedAt + PAUSED_GRACE_MS;
 };
 
-/**
- * Picks the media player to show. `players` is in priority order.
- *
- * 1. The first player that is in use (playing, buffering or switched on).
- * 2. Otherwise the first player that was paused less than
- *    `PAUSED_GRACE_MS` ago, so it can still be resumed.
- */
 export const selectActiveMediaPlayer = <T extends PlayerState>(
   players: ReadonlyArray<T | null | undefined>,
   now: number

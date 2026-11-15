@@ -13,7 +13,6 @@ type MediaAttributes = {
 export type MediaDisplay = {
   title: string;
   subtitle: string | undefined;
-  /** Either an absolute URL, a local asset or a path on the HA instance. */
   thumbnail: string;
 };
 

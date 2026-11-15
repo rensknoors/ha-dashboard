@@ -7,11 +7,6 @@ export type MediaPlayer = HassEntityWithService<'media_player'>;
 
 const options = { returnNullIfNotFound: true } as const;
 
-/**
- * Returns the media player that should be shown on the dashboard, or
- * `undefined` when nothing is playing. See `selectActiveMediaPlayer` for the
- * rules.
- */
 export const useActiveMediaPlayer = (): MediaPlayer | undefined => {
   // In priority order: the first active player wins.
   const players = [

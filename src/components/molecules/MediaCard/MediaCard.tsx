@@ -51,7 +51,6 @@ const MediaCard = ({ player, className }: MediaCardProps) => {
         className
       )}
     >
-      {/* Background image */}
       <div
         className="absolute inset-0 z-0 scale-150 bg-cover bg-center bg-no-repeat blur-2xl filter"
         style={{
@@ -59,7 +58,6 @@ const MediaCard = ({ player, className }: MediaCardProps) => {
         }}
       />
 
-      {/* Thumbnail */}
       <div className="z-10 shrink-0">
         <img
           src={thumbnailUrl}
@@ -68,7 +66,6 @@ const MediaCard = ({ player, className }: MediaCardProps) => {
         />
       </div>
 
-      {/* Media info */}
       <div className="z-10 flex min-w-0 grow flex-col">
         <span className="line-clamp-1 text-lg font-semibold">{title}</span>
         {subtitle && (
@@ -78,7 +75,6 @@ const MediaCard = ({ player, className }: MediaCardProps) => {
         )}
       </div>
 
-      {/* Controls */}
       <button
         type="button"
         aria-label={controlLabel}
