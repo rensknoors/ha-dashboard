@@ -30,7 +30,9 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-6">
+      {/* The room and light cards keep their own height; the media card takes
+          whatever is left, so the column always ends exactly at the bottom. */}
+      <div className="grid min-h-0 flex-1 grid-rows-[auto_minmax(0,1fr)_auto] gap-6">
         <div className="grid grid-cols-2 gap-6">
           <GraphCard
             entity="sensor.living_room_temperature"
@@ -41,7 +43,7 @@ const Home = () => {
 
         <MediaCard player={activeMediaPlayer} />
 
-        <div className="wrap grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-6">
           <LightCard entity="light.kitchen_group" />
           <LightCard entity="light.living_room_group" />
           <LightCard entity="light.christmas_tree" />

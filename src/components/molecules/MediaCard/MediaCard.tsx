@@ -47,7 +47,7 @@ const MediaCard = ({ player, className }: MediaCardProps) => {
   return (
     <Card
       className={clsx(
-        'relative z-0 flex min-h-45 place-items-center gap-6 border-0',
+        'relative z-0 flex place-items-center gap-6 border-0',
         className
       )}
     >

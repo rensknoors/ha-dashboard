@@ -8,7 +8,7 @@ export const Placeholder = () => {
   const description = 'Er wordt niets afgespeeld';
 
   return (
-    <Card className="flex min-h-45 place-items-center gap-6">
+    <Card className="flex place-items-center gap-6">
       <IconBadge size={56} className="text-mist-muted">
         <BiMusic size={26} />
       </IconBadge>
