@@ -1,21 +1,24 @@
 import { describe, expect, it } from 'vitest';
 
 import { getSkyPhase } from './sky';
-import { toWallClock } from './wallClock';
-
-const sunrise = toWallClock('2026-11-15T07:59');
-const sunset = toWallClock('2026-11-15T16:48');
 
 describe('getSkyPhase', () => {
   it.each([
-    ['2026-11-15T03:00', 'night'],
-    ['2026-11-15T07:20', 'twilight'],
-    ['2026-11-15T08:40', 'twilight'],
-    ['2026-11-15T12:00', 'day'],
-    ['2026-11-15T16:10', 'twilight'],
-    ['2026-11-15T17:30', 'twilight'],
-    ['2026-11-15T17:40', 'night'],
-  ])('is %s → %s', (time, phase) => {
-    expect(getSkyPhase(toWallClock(time), sunrise, sunset)).toBe(phase);
+    [38, 'day'],
+    [6.1, 'day'],
+    [6, 'twilight'],
+    [0, 'twilight'],
+    [-4, 'twilight'],
+    [-4.1, 'night'],
+    [-30, 'night'],
+  ])('is %s° → %s', (sunElevation, phase) => {
+    // The day flag must not override a known elevation.
+    expect(getSkyPhase(sunElevation, true)).toBe(phase);
+    expect(getSkyPhase(sunElevation, false)).toBe(phase);
+  });
+
+  it('falls back to the day flag without an elevation', () => {
+    expect(getSkyPhase(undefined, true)).toBe('day');
+    expect(getSkyPhase(undefined, false)).toBe('night');
   });
 });

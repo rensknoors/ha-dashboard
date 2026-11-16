@@ -2,21 +2,28 @@ import { WeatherGroup } from '@/utils/weather/weatherConditions';
 
 export type SkyPhase = 'day' | 'twilight' | 'night';
 
-const TWILIGHT_MS = 45 * 60 * 1000;
+/**
+ * Golden hour by its usual definition: the sun between 6° above and 4° below
+ * the horizon. Past that the sky is plain daylight or has lost its warm glow.
+ */
+const GOLDEN_HOUR_TOP = 6;
+const GOLDEN_HOUR_BOTTOM = -4;
 
-/** All arguments share one time frame; see `toWallClock`. */
+/**
+ * Follows the sun's actual elevation in degrees. Without one it falls back to
+ * the forecast's day flag, which knows no twilight.
+ */
 export const getSkyPhase = (
-  now: number,
-  sunrise: number,
-  sunset: number
+  sunElevation: number | undefined,
+  isDay: boolean
 ): SkyPhase => {
-  if (
-    Math.abs(now - sunrise) <= TWILIGHT_MS ||
-    Math.abs(now - sunset) <= TWILIGHT_MS
-  ) {
-    return 'twilight';
+  if (sunElevation === undefined) {
+    return isDay ? 'day' : 'night';
   }
-  return now > sunrise && now < sunset ? 'day' : 'night';
+  if (sunElevation > GOLDEN_HOUR_TOP) {
+    return 'day';
+  }
+  return sunElevation >= GOLDEN_HOUR_BOTTOM ? 'twilight' : 'night';
 };
 
 export interface SkyTheme {

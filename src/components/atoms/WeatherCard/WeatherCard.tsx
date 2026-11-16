@@ -2,16 +2,17 @@ import { Lottie } from 'lottie-react';
 import { Link } from 'react-router-dom';
 
 import { useWeather } from '@/api/weather/useWeather';
+import { useSunElevation } from '@/hooks/useSunElevation';
 import { ROUTES } from '@/routes/routes';
 import { getSkyPhase, getSkyTheme } from '@/utils/weather/sky';
-import { getWallClockNow, toWallClock } from '@/utils/weather/wallClock';
 import {
   getWeatherAnimation,
   getWeatherCondition,
 } from '@/utils/weather/weatherConditions';
 
 const WeatherCard = () => {
-  const { data, isPending, dataUpdatedAt, refetch } = useWeather();
+  const { data, isPending, refetch } = useWeather();
+  const sunElevation = useSunElevation();
 
   if (!data) {
     return isPending ? (
@@ -28,16 +29,12 @@ const WeatherCard = () => {
     );
   }
 
-  const { current, daily } = data;
+  const { current } = data;
   const isDay = current.is_day === 1;
   // The same sky as the hero on the Weather screen, reduced to a faint haze.
   const sky = getSkyTheme(
     getWeatherCondition(current.weather_code).group,
-    getSkyPhase(
-      getWallClockNow(dataUpdatedAt, data.utc_offset_seconds),
-      toWallClock(daily.sunrise[0]),
-      toWallClock(daily.sunset[0])
-    )
+    getSkyPhase(sunElevation, isDay)
   );
 
   return (
