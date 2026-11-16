@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
+import { toWallClock } from '@/utils/weather/wallClock';
+
 import { buildHourlyPoints } from './buildHourlyPoints';
-import { toWallClock } from './wallClock';
 
 const hours = Array.from({ length: 72 }, (_, index) => {
   const day = 15 + Math.floor(index / 24);

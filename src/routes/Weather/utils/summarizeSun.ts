@@ -1,4 +1,4 @@
-import { formatDuration } from './wallClock';
+import { formatDuration } from '@/utils/weather/wallClock';
 
 export interface SunSummary {
   /** The sunrise and sunset the arc is drawn between. */

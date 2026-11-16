@@ -1,12 +1,12 @@
 import { PiArrowDownBold, PiArrowUpBold } from 'react-icons/pi';
 
 import { Card } from '@/components/atoms/Card/Card';
+import { SkyPhase, getSkyTheme } from '@/utils/weather/sky';
 import {
   getWeatherCondition,
   getWeatherLabel,
 } from '@/utils/weather/weatherConditions';
 
-import { SkyPhase, getSkyTheme } from '../utils/sky';
 import { WeatherIcon } from './WeatherIcon';
 
 interface HeroCardProps {

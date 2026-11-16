@@ -15,17 +15,17 @@ const Home = () => {
 
   return (
     <div className="flex h-full w-full gap-6">
-      <div className="flex-1">
+      <div className="flex flex-1 flex-col justify-center">
         <div className="centered-row py-8">
           <Time />
         </div>
         <div className="centered-row">
           <CurrentDate />
         </div>
-        <div className="centered-row py-8">
+        <div className="centered-row py-4">
           <WeatherCard />
         </div>
-        <div className="centered-row py-8">
+        <div className="centered-row py-4">
           <CalendarCard />
         </div>
       </div>

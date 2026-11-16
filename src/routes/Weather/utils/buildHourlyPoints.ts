@@ -1,4 +1,4 @@
-import { formatWallClockTime, toWallClock } from './wallClock';
+import { formatWallClockTime, toWallClock } from '@/utils/weather/wallClock';
 
 export interface HourlyPoint {
   /** The wall-clock timestamp string, unique per point. */

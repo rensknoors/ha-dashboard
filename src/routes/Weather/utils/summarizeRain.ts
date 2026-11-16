@@ -1,4 +1,4 @@
-import { formatWallClockTime, toWallClock } from './wallClock';
+import { formatWallClockTime, toWallClock } from '@/utils/weather/wallClock';
 
 /** Open-Meteo reports precipitation in steps of 0.1 mm. */
 const WET_THRESHOLD = 0.1;

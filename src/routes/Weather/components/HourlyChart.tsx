@@ -12,10 +12,10 @@ import {
 } from 'recharts';
 
 import { formatDecimal } from '@/utils/formatDecimal';
+import { formatWallClockWeekday, toWallClock } from '@/utils/weather/wallClock';
 
 import { HourlyPoint } from '../utils/buildHourlyPoints';
 import { getTemperatureColor } from '../utils/getTemperatureColor';
-import { formatWallClockWeekday, toWallClock } from '../utils/wallClock';
 import { WeatherIcon } from './WeatherIcon';
 
 const MARKER_INTERVAL_HOURS = 3;

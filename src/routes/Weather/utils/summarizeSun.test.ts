@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
+import { toWallClock } from '@/utils/weather/wallClock';
+
 import { summarizeSun } from './summarizeSun';
-import { toWallClock } from './wallClock';
 
 const today = {
   sunrise: toWallClock('2026-11-15T08:00'),
