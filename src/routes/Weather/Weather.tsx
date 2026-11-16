@@ -1,5 +1,6 @@
 import { usePollen } from '@/api/pollen/usePollen';
 import { useWeather } from '@/api/weather/useWeather';
+import { useSunElevation } from '@/hooks/useSunElevation';
 import { getSkyPhase } from '@/utils/weather/sky';
 import {
   formatWallClockDate,
@@ -23,6 +24,7 @@ import { summarizeSun } from './utils/summarizeSun';
 const Weather = () => {
   const { data, isPending, dataUpdatedAt, refetch } = useWeather();
   const pollen = usePollen();
+  const sunElevation = useSunElevation();
   const [selectedDay, setSelectedDay] = useSelectedDay();
 
   if (!data) {
@@ -34,6 +36,7 @@ const Weather = () => {
   }
 
   const { current, daily, hourly } = data;
+  const isDay = current.is_day === 1;
   const now = getWallClockNow(dataUpdatedAt, data.utc_offset_seconds);
 
   const days: DayForecast[] = daily.time.map((key, index) => ({
@@ -63,8 +66,8 @@ const Weather = () => {
         temperature={current.temperature_2m}
         apparentTemperature={current.apparent_temperature}
         weatherCode={current.weather_code}
-        isDay={current.is_day === 1}
-        phase={getSkyPhase(now, sunTimes[0].sunrise, sunTimes[0].sunset)}
+        isDay={isDay}
+        phase={getSkyPhase(sunElevation, isDay)}
         high={days[0].high}
         low={days[0].low}
       />
