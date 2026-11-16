@@ -19,7 +19,11 @@ const CurrentDate = () => {
     month: 'long',
   });
 
-  return <span className="text-3xl">{formattedDate}</span>;
+  return (
+    <span className="text-mist-muted text-2xl font-medium">
+      {formattedDate}
+    </span>
+  );
 };
 
 export { CurrentDate };

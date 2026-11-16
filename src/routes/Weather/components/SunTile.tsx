@@ -1,5 +1,6 @@
+import { formatWallClockTime } from '@/utils/weather/wallClock';
+
 import { SunSummary } from '../utils/summarizeSun';
-import { formatWallClockTime } from '../utils/wallClock';
 import { HighlightTile } from './HighlightTile';
 
 const ARC = 'M10 46 A50 38 0 0 1 110 46';

@@ -20,4 +20,6 @@ export interface CalendarEvent {
   uid?: string;
   recurrence_id?: string;
   rrule?: string;
+  /** Display name of the calendar the event was read from. */
+  calendar?: string;
 }
