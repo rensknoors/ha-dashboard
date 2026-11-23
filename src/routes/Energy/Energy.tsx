@@ -8,22 +8,15 @@ import { MetricCard } from './components/MetricCard';
 import { PriceNowCard } from './components/PriceNowCard';
 import { TariffChartCard } from './components/TariffChartCard';
 import { TodayCard } from './components/TodayCard';
-import { useBestChargeWindow } from './useBestChargeWindow';
+import { useChargePlan } from './useChargePlan';
 import { useEnergyTariffs } from './useEnergyTariffs';
 import { useTariffForecast } from './useTariffForecast';
 
 const Energy = () => {
   const tariffs = useEnergyTariffs();
-  const {
-    points,
-    nowIndex,
-    chartPoints,
-    chartNowIndex,
-    dayBoundaries,
-    today,
-    currentPrice,
-  } = useTariffForecast();
-  const chargeWindow = useBestChargeWindow({ points, nowIndex });
+  const { chartPoints, chartNowIndex, dayBoundaries, today, currentPrice } =
+    useTariffForecast();
+  const chargePlan = useChargePlan();
 
   return (
     <div className="text-mist flex h-full w-full gap-6">
@@ -71,7 +64,7 @@ const Energy = () => {
                 : `${formatCurrency(tariffs.currentGasTariff)} /m³`
             }
           />
-          <CarChargeCard chargeWindow={chargeWindow} />
+          <CarChargeCard plan={chargePlan} />
         </div>
       </main>
     </div>

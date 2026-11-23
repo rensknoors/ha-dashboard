@@ -1,67 +1,79 @@
 import { ReactNode } from 'react';
 import { BiCar, BiTimeFive } from 'react-icons/bi';
+import { BsLightningChargeFill } from 'react-icons/bs';
 
-import { formatClock } from '@/utils/formatClock';
-import { formatCurrency } from '@/utils/formatCurrency';
+import { formatClock, formatWeekdayClock } from '@/utils/formatClock';
+import { getDayKey } from '@/utils/getDayKey';
 
-import { ChargeWindow } from '../useBestChargeWindow';
+import { ChargePlan } from '../useChargePlan';
 import { MetricCard } from './MetricCard';
 
 interface CarChargeCardProps {
-  chargeWindow: ChargeWindow;
+  plan: ChargePlan;
 }
 
-const FALLBACK: Record<
-  Exclude<ChargeWindow['status'], 'ready'>,
-  { value: string; sublabel: string }
-> = {
-  full: {
-    value: 'Accu vol',
-    sublabel: 'Geen laadvenster nodig',
-  },
-  away: {
-    value: 'Niet thuis',
-    sublabel: 'Auto niet thuis',
-  },
-  unplugged: {
-    value: 'Niet aangesloten',
-    sublabel: 'Kabel niet aangesloten',
-  },
-  unavailable: {
-    value: 'Onbekend',
-    sublabel: 'Geen laadvenster beschikbaar',
-  },
-};
+const formatStart = (date: Date) =>
+  getDayKey(date) === getDayKey(new Date())
+    ? formatClock(date)
+    : formatWeekdayClock(date);
 
-const getContent = (
-  chargeWindow: ChargeWindow
-): { icon: ReactNode; label: string; value: string; sublabel: string } => {
-  if (chargeWindow.status !== 'ready' || chargeWindow.startsAt === null) {
+const getContent = ({
+  window,
+  isActive,
+  batteryLevel,
+  targetLevel,
+}: ChargePlan): { icon: ReactNode; value: string; sublabel: string } => {
+  if (window && isActive) {
     return {
-      icon: <BiCar size={14} />,
-      label: 'Tesla',
-      ...FALLBACK[
-        chargeWindow.status === 'ready' ? 'unavailable' : chargeWindow.status
-      ],
+      icon: <BsLightningChargeFill size={14} />,
+      value: 'Laden',
+      sublabel: `tot ${formatClock(window.endsAt)}`,
     };
   }
 
-  const solarPercent = Math.round(chargeWindow.solarShare * 100);
+  if (window) {
+    return {
+      icon: <BiTimeFive size={14} />,
+      value: formatStart(window.startsAt),
+      sublabel: `tot ${formatClock(window.endsAt)}`,
+    };
+  }
+
+  if (
+    batteryLevel !== null &&
+    targetLevel !== null &&
+    batteryLevel >= targetLevel
+  ) {
+    return {
+      icon: <BiCar size={14} />,
+      value: 'Accu vol',
+      sublabel: 'Geen laadvenster nodig',
+    };
+  }
 
   return {
-    icon: <BiTimeFive size={14} />,
-    label: `Tesla ${chargeWindow.batteryLevel}%`,
-    value: formatClock(chargeWindow.startsAt),
-    sublabel: `bespaart ${formatCurrency(chargeWindow.savingsVsNow)}${
-      solarPercent > 0 ? ` · ${solarPercent}% zon` : ''
-    }`,
+    icon: <BiCar size={14} />,
+    value: 'Geen plan',
+    sublabel: 'Nog geen laadvenster',
   };
 };
 
-export const CarChargeCard = ({ chargeWindow }: CarChargeCardProps) => (
+const getIndicator = ({ isHome, isPluggedIn }: ChargePlan) => {
+  if (!isHome) {
+    return 'niet thuis';
+  }
+  if (!isPluggedIn) {
+    return 'kabel los';
+  }
+  return undefined;
+};
+
+export const CarChargeCard = ({ plan }: CarChargeCardProps) => (
   <MetricCard
     className="border-0"
     variant="panel"
-    {...getContent(chargeWindow)}
+    label={plan.batteryLevel === null ? 'Tesla' : `Tesla ${plan.batteryLevel}%`}
+    indicator={getIndicator(plan)}
+    {...getContent(plan)}
   />
 );
