@@ -18,6 +18,8 @@ interface MetricCardProps {
   className?: string;
   icon: ReactNode;
   label: string;
+  /** Small, subtle status shown next to the label. */
+  indicator?: string;
   value: ReactNode;
   sublabel?: string;
   variant?: CardVariant;
@@ -27,6 +29,7 @@ export const MetricCard = ({
   className,
   icon,
   label,
+  indicator,
   value,
   sublabel,
   variant = 'surface',
@@ -40,9 +43,14 @@ export const MetricCard = ({
     </IconBadge>
     <div className="flex min-w-0 flex-col gap-1">
       <div
-        className={`${mutedText[variant]} text-[11px] font-semibold tracking-[0.12em] uppercase`}
+        className={`${mutedText[variant]} flex items-baseline gap-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase`}
       >
-        {label}
+        <span>{label}</span>
+        {indicator ? (
+          <span className="truncate text-[10px] font-medium tracking-normal normal-case opacity-70">
+            · {indicator}
+          </span>
+        ) : null}
       </div>
       <div className="text-2xl leading-tight font-bold tracking-tight tabular-nums">
         {value}
